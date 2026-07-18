@@ -27,10 +27,11 @@ const members = [
     role: "Striimaaja",
     twitch: "sanzzuuu",
   },
-  {
-    name: "Kinkki",
-    role: "Striimaaja",
-    twitch: "ytkimo3",
+  
+{
+  name: "Kinkki",
+  role: "Striimaaja",
+  twitch: "kinkki03",
   },
   {
     name: "Burdeni",
@@ -665,7 +666,7 @@ const getProfileImage = (twitch: string) => {
                 <div className="grid lg:grid-cols-[1fr_360px]">
                   <div className="aspect-video min-h-[400px] bg-black">
                     <iframe
-                      src={`https://player.twitch.tv/?channel=${streams[0].user_login}&parent=localhost`}
+src={`https://player.twitch.tv/?channel=${streams[0].user_login}&parent=${window.location.hostname}&autoplay=true&muted=true`}
                       title={`${streams[0].user_name} Twitch-lähetys`}
                       className="h-full w-full"
                       allowFullScreen
@@ -674,7 +675,7 @@ const getProfileImage = (twitch: string) => {
 
                   <div className="h-[500px] border-t border-white/10 bg-zinc-950 lg:h-auto lg:border-l lg:border-t-0">
                     <iframe
-                      src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=localhost&darkpopout`}
+src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.location.hostname}&darkpopout`}
                       title={`${streams[0].user_name} Twitch-chat`}
                       className="h-full min-h-[500px] w-full"
                     />

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+const defaultUsernames = ["kopostream", "sanzzuuu", "kinkki03"];
+
 async function getAccessToken() {
   const clientId = process.env.TWITCH_CLIENT_ID;
   const clientSecret = process.env.TWITCH_CLIENT_SECRET;
@@ -9,7 +11,11 @@ async function getAccessToken() {
   }
 
   const response = await fetch(
-    `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`,
+    `https://id.twitch.tv/oauth2/token?client_id=${encodeURIComponent(
+      clientId
+    )}&client_secret=${encodeURIComponent(
+      clientSecret
+    )}&grant_type=client_credentials`,
     {
       method: "POST",
       cache: "no-store",
@@ -33,15 +39,18 @@ export async function GET(request: NextRequest) {
       throw new Error("TWITCH_CLIENT_ID puuttuu.");
     }
 
-    const searchParams = request.nextUrl.searchParams;
-    const usersParameter = searchParams.get("users") || "";
+    const usersParameter = request.nextUrl.searchParams.get("users");
 
     const usernames = usersParameter
-      .split(",")
-      .map((username) => username.trim().toLowerCase())
-      .filter(Boolean);
+      ? usersParameter
+          .split(",")
+          .map((username) => username.trim().toLowerCase())
+          .filter(Boolean)
+      : defaultUsernames;
 
-    if (usernames.length === 0) {
+    const uniqueUsernames = [...new Set(usernames)].slice(0, 100);
+
+    if (uniqueUsernames.length === 0) {
       return NextResponse.json({
         data: [],
         users: [],
@@ -50,11 +59,11 @@ export async function GET(request: NextRequest) {
 
     const accessToken = await getAccessToken();
 
-    const streamParameters = usernames
+    const streamParameters = uniqueUsernames
       .map((username) => `user_login=${encodeURIComponent(username)}`)
       .join("&");
 
-    const userParameters = usernames
+    const userParameters = uniqueUsernames
       .map((username) => `login=${encodeURIComponent(username)}`)
       .join("&");
 
@@ -68,14 +77,25 @@ export async function GET(request: NextRequest) {
         headers,
         cache: "no-store",
       }),
+
       fetch(`https://api.twitch.tv/helix/users?${userParameters}`, {
         headers,
         cache: "no-store",
       }),
     ]);
 
-    if (!streamsResponse.ok || !usersResponse.ok) {
-      throw new Error("Twitch-tietojen hakeminen epäonnistui.");
+    if (!streamsResponse.ok) {
+      const errorText = await streamsResponse.text();
+      console.error("Twitch streams -virhe:", errorText);
+
+      throw new Error("Twitch-lähetysten hakeminen epäonnistui.");
+    }
+
+    if (!usersResponse.ok) {
+      const errorText = await usersResponse.text();
+      console.error("Twitch users -virhe:", errorText);
+
+      throw new Error("Twitch-käyttäjien hakeminen epäonnistui.");
     }
 
     const streamsData = await streamsResponse.json();
