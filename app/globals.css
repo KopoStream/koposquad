@@ -1,0 +1,250 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ededed;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--background);
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* HERO-KUVAN HIDAS ZOOM */
+
+@keyframes heroZoom {
+  0% {
+    transform: scale(1.08);
+  }
+
+  100% {
+    transform: scale(1.16);
+  }
+}
+
+.animate-hero {
+  animation: heroZoom 25s ease-in-out infinite alternate;
+}
+
+/* SIVUN AVAUTUMINEN */
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.page-fade-in {
+  animation: pageFadeIn 0.9s ease-out both;
+}
+
+/* TAUSTAVALON HIDAS LIIKE */
+
+@keyframes slowFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(30px, -25px, 0) scale(1.08);
+  }
+}
+
+@keyframes slowFloatReverse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-35px, 25px, 0) scale(1.1);
+  }
+}
+
+.slow-float {
+  animation: slowFloat 12s ease-in-out infinite;
+}
+
+.slow-float-reverse {
+  animation: slowFloatReverse 15s ease-in-out infinite;
+}
+
+/* SAVUN HIDAS LIIKE */
+
+@keyframes smokeMove {
+  0%,
+  100% {
+    transform: translate3d(-3%, 0, 0) scale(1.08);
+    opacity: 0.25;
+  }
+
+  50% {
+    transform: translate3d(3%, -2%, 0) scale(1.14);
+    opacity: 0.4;
+  }
+}
+
+.smoke-move {
+  animation: smokeMove 18s ease-in-out infinite;
+}
+
+/* NAPIN KEVYT HEHKU */
+
+@keyframes buttonGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(168, 85, 247, 0.3),
+      0 0 45px rgba(168, 85, 247, 0.12);
+  }
+
+  50% {
+    box-shadow:
+      0 0 35px rgba(168, 85, 247, 0.65),
+      0 0 75px rgba(217, 70, 239, 0.25);
+  }
+}
+
+.button-glow {
+  animation: buttonGlow 3s ease-in-out infinite;
+}
+
+/* LIVE-MERKIN HEHKU */
+
+@keyframes liveGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.45);
+  }
+
+  50% {
+    box-shadow:
+      0 0 20px rgba(239, 68, 68, 0.9),
+      0 0 40px rgba(239, 68, 68, 0.35);
+  }
+}
+
+.live-glow {
+  animation: liveGlow 2s ease-in-out infinite;
+}
+
+/* OSIOIDEN PEHMEÄ SISÄÄNTULO */
+
+@keyframes sectionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-reveal {
+  animation: sectionReveal 0.9s ease-out both;
+}
+
+/* NUOLEN KEVYT LIIKE */
+
+@keyframes arrowFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+.arrow-float {
+  animation: arrowFloat 2s ease-in-out infinite;
+}
+
+/* VALINNAN VÄRI */
+
+::selection {
+  background: rgba(168, 85, 247, 0.75);
+  color: white;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid #09090b;
+  border-radius: 999px;
+  background: linear-gradient(
+    to bottom,
+    rgb(147, 51, 234),
+    rgb(217, 70, 239)
+  );
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    rgb(168, 85, 247),
+    rgb(236, 72, 153)
+  );
+}
+
+/* FIREFOX-SCROLLBAR */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(168, 85, 247) #09090b;
+}
+
+/* VÄHEMMÄN LIIKETTÄ -ASETUS */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-hero,
+  .page-fade-in,
+  .slow-float,
+  .slow-float-reverse,
+  .smoke-move,
+  .button-glow,
+  .live-glow,
+  .section-reveal,
+  .arrow-float {
+    animation: none;
+  }
+}
