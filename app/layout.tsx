@@ -5,6 +5,36 @@ export const metadata: Metadata = {
   title: "KOPOSQUAD | Suomen kasvava striimaajatiimi",
   description:
     "KOPOSQUAD yhdistää striimaajat, sisällöntuottajat ja yhteisön.",
+
+  openGraph: {
+    title: "KOPOSQUAD | Suomen kasvava striimaajatiimi",
+    description:
+      "KOPOSQUAD yhdistää striimaajat, sisällöntuottajat ja yhteisön.",
+    url: "https://koposquad.vercel.app",
+    siteName: "KOPOSQUAD",
+    images: [
+      {
+        url: "/images/publicog-image.png",
+        width: 1200,
+        height: 630,
+        alt: "KOPOSQUAD",
+      },
+    ],
+    locale: "fi_FI",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "KOPOSQUAD | Suomen kasvava striimaajatiimi",
+    description:
+      "KOPOSQUAD yhdistää striimaajat, sisällöntuottajat ja yhteisön.",
+    images: ["/images/publicog-image.png"],
+  },
+
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
