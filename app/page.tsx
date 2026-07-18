@@ -9,35 +9,49 @@ type Stream = {
   viewer_count: number;
 };
 
+type TwitchUser = {
+  id: string;
+  login: string;
+  display_name: string;
+  profile_image_url: string;
+};
+
 const members = [
   {
     name: "Kopo",
     role: "Perustaja / Striimaaja",
     twitch: "kopostream",
-    image: "/members/kopo.png.png",
   },
   {
     name: "Sanzzuuu",
     role: "Striimaaja",
     twitch: "sanzzuuu",
-    image: "/members/sanzzu.png.png",
   },
   {
     name: "Kinkki",
     role: "Striimaaja",
-    twitch: "kinkki03",
-    image: "/members/kinkki.png.png",
+    twitch: "ytkimo3",
+  },
+  {
+    name: "Burdeni",
+    role: "Striimaaja",
+    twitch: "burdeni",
+  },
+  {
+    name: "HKBLUE88",
+    role: "Striimaaja",
+    twitch: "hkblue88",
   },
   {
     name: "Vapaa paikka",
     role: "Sisällöntuottaja",
     twitch: "",
-    image: "/members/placeholder.png",
   },
 ];
 
 export default function Home() {
   const [streams, setStreams] = useState<Stream[]>([]);
+  const [twitchUsers, setTwitchUsers] = useState<TwitchUser[]>([]);
   const [language, setLanguage] = useState<"fi" | "en">("fi");
 
   const [clips, setClips] = useState<any[]>([]);
@@ -122,29 +136,51 @@ const response = await fetch("/api/live/apply", {
   }
 }
 
-  useEffect(() => {
-    async function checkLive() {
-      try {
-        const response = await fetch("/api/live");
+useEffect(() => {
+  async function checkLive() {
+    try {
+      const twitchUsernames = members
+        .filter((member) => member.twitch)
+        .map((member) => member.twitch)
+        .join(",");
 
-        if (!response.ok) {
-          throw new Error("Live-tietojen hakeminen epäonnistui.");
-        }
+      const response = await fetch(
+        `/api/live?users=${encodeURIComponent(twitchUsernames)}`
+      );
 
-        const data = await response.json();
-
-        setStreams(data.data || []);
-      } catch {
-        setStreams([]);
+      if (!response.ok) {
+        throw new Error("Live-tietojen hakeminen epäonnistui.");
       }
+
+      const data = await response.json();
+
+      setStreams(data.data || []);
+      setTwitchUsers(data.users || []);
+    } catch {
+      setStreams([]);
+      setTwitchUsers([]);
     }
+  }
 
-    checkLive();
+  checkLive();
 
-    const timer = setInterval(checkLive, 60000);
+  const timer = setInterval(checkLive, 60000);
 
-    return () => clearInterval(timer);
-  }, []);
+  return () => clearInterval(timer);
+}, []);
+
+const getProfileImage = (twitch: string) => {
+  if (!twitch) {
+    return "/members/default.jpg";
+  }
+
+  const twitchUser = twitchUsers.find(
+    (user) => user.login.toLowerCase() === twitch.toLowerCase()
+  );
+
+  return twitchUser?.profile_image_url || "/members/default.jpg";
+};
+
 
   useEffect(() => {
     async function fetchClips() {
@@ -736,9 +772,9 @@ const response = await fetch("/api/live/apply", {
                   <div className="relative mb-6 flex justify-center">
                     <div className="rounded-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 p-[3px] shadow-[0_0_35px_rgba(168,85,247,0.4)] transition-all duration-500 group-hover:rotate-3 group-hover:scale-110 group-hover:shadow-[0_0_55px_rgba(168,85,247,0.75)]">
 <img
- src={member.image}
+  src={getProfileImage(member.twitch)}
   alt={member.name}
-  className="h-36 w-36 rounded-full bg-zinc-900 object-contain transition-all duration-500 group-hover:scale-[1.04]"
+  className="h-36 w-36 rounded-full bg-zinc-900 object-cover transition-all duration-500 group-hover:scale-[1.04]"
 />
                     </div>
 
@@ -1391,8 +1427,7 @@ const response = await fetch("/api/live/apply", {
       ? "Sivuston tekijä: Kopo"
       : "Website created by Kopo"}
   </p>
-</footer>
-
-</main>
+      </footer>
+    </main>
   );
 }

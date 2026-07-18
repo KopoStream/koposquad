@@ -1,83 +1,100 @@
-import { NextResponse } from "next/server";
-
-
-const channels = [
-  "kopostream",
-  "sanzzuuu",
-];
-
+import { NextRequest, NextResponse } from "next/server";
 
 async function getAccessToken() {
+  const clientId = process.env.TWITCH_CLIENT_ID;
+  const clientSecret = process.env.TWITCH_CLIENT_SECRET;
+
+  if (!clientId || !clientSecret) {
+    throw new Error("Twitch-tunnukset puuttuvat.");
+  }
 
   const response = await fetch(
-    "https://id.twitch.tv/oauth2/token",
+    `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`,
     {
       method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-
-      body: new URLSearchParams({
-        client_id: process.env.TWITCH_CLIENT_ID!,
-        client_secret: process.env.TWITCH_CLIENT_SECRET!,
-        grant_type: "client_credentials",
-      }),
+      cache: "no-store",
     }
   );
 
+  if (!response.ok) {
+    throw new Error("Twitch-tokenin hakeminen epäonnistui.");
+  }
 
   const data = await response.json();
 
   return data.access_token;
-
 }
 
-
-
-
-
-export async function GET() {
-
-
+export async function GET(request: NextRequest) {
   try {
+    const clientId = process.env.TWITCH_CLIENT_ID;
 
+    if (!clientId) {
+      throw new Error("TWITCH_CLIENT_ID puuttuu.");
+    }
 
-    const token = await getAccessToken();
+    const searchParams = request.nextUrl.searchParams;
+    const usersParameter = searchParams.get("users") || "";
 
+    const usernames = usersParameter
+      .split(",")
+      .map((username) => username.trim().toLowerCase())
+      .filter(Boolean);
 
-    const response = await fetch(
-      `https://api.twitch.tv/helix/streams?${channels
-        .map(channel => `user_login=${channel}`)
-        .join("&")}`,
-      {
-        headers: {
-          "Client-ID": process.env.TWITCH_CLIENT_ID!,
-          "Authorization": `Bearer ${token}`,
-        },
-      }
-    );
+    if (usernames.length === 0) {
+      return NextResponse.json({
+        data: [],
+        users: [],
+      });
+    }
 
+    const accessToken = await getAccessToken();
 
-    const data = await response.json();
+    const streamParameters = usernames
+      .map((username) => `user_login=${encodeURIComponent(username)}`)
+      .join("&");
 
+    const userParameters = usernames
+      .map((username) => `login=${encodeURIComponent(username)}`)
+      .join("&");
 
-    return NextResponse.json(data);
+    const headers = {
+      "Client-ID": clientId,
+      Authorization: `Bearer ${accessToken}`,
+    };
 
+    const [streamsResponse, usersResponse] = await Promise.all([
+      fetch(`https://api.twitch.tv/helix/streams?${streamParameters}`, {
+        headers,
+        cache: "no-store",
+      }),
+      fetch(`https://api.twitch.tv/helix/users?${userParameters}`, {
+        headers,
+        cache: "no-store",
+      }),
+    ]);
 
+    if (!streamsResponse.ok || !usersResponse.ok) {
+      throw new Error("Twitch-tietojen hakeminen epäonnistui.");
+    }
+
+    const streamsData = await streamsResponse.json();
+    const usersData = await usersResponse.json();
+
+    return NextResponse.json({
+      data: streamsData.data || [],
+      users: usersData.data || [],
+    });
   } catch (error) {
-
+    console.error("Twitch API -virhe:", error);
 
     return NextResponse.json(
       {
-        error: "Twitch API error"
+        data: [],
+        users: [],
+        error: "Twitch-tietojen hakeminen epäonnistui.",
       },
-      {
-        status:500
-      }
+      { status: 500 }
     );
-
-
   }
-
-
 }
