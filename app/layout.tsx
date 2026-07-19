@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "KOPOSQUAD | Suomen kasvava striimaajatiimi",
     description:
-      "Tutustu KOPOSQUADin striimaajiin ja sisällöntuottajiin, katso kuka on livenä ja hae mukaan kasvavaan yhteisöön.",
+      "Tutustu KOPOSQUADin striimaajiin ja sisällöntuottajiin, katso kuka on livenä ja hae mukaan yhteisöön.",
     url: "/",
     siteName: "KOPOSQUAD",
     images: [
@@ -76,6 +76,10 @@ export const metadata: Metadata = {
     },
   },
 
+  verification: {
+    google: "7KJbKnOqmo4lHjSyuaErpxESJjJDT-D9iHLizhszdQ4",
+  },
+
   icons: {
     icon: "/favicon.ico",
   },
@@ -88,7 +92,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fi">
-      <body className="bg-black text-white">{children}</body>
+      <body className="bg-black text-white">
+        {children}
+      </body>
     </html>
   );
 }
