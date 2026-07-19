@@ -810,9 +810,8 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
                     {member.twitch ? (
                       <div className="flex justify-center">
                         <a
-                          href={`https://www.twitch.tv/${member.twitch}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
+href={`/member/${member.twitch}`}
+
                           className="mt-6 inline-flex items-center gap-2 rounded-xl border border-purple-400/20 bg-gradient-to-r from-purple-600 to-fuchsia-600 px-6 py-3 font-bold shadow-[0_0_20px_rgba(168,85,247,0.25)] transition-all duration-300 hover:scale-105 hover:from-purple-500 hover:to-fuchsia-500 hover:shadow-[0_0_35px_rgba(168,85,247,0.55)]"
                         >
                           Twitch
