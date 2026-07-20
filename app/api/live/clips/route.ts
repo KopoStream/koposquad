@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-
-const channels = ["kopostream", "sanzzuuu", "kinkki03"];
+import { members } from "../../../data/members";
 
 type TwitchUser = {
   id: string;
@@ -61,6 +60,10 @@ export async function GET() {
     if (!clientId) {
       throw new Error("TWITCH_CLIENT_ID puuttuu.");
     }
+
+    const channels = members
+      .map((member) => member.twitch)
+      .filter((channel) => channel.trim() !== "");
 
     const token = await getAccessToken();
 
@@ -126,9 +129,7 @@ export async function GET() {
       }
     }
 
-    // Kopo ensimmäiseksi, sitten Sanzzuuu, lopuksi muut.
-    // Jokaisen sisällä uusimmat klipit ensin.
-    const order = ["kopostream", "sanzzuuu", "kinkki03"];
+    const order = channels;
 
     clips.sort((a, b) => {
       const orderA = order.indexOf(a.broadcaster_login);

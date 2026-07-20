@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { members } from "./data/members";
 
 type Stream = {
   user_name: string;
@@ -16,45 +17,7 @@ type TwitchUser = {
   profile_image_url: string;
 };
 
-const members = [
-  {
-    name: "Kopo",
-    role: "Perustaja / Striimaaja",
-    twitch: "kopostream",
-  },
-  {
-    name: "Sanzzuuu",
-    role: "Striimaaja",
-    twitch: "sanzzuuu",
-  },
-  {
-    name: "Kinkki",
-    role: "Striimaaja",
-    twitch: "kinkki03",
-  },
-  {
-    name: "Burdeni",
-    role: "Striimaaja",
-    twitch: "burdeni",
-  },
-  {
-    name: "HKBLUE88",
-    role: "Striimaaja",
-    twitch: "hkblue88",
-  },
-  {
-    name: "HellBr0",
-    role: "Striimaaja",
-    twitch: "hellbr0",
-  },
-  {
-    name: "MakeZi",
-    role: "Sisällöntuottaja",
-    twitch: "makezilivetw",
-    youtube:
-      "https://www.youtube.com/channel/UCGm35izpbYaaNcUwEPo2MzA",
-  },
-];
+
 
 export default function Home() {
   const [streams, setStreams] = useState<Stream[]>([]);
@@ -946,41 +909,43 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
                         />
                       </div>
 
-                      <h3 className="mt-4 text-2xl font-black text-white transition group-hover:text-purple-200">
-                        {member.name}
-                      </h3>
+<h3 className="mt-4 text-2xl font-black text-white transition group-hover:text-purple-200">
+  {member.name}
+</h3>
 
-                      <p className="mt-1 text-sm font-bold text-purple-400">
-                        {member.role === "Perustaja / Striimaaja"
-                          ? language === "fi"
-                            ? "Perustaja / Striimaaja"
-                            : "Founder / Streamer"
-                          : member.role === "Striimaaja"
-                            ? language === "fi"
-                              ? "Striimaaja"
-                              : "Streamer"
-                            : member.role === "Sisällöntuottaja"
-                              ? language === "fi"
-                                ? "Sisällöntuottaja"
-                                : "Content Creator"
-                              : member.role}
-                      </p>
+<p className="mt-1 text-sm font-bold text-purple-400">
+  {member.role === "Perustaja / Striimaaja"
+    ? language === "fi"
+      ? "Perustaja / Striimaaja"
+      : "Founder / Streamer"
+    : member.role === "Striimaaja"
+      ? language === "fi"
+        ? "Striimaaja"
+        : "Streamer"
+      : member.role === "Moderaattori"
+        ? language === "fi"
+          ? "Moderaattori"
+          : "Moderator"
+        : member.role === "Sisällöntuottaja"
+          ? language === "fi"
+            ? "Sisällöntuottaja"
+            : "Content Creator"
+          : member.role}
+</p>
 
-                      <div className="mt-auto pt-5">
-                        <span className="inline-flex items-center gap-2 text-sm font-black text-purple-400 transition group-hover:text-purple-300">
-                          {language === "fi"
-                            ? "Avaa profiili"
-                            : "Open profile"}
+<div className="mt-auto pt-5">
+  <span className="inline-flex items-center gap-2 text-sm font-black text-purple-400 transition group-hover:text-purple-300">
+    {language === "fi" ? "Avaa profiili" : "Open profile"}
 
-                          <span className="transition-transform duration-300 group-hover:translate-x-1">
-                            →
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </a>
-                );
-              })}
+    <span className="transition-transform duration-300 group-hover:translate-x-1">
+      →
+    </span>
+  </span>
+</div>
+</div>
+</a>
+);
+})}
 
             {/* VAPAAT PAIKAT */}
 
@@ -1166,94 +1131,83 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
 
 <section
   id="clips"
-  className="py-24 px-6 bg-zinc-950 relative overflow-hidden"
+  className="relative overflow-hidden bg-zinc-950 px-6 py-20"
 >
+  <div className="absolute left-1/2 h-[450px] w-[700px] -translate-x-1/2 rounded-full bg-purple-700 opacity-20 blur-[220px]" />
 
-  <div className="absolute left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-purple-700 blur-[220px] opacity-20 rounded-full"></div>
+  <div className="relative z-10 mx-auto max-w-[1500px]">
+    <h2 className="text-center text-4xl font-black md:text-5xl">
+      KOPOSQUAD CLIPS
+    </h2>
 
-  <div className="relative z-10">
+    <p className="mt-4 text-center text-base text-gray-400 md:text-lg">
+      {language === "fi"
+        ? "Katso tiimin parhaat Twitch-klipit yhdestä paikasta."
+        : "Watch the best Twitch clips from the team in one place."}
+    </p>
 
-<h2 className="text-5xl font-black text-center">
-  KOPOSQUAD CLIPS
-</h2>
+    <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5">
+      {clipsLoading ? (
+        <p className="col-span-full text-center text-gray-400">
+          {language === "fi" ? "Ladataan klippejä..." : "Loading clips..."}
+        </p>
+      ) : (
+        clips.map((clip, index) => (
+          <article
+            key={`${clip.id || "clip"}-${index}`}
+            className="group overflow-hidden rounded-2xl border border-purple-500/20 bg-zinc-900 shadow-[0_0_20px_rgba(168,85,247,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-purple-500 hover:shadow-[0_0_25px_rgba(168,85,247,0.20)]"
+          >
+            <a
+              href={clip.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              <div className="relative aspect-video overflow-hidden bg-black">
+                <img
+                  src={clip.thumbnail_url}
+                  alt={clip.title}
+                  className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                />
 
-<p className="text-center text-gray-400 mt-4 text-xl">
-  {language === "fi"
-    ? "Katso tiimin parhaat Twitch-klipit yhdestä paikasta."
-    : "Watch the best Twitch clips from the team in one place."}
-</p>
+                <div className="absolute inset-0 flex items-center justify-center bg-black/15 transition group-hover:bg-black/30">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-black/70 text-xl shadow-lg transition group-hover:scale-110">
+                    ▶
+                  </span>
+                </div>
+              </div>
+            </a>
 
-<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto mt-14">
+            <div className="p-4">
+              <h3 className="line-clamp-2 min-h-[40px] text-sm font-black leading-5">
+                {clip.title}
+              </h3>
 
-{clipsLoading ? (
-  <p className="col-span-full text-center text-gray-400">
-    {language === "fi" ? "Ladataan klippejä..." : "Loading clips..."}
-  </p>
-) : (
-  clips.map((clip) => (
+              <p className="mt-2 truncate text-xs font-bold text-purple-400">
+                {clip.broadcaster_name}
+              </p>
 
-    <div
-      key={clip}
-      className="bg-zinc-900 border border-purple-500/20 rounded-3xl overflow-hidden hover:border-purple-500 hover:scale-[1.02] transition-all duration-300 shadow-[0_0_25px_rgba(168,85,247,0.12)]"
-    >
+              <p className="mt-2 text-xs text-gray-400">
+                {clip.view_count}{" "}
+                {language === "fi" ? "katselukertaa" : "views"}
+              </p>
 
-<a
-  href={clip.url}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="block"
->
-  <div className="aspect-video bg-black overflow-hidden relative">
-
-    <img
-      src={clip.thumbnail_url}
-      alt={clip.title}
-      className="h-full w-full object-cover transition duration-300 hover:scale-105"
-    />
-
-    <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-      <span className="text-6xl drop-shadow-lg">
-        ▶
-      </span>
+              <a
+                href={clip.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 block w-full rounded-lg bg-purple-600 px-3 py-2.5 text-center text-xs font-black transition hover:bg-purple-500"
+              >
+                {language === "fi" ? "Katso Twitchissä" : "Watch on Twitch"}
+              </a>
+            </div>
+          </article>
+        ))
+      )}
     </div>
-
   </div>
-</a>
-
-<div className="p-6">
-
-  <h3 className="text-xl font-bold line-clamp-2 min-h-[56px]">
-    {clip.title}
-  </h3>
-
-  <p className="text-purple-400 mt-2 font-bold">
-    {clip.broadcaster_name}
-  </p>
-
-  <p className="text-gray-400 mt-3">
-    {clip.view_count} {language === "fi" ? "katselukertaa" : "views"}
-  </p>
-
-  <a
-    href={clip.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="mt-6 block w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-xl font-bold transition text-center"
-  >
-    {language === "fi" ? "Katso Twitchissä" : "Watch on Twitch"}
-  </a>
-
-</div>
-
-    </div>
-
-  ))
-)}
-</div>
-
-  </div>
-
 </section>
+
 
 
 
