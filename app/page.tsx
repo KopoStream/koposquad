@@ -983,11 +983,11 @@ href={`/member/${member.twitch}`}
   <div className="bg-zinc-900 border border-green-500/40 rounded-3xl p-6 shadow-[0_0_35px_rgba(34,197,94,0.15)]">
     <div className="flex justify-between items-center">
       <h3 className="text-2xl font-bold">
-{language === "fi" ? "Sivusto luotu" : "Website launched"}
+        {language === "fi" ? "Sivusto luotu" : "Website launched"}
       </h3>
 
       <span className="text-green-400 font-bold">
-{language === "fi" ? "✓ VALMIS" : "✓ COMPLETED"}
+        {language === "fi" ? "✓ VALMIS" : "✓ COMPLETED"}
       </span>
     </div>
   </div>
@@ -995,11 +995,11 @@ href={`/member/${member.twitch}`}
   <div className="bg-zinc-900 border border-green-500/40 rounded-3xl p-6 shadow-[0_0_35px_rgba(34,197,94,0.15)]">
     <div className="flex justify-between items-center">
       <h3 className="text-2xl font-bold">
-{language === "fi" ? "Ensimmäiset jäsenet" : "First members"}
+        {language === "fi" ? "Ensimmäiset jäsenet" : "First members"}
       </h3>
 
       <span className="text-green-400 font-bold">
-{language === "fi" ? "✓ VALMIS" : "✓ COMPLETED"}
+        {language === "fi" ? "✓ VALMIS" : "✓ COMPLETED"}
       </span>
     </div>
   </div>
@@ -1007,11 +1007,23 @@ href={`/member/${member.twitch}`}
   <div className="bg-zinc-900 border border-purple-500/40 rounded-3xl p-6 shadow-[0_0_35px_rgba(168,85,247,0.15)]">
     <div className="flex justify-between items-center">
       <h3 className="text-2xl font-bold">
-{language === "fi" ? "10 aktiivista tekijää" : "10 active creators"}
+        {language === "fi" ? "Jäsenprofiilit" : "Member profiles"}
       </h3>
 
       <span className="text-purple-400 font-bold">
-{language === "fi" ? "TYÖN ALLA" : "IN PROGRESS"}
+        {language === "fi" ? "TYÖN ALLA" : "IN PROGRESS"}
+      </span>
+    </div>
+  </div>
+
+  <div className="bg-zinc-900 border border-purple-500/40 rounded-3xl p-6 shadow-[0_0_35px_rgba(168,85,247,0.15)]">
+    <div className="flex justify-between items-center">
+      <h3 className="text-2xl font-bold">
+        {language === "fi" ? "10 aktiivista tekijää" : "10 active creators"}
+      </h3>
+
+      <span className="text-purple-400 font-bold">
+        {language === "fi" ? "TYÖN ALLA" : "IN PROGRESS"}
       </span>
     </div>
   </div>
