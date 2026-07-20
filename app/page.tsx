@@ -27,11 +27,10 @@ const members = [
     role: "Striimaaja",
     twitch: "sanzzuuu",
   },
-  
-{
-  name: "Kinkki",
-  role: "Striimaaja",
-  twitch: "kinkki03",
+  {
+    name: "Kinkki",
+    role: "Striimaaja",
+    twitch: "kinkki03",
   },
   {
     name: "Burdeni",
@@ -44,9 +43,16 @@ const members = [
     twitch: "hkblue88",
   },
   {
-    name: "Vapaa paikka",
+    name: "HellBr0",
+    role: "Striimaaja",
+    twitch: "hellbr0",
+  },
+  {
+    name: "MakeZi",
     role: "Sisällöntuottaja",
-    twitch: "",
+    twitch: "makezilivetw",
+    youtube:
+      "https://www.youtube.com/channel/UCGm35izpbYaaNcUwEPo2MzA",
   },
 ];
 
@@ -54,6 +60,16 @@ export default function Home() {
   const [streams, setStreams] = useState<Stream[]>([]);
   const [twitchUsers, setTwitchUsers] = useState<TwitchUser[]>([]);
   const [language, setLanguage] = useState<"fi" | "en">("fi");
+
+  const [memberSearch, setMemberSearch] = useState("");
+  const [memberFilter, setMemberFilter] = useState<
+    | "all"
+    | "streamer"
+    | "content"
+    | "moderator"
+    | "videoeditor"
+    | "graphic"
+  >("all");
 
   const [clips, setClips] = useState<any[]>([]);
   const [clipsLoading, setClipsLoading] = useState(true);
@@ -392,7 +408,7 @@ const getProfileImage = (twitch: string) => {
         id="mika"
         className="relative overflow-hidden bg-black px-6 py-24"
       >
-        <div className="absolute left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-purple-700 opacity-20 blur-[250px]" />
+        <div className="ambient-glow absolute left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-purple-700 opacity-20 blur-[250px]" />
 
         <div className="relative z-10 mx-auto max-w-6xl">
           <h2 className="text-center text-5xl font-black">
@@ -408,7 +424,7 @@ const getProfileImage = (twitch: string) => {
     : "A community for streamers and content creators where everyone can grow"}
 </p>
 
-          <div className="mt-12 rounded-3xl border border-purple-500/30 bg-zinc-900 p-10 shadow-[0_0_40px_rgba(168,85,247,0.15)]">
+          <div className="polished-card mt-12 rounded-3xl border border-purple-500/30 bg-zinc-900 p-10 shadow-[0_0_40px_rgba(168,85,247,0.15)]">
 <p className="text-center text-xl leading-relaxed text-gray-300">
   {language === "fi" ? (
     <>
@@ -440,7 +456,7 @@ const getProfileImage = (twitch: string) => {
           </div>
 
           <div className="mt-12 grid gap-8 md:grid-cols-3">
-            <div className="relative overflow-hidden rounded-3xl border border-purple-500/30 bg-zinc-900 p-8 shadow-lg transition hover:border-purple-500">
+            <div className="polished-card relative overflow-hidden rounded-3xl border border-purple-500/30 bg-zinc-900 p-8 shadow-lg">
               <div className="absolute inset-0 bg-purple-600 opacity-10 blur-3xl" />
 
               <div className="relative z-10">
@@ -456,7 +472,7 @@ const getProfileImage = (twitch: string) => {
               </div>
             </div>
 
-            <div className="relative overflow-hidden rounded-3xl border border-purple-500/30 bg-zinc-900 p-8 shadow-lg transition hover:border-purple-500">
+            <div className="polished-card relative overflow-hidden rounded-3xl border border-purple-500/30 bg-zinc-900 p-8 shadow-lg">
               <div className="absolute inset-0 bg-purple-600 opacity-10 blur-3xl" />
 
               <div className="relative z-10">
@@ -472,7 +488,7 @@ const getProfileImage = (twitch: string) => {
               </div>
             </div>
 
-            <div className="relative overflow-hidden rounded-3xl border border-purple-500/30 bg-zinc-900 p-8 shadow-lg transition hover:border-purple-500">
+            <div className="polished-card relative overflow-hidden rounded-3xl border border-purple-500/30 bg-zinc-900 p-8 shadow-lg">
               <div className="absolute inset-0 bg-purple-600 opacity-10 blur-3xl" />
 
               <div className="relative z-10">
@@ -733,129 +749,413 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
 
       {/* TIIMI */}
 
-      <section
-        id="tiimi"
-        className="relative overflow-hidden bg-zinc-950 px-6 py-24"
-      >
-        <div className="absolute left-1/2 top-1/2 h-[750px] w-[750px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700/20 blur-[250px]" />
+<section
+  id="tiimi"
+  className="relative overflow-hidden bg-zinc-950 px-4 py-24 sm:px-6"
+>
+  <div className="pointer-events-none absolute left-1/2 top-[-220px] h-[650px] w-[900px] -translate-x-1/2 rounded-full bg-purple-700/20 blur-[180px]" />
 
-        <div className="absolute left-10 top-20 h-72 w-72 rounded-full bg-fuchsia-600/10 blur-[160px]" />
+  <div className="pointer-events-none absolute bottom-[-260px] left-[-180px] h-[600px] w-[600px] rounded-full bg-fuchsia-700/10 blur-[180px]" />
 
-        <div className="absolute bottom-10 right-10 h-72 w-72 rounded-full bg-blue-600/10 blur-[160px]" />
+  <div className="pointer-events-none absolute bottom-[-260px] right-[-180px] h-[600px] w-[600px] rounded-full bg-purple-700/10 blur-[180px]" />
 
-        <div className="relative z-10">
-          <h2 className="text-center text-5xl font-black">
-            <span className="text-purple-500 drop-shadow-[0_0_25px_rgba(168,85,247,0.7)]">
-              KOPOSQUAD
-            </span>{" "}
-            TIIMI
-          </h2>
+  <div className="relative z-10 mx-auto max-w-[1400px]">
+    <div className="text-center">
+      <h2 className="text-4xl font-black md:text-6xl">
+        <span className="text-purple-500 drop-shadow-[0_0_25px_rgba(168,85,247,0.7)]">
+          KOPOSQUAD
+        </span>{" "}
+        {language === "fi" ? "TIIMI" : "TEAM"}
+      </h2>
 
-          <p className="mt-4 text-center text-xl text-gray-400">
-{language === "fi"
-  ? "Striimaajat ja sisällöntuottajat"
-  : "Streamers and Content Creators"}
-          </p>
+      <p className="mt-3 text-lg text-gray-400">
+        {language === "fi"
+          ? "Striimaajat ja sisällöntuottajat"
+          : "Streamers and content creators"}
+      </p>
+    </div>
 
-          <div className="mx-auto mt-14 max-w-7xl">
-            <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {members.map((member) => (
-                <div
-                  key={member.name}
-                  className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-3 hover:scale-[1.03] hover:border-purple-400/70 hover:bg-white/[0.09] hover:shadow-[0_25px_80px_rgba(168,85,247,0.25)]"
+          {/* HAKUKENTTÄ JA SUODATTIMET */}
+
+          <div className="mt-10 flex flex-col gap-4 xl:flex-row">
+            <div className="relative xl:w-[390px]">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+                className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-purple-400"
+              >
+                <circle
+                  cx="11"
+                  cy="11"
+                  r="7"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+
+                <path
+                  d="M16.5 16.5L21 21"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+
+              <input
+                type="text"
+                value={memberSearch}
+                onChange={(event) => setMemberSearch(event.target.value)}
+                placeholder={
+                  language === "fi" ? "Hae jäsentä..." : "Search members..."
+                }
+                className="w-full rounded-xl border border-purple-500/30 bg-black/40 py-3 pl-12 pr-4 text-white outline-none transition placeholder:text-gray-500 focus:border-purple-400 focus:shadow-[0_0_25px_rgba(168,85,247,0.15)]"
+              />
+            </div>
+
+            <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
+              {[
+                {
+                  value: "all",
+                  fi: "Kaikki",
+                  en: "All",
+                },
+                {
+                  value: "streamer",
+                  fi: "Striimaajat",
+                  en: "Streamers",
+                },
+                {
+                  value: "content",
+                  fi: "Sisällöntuottajat",
+                  en: "Content Creators",
+                },
+                {
+                  value: "moderator",
+                  fi: "Moderaattorit",
+                  en: "Moderators",
+                },
+                {
+                  value: "videoeditor",
+                  fi: "Videoeditoijat",
+                  en: "Video Editors",
+                },
+
+              ].map((filter) => (
+                <button
+                  key={filter.value}
+                  type="button"
+                  onClick={() =>
+                    setMemberFilter(
+                      filter.value as
+                        | "all"
+                        | "streamer"
+                        | "content"
+                        | "moderator"
+                        | "videoeditor"
+                        | "graphic"
+                    )
+                  }
+                  className={`rounded-xl border px-3 py-3 text-sm font-bold transition-all duration-300 ${
+                    memberFilter === filter.value
+                      ? "border-purple-400 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-[0_0_25px_rgba(168,85,247,0.3)]"
+                      : "border-white/15 bg-white/[0.04] text-gray-300 hover:border-purple-400/60 hover:bg-purple-500/10 hover:text-white"
+                  }`}
                 >
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-purple-500/10 opacity-60" />
+                  {language === "fi" ? filter.fi : filter.en}
+                </button>
+              ))}
+            </div>
+          </div>
 
-                  <div className="pointer-events-none absolute -left-20 -top-20 h-48 w-48 rounded-full bg-purple-500/20 blur-[80px] transition-all duration-700 group-hover:left-0 group-hover:top-0 group-hover:bg-purple-500/30" />
+          {/* JÄSENKORTIT */}
 
-                  <div className="pointer-events-none absolute -bottom-24 -right-24 h-52 w-52 rounded-full bg-fuchsia-500/10 blur-[90px] transition-all duration-700 group-hover:-bottom-10 group-hover:-right-10 group-hover:bg-fuchsia-500/20" />
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {members
+              .filter((member) => member.twitch)
+              .filter((member) => {
+                const search = memberSearch.trim().toLowerCase();
 
-                  <div className="relative mb-6 flex justify-center">
-                    <div className="rounded-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-700 p-[3px] shadow-[0_0_35px_rgba(168,85,247,0.4)] transition-all duration-500 group-hover:rotate-3 group-hover:scale-110 group-hover:shadow-[0_0_55px_rgba(168,85,247,0.75)]">
-<img
-  src={getProfileImage(member.twitch)}
-  alt={member.name}
-  className="h-36 w-36 rounded-full bg-zinc-900 object-cover transition-all duration-500 group-hover:scale-[1.04]"
-/>
-                    </div>
+                const roleCategory =
+                  member.role.toLowerCase().includes("sisällöntuottaja")
+                    ? "content"
+                    : member.role.toLowerCase().includes("moderaattori")
+                      ? "moderator"
+                      : member.role.toLowerCase().includes("videoeditoija")
+                        ? "videoeditor"
+                        : member.role.toLowerCase().includes("graafikko")
+                          ? "graphic"
+                          : "streamer";
 
-                    <div className="absolute bottom-1 right-[calc(50%-70px)] h-5 w-5 rounded-full border-4 border-zinc-900 bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.8)]" />
-                  </div>
+                const matchesSearch =
+                  search === "" ||
+                  member.name.toLowerCase().includes(search) ||
+                  member.role.toLowerCase().includes(search) ||
+                  member.twitch.toLowerCase().includes(search);
 
-                  <div className="relative z-10">
-                    <h3 className="text-center text-3xl font-black transition-all duration-300 group-hover:text-purple-300 group-hover:drop-shadow-[0_0_15px_rgba(168,85,247,0.6)]">
-                    {member.name === "Vapaa paikka"
-  ? language === "fi"
-    ? "Vapaa paikka"
-    : "Open Position"
-  : member.name}
-                    </h3>
+                const matchesFilter =
+                  memberFilter === "all" || memberFilter === roleCategory;
 
-                    <p className="mt-2 text-center font-bold text-purple-400">
-{member.role === "Perustaja / Striimaaja"
-  ? language === "fi"
-    ? "Perustaja / Striimaaja"
-    : "Founder / Streamer"
-  : member.role === "Striimaaja"
-  ? language === "fi"
-    ? "Striimaaja"
-    : "Streamer"
-  : member.role === "Sisällöntuottaja"
-  ? language === "fi"
-    ? "Sisällöntuottaja"
-    : "Content Creator"
-  : member.role}
-                    </p>
+                return matchesSearch && matchesFilter;
+              })
+              .map((member) => {
+                const stream = streams.find(
+                  (item) =>
+                    item.user_login.toLowerCase() ===
+                    member.twitch.toLowerCase()
+                );
 
-                    {member.twitch ? (
-                      <div className="flex justify-center">
-                        <a
-href={`/member/${member.twitch}`}
+                const isLive = Boolean(stream);
 
-                          className="mt-6 inline-flex items-center gap-2 rounded-xl border border-purple-400/20 bg-gradient-to-r from-purple-600 to-fuchsia-600 px-6 py-3 font-bold shadow-[0_0_20px_rgba(168,85,247,0.25)] transition-all duration-300 hover:scale-105 hover:from-purple-500 hover:to-fuchsia-500 hover:shadow-[0_0_35px_rgba(168,85,247,0.55)]"
-                        >
-                          Twitch
+                return (
+                  <a
+                    key={member.name}
+                    href={`/member/${member.twitch}`}
+                    className="group relative flex min-h-[290px] flex-col overflow-hidden rounded-2xl border border-white/15 bg-white/[0.045] px-5 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.4)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-purple-400/70 hover:bg-purple-500/[0.08] hover:shadow-[0_24px_70px_rgba(168,85,247,0.2)]"
+                  >
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-fuchsia-500/5 opacity-70" />
+
+                    {isLive && (
+                      <div className="absolute right-3 top-3 z-20 flex items-center gap-1.5 rounded-md border border-green-400/50 bg-green-500/10 px-2 py-1">
+                        <span className="relative flex h-2 w-2">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-70" />
+                          <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
+                        </span>
+
+                        <span className="text-[10px] font-black uppercase text-green-400">
+                          LIVE
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="relative z-10 flex h-full flex-col items-center text-center">
+                      <div className="relative">
+                        <div className="rounded-full bg-gradient-to-br from-purple-400 via-fuchsia-500 to-purple-700 p-[2px] shadow-[0_0_28px_rgba(168,85,247,0.4)] transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(168,85,247,0.7)]">
+                          <img
+                            src={getProfileImage(member.twitch)}
+                            alt={member.name}
+                            className="h-28 w-28 rounded-full bg-zinc-900 object-cover sm:h-32 sm:w-32"
+                          />
+                        </div>
+
+                        <span
+                          className={`absolute bottom-1 right-1 h-4 w-4 rounded-full border-[3px] border-zinc-950 ${
+                            isLive
+                              ? "bg-green-400 shadow-[0_0_12px_rgba(74,222,128,0.9)]"
+                              : "bg-zinc-600"
+                          }`}
+                        />
+                      </div>
+
+                      <h3 className="mt-4 text-2xl font-black text-white transition group-hover:text-purple-200">
+                        {member.name}
+                      </h3>
+
+                      <p className="mt-1 text-sm font-bold text-purple-400">
+                        {member.role === "Perustaja / Striimaaja"
+                          ? language === "fi"
+                            ? "Perustaja / Striimaaja"
+                            : "Founder / Streamer"
+                          : member.role === "Striimaaja"
+                            ? language === "fi"
+                              ? "Striimaaja"
+                              : "Streamer"
+                            : member.role === "Sisällöntuottaja"
+                              ? language === "fi"
+                                ? "Sisällöntuottaja"
+                                : "Content Creator"
+                              : member.role}
+                      </p>
+
+                      <div className="mt-auto pt-5">
+                        <span className="inline-flex items-center gap-2 text-sm font-black text-purple-400 transition group-hover:text-purple-300">
+                          {language === "fi"
+                            ? "Avaa profiili"
+                            : "Open profile"}
+
                           <span className="transition-transform duration-300 group-hover:translate-x-1">
                             →
                           </span>
-                        </a>
+                        </span>
                       </div>
-                    ) : (
-                      <p className="mt-6 text-center text-sm font-semibold text-gray-500">
-{language === "fi"
-  ? "Paikka avoinna"
-  : "Position available"}
-                      </p>
-                    )}
+                    </div>
+                  </a>
+                );
+              })}
+
+            {/* VAPAAT PAIKAT */}
+
+            {[
+              {
+                category: "content",
+                fi: "Sisällöntuottaja",
+                en: "Content Creator",
+              },
+              {
+                category: "streamer",
+                fi: "Striimaaja",
+                en: "Streamer",
+              },
+              {
+                category: "moderator",
+                fi: "Moderaattori",
+                en: "Moderator",
+              },
+              {
+                category: "videoeditor",
+                fi: "Videoeditoija",
+                en: "Video Editor",
+              },
+              
+            ]
+              .filter((position) => {
+                const search = memberSearch.trim().toLowerCase();
+
+                const positionName =
+                  language === "fi" ? position.fi : position.en;
+
+                const matchesSearch =
+                  search === "" ||
+                  positionName.toLowerCase().includes(search) ||
+                  "vapaa paikka".includes(search) ||
+                  "open position".includes(search);
+
+                const matchesFilter =
+                  memberFilter === "all" ||
+                  memberFilter === position.category;
+
+                return matchesSearch && matchesFilter;
+              })
+              .map((position) => (
+                <a
+                  key={position.category}
+                  href="#rekry"
+                  className="group relative flex min-h-[290px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] px-5 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-purple-400/60 hover:bg-purple-500/[0.07] hover:shadow-[0_24px_70px_rgba(168,85,247,0.16)]"
+                >
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-fuchsia-500/5" />
+
+                  <div className="relative z-10 flex h-full flex-col items-center text-center">
+                    <div className="relative flex h-32 w-32 items-center justify-center rounded-full border-2 border-purple-500 bg-purple-500/[0.06] shadow-[0_0_28px_rgba(168,85,247,0.25)] transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(168,85,247,0.45)]">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        className="h-16 w-16 text-purple-500"
+                        aria-hidden="true"
+                      >
+                        <circle
+                          cx="12"
+                          cy="8"
+                          r="4"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                        />
+
+                        <path
+                          d="M4.5 21C4.8 16.5 7.2 14 12 14C16.8 14 19.2 16.5 19.5 21"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+
+                      <span className="absolute bottom-1 right-1 h-4 w-4 rounded-full border-[3px] border-zinc-950 bg-zinc-600" />
+                    </div>
+
+                    <h3 className="mt-4 text-2xl font-black text-white">
+                      {language === "fi"
+                        ? "Vapaa paikka"
+                        : "Open position"}
+                    </h3>
+
+                    <p className="mt-1 text-sm font-bold text-purple-400">
+                      {language === "fi" ? position.fi : position.en}
+                    </p>
+
+                    <p className="mt-3 text-sm text-gray-400">
+                      {language === "fi"
+                        ? "Etsimme sinua!"
+                        : "We are looking for you!"}
+                    </p>
+
+                    <div className="mt-auto pt-5">
+                      <span className="inline-flex items-center gap-2 text-sm font-black text-purple-400 transition group-hover:text-purple-300">
+                        {language === "fi" ? "Hae mukaan" : "Apply now"}
+
+                        <span className="transition-transform duration-300 group-hover:translate-x-1">
+                          →
+                        </span>
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </a>
               ))}
+          </div>
 
-              <a
-                href="#rekry"
-                className="group relative flex min-h-[330px] items-center justify-center overflow-hidden rounded-3xl border-2 border-dashed border-purple-500/40 bg-white/[0.04] p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-3 hover:scale-[1.03] hover:border-purple-400 hover:bg-purple-500/10 hover:shadow-[0_25px_80px_rgba(168,85,247,0.2)]"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-fuchsia-500/10" />
+          {/* EI HAKUTULOKSIA */}
 
-                <div className="relative z-10 text-center text-gray-400">
-                  <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-purple-500/30 bg-purple-500/10 text-6xl font-black text-purple-500 shadow-[0_0_30px_rgba(168,85,247,0.2)] transition-all duration-500 group-hover:rotate-90 group-hover:scale-110 group-hover:bg-purple-500/20 group-hover:shadow-[0_0_45px_rgba(168,85,247,0.5)]">
-                    +
-                  </div>
+          {members
+            .filter((member) => member.twitch)
+            .filter((member) => {
+              const search = memberSearch.trim().toLowerCase();
 
-                  <p className="mt-5 text-2xl font-black text-white">
-{language === "fi"
-  ? "Uusi jäsen"
-  : "New member"}
-                  </p>
+              const roleCategory =
+                member.role.toLowerCase().includes("sisällöntuottaja")
+                  ? "content"
+                  : member.role.toLowerCase().includes("moderaattori")
+                    ? "moderator"
+                    : member.role.toLowerCase().includes("videoeditoija")
+                      ? "videoeditor"
+                      : member.role.toLowerCase().includes("graafikko")
+                        ? "graphic"
+                        : "streamer";
 
-                  <p className="mt-2 text-sm">
-{language === "fi"
-  ? "Tule mukaan Koposquadiin"
-  : "Join Koposquad"}
-                  </p>
-                </div>
-              </a>
+              return (
+                (search === "" ||
+                  member.name.toLowerCase().includes(search) ||
+                  member.role.toLowerCase().includes(search) ||
+                  member.twitch.toLowerCase().includes(search)) &&
+                (memberFilter === "all" || memberFilter === roleCategory)
+              );
+            }).length === 0 &&
+            memberSearch.trim() !== "" && (
+              <div className="mt-8 rounded-2xl border border-purple-500/20 bg-white/[0.03] p-8 text-center">
+                <p className="text-lg font-bold text-gray-300">
+                  {language === "fi"
+                    ? "Haulla ei löytynyt jäsentä."
+                    : "No member matched your search."}
+                </p>
+              </div>
+            )}
+
+          {/* LIITY MUKAAN -BANNERI */}
+
+          <div className="mt-10 flex flex-col gap-6 rounded-2xl border border-purple-500/40 bg-gradient-to-r from-purple-950/50 via-zinc-950 to-purple-950/40 px-6 py-6 shadow-[0_0_45px_rgba(168,85,247,0.14)] md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-purple-500/40 bg-purple-500/10 text-4xl font-black text-purple-400">
+                +
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-black text-white">
+                  {language === "fi"
+                    ? "Liity osaksi KOPOSQUADIA!"
+                    : "Become part of KOPOSQUAD!"}
+                </h3>
+
+                <p className="mt-1 text-gray-400">
+                  {language === "fi"
+                    ? "Etsimme jatkuvasti uusia striimaajia ja sisällöntuottajia mukaan tiimiin."
+                    : "We are always looking for new streamers and content creators to join the team."}
+                </p>
+              </div>
             </div>
+
+            <a
+              href="#rekry"
+              className="inline-flex shrink-0 items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-8 py-4 font-black text-white shadow-[0_0_28px_rgba(168,85,247,0.3)] transition-all duration-300 hover:scale-105 hover:from-purple-500 hover:to-fuchsia-500 hover:shadow-[0_0_40px_rgba(168,85,247,0.55)]"
+            >
+              {language === "fi" ? "HAE MUKAAN" : "APPLY NOW"}
+              <span>→</span>
+            </a>
           </div>
         </div>
       </section>

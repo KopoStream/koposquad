@@ -248,3 +248,90 @@ body {
     animation: none;
   }
 }
+
+/* KOPOSQUAD – SIVUSTON VIIMEISTELY */
+
+@keyframes ambientGlow {
+  0% {
+    transform: translate3d(-2%, -2%, 0) scale(0.95);
+    opacity: 0.12;
+  }
+
+  50% {
+    transform: translate3d(2%, 1%, 0) scale(1.05);
+    opacity: 0.22;
+  }
+
+  100% {
+    transform: translate3d(-1%, 3%, 0) scale(1);
+    opacity: 0.16;
+  }
+}
+
+.ambient-glow {
+  pointer-events: none;
+  animation: ambientGlow 9s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+.polished-card {
+  transition:
+    transform 350ms ease,
+    border-color 350ms ease,
+    background-color 350ms ease,
+    box-shadow 350ms ease;
+}
+
+.polished-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(168, 85, 247, 0.65);
+  background-color: rgba(39, 39, 42, 0.95);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.45),
+    0 0 35px rgba(168, 85, 247, 0.18);
+}
+
+.polished-card-green:hover {
+  border-color: rgba(34, 197, 94, 0.7);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.45),
+    0 0 35px rgba(34, 197, 94, 0.2);
+}
+
+.polished-card-pink:hover {
+  border-color: rgba(236, 72, 153, 0.7);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.45),
+    0 0 35px rgba(236, 72, 153, 0.2);
+}
+
+.polished-card-blue:hover {
+  border-color: rgba(59, 130, 246, 0.7);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.45),
+    0 0 35px rgba(59, 130, 246, 0.2);
+}
+
+.polished-button {
+  transition:
+    transform 250ms ease,
+    filter 250ms ease,
+    box-shadow 250ms ease;
+}
+
+.polished-button:hover {
+  transform: translateY(-3px) scale(1.03);
+  filter: brightness(1.08);
+  box-shadow: 0 0 35px rgba(168, 85, 247, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-glow {
+    animation: none;
+  }
+
+  .polished-card,
+  .polished-button {
+    transition: none;
+  }
+}
