@@ -1249,7 +1249,7 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
   <div className="bg-zinc-900 border border-green-500/40 rounded-3xl p-6 shadow-[0_0_35px_rgba(34,197,94,0.15)]">
     <div className="flex justify-between items-center">
       <h3 className="text-2xl font-bold">
-        {language === "fi" ? "Ensimmäiset jäsenet" : "First members"}
+        {language === "fi" ? "Jäsenprofiilit" : "Member profiles"}
       </h3>
 
       <span className="text-green-400 font-bold">
