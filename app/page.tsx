@@ -1257,19 +1257,6 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
       </span>
     </div>
   </div>
-
-  <div className="bg-zinc-900 border border-purple-500/40 rounded-3xl p-6 shadow-[0_0_35px_rgba(168,85,247,0.15)]">
-    <div className="flex justify-between items-center">
-      <h3 className="text-2xl font-bold">
-        {language === "fi" ? "Jäsenprofiilit" : "Member profiles"}
-      </h3>
-
-      <span className="text-purple-400 font-bold">
-        {language === "fi" ? "TYÖN ALLA" : "IN PROGRESS"}
-      </span>
-    </div>
-  </div>
-
   <div className="bg-zinc-900 border border-purple-500/40 rounded-3xl p-6 shadow-[0_0_35px_rgba(168,85,247,0.15)]">
     <div className="flex justify-between items-center">
       <h3 className="text-2xl font-bold">
