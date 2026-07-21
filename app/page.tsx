@@ -185,193 +185,270 @@ const getProfileImage = (twitch: string) => {
   }, []);
 
   return (
-    <main className="page-fade-in min-h-screen bg-black text-white">
-      {/* NAV */}
+<main className="page-fade-in relative min-h-screen overflow-hidden bg-black text-white">
+  <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+    <div className="absolute -left-72 top-[22%] h-[900px] w-[650px] rounded-full bg-purple-700/14 blur-[220px]" />
 
-      <nav className="fixed left-0 right-0 top-0 z-50 border-b border-purple-500/20 bg-black/80 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <h1 className="text-3xl font-black">
-            <span className="text-purple-500">K</span>
-            OPOSQUAD
-          </h1>
+    <div className="absolute -right-72 top-[48%] h-[950px] w-[700px] rounded-full bg-fuchsia-700/10 blur-[230px]" />
 
-          <div className="flex items-center gap-6 text-sm">
-            <a
-              href="#"
-              className="text-gray-300 transition hover:text-purple-400"
-            >
-              {language === "fi" ? "Etusivu" : "Home"}
-            </a>
+    <div className="absolute -left-64 top-[76%] h-[700px] w-[620px] rounded-full bg-violet-700/10 blur-[210px]" />
 
-            <a
-              href="#live"
-              className="text-gray-300 transition hover:text-purple-400"
-            >
-              Live
-            </a>
+    <div className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-purple-500/25 to-transparent" />
 
-            <a
-              href="#clips"
-              className="text-gray-300 transition hover:text-purple-400"
-            >
-              Clips
-            </a>
+    <div className="absolute right-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-fuchsia-500/20 to-transparent" />
+  </div>
 
-            <a
-              href="#tiimi"
-              className="text-gray-300 transition hover:text-purple-400"
-            >
-              {language === "fi" ? "Tiimi" : "Team"}
-            </a>
+  <div className="relative z-10">
 
-            <a
-              href="#uutiset"
-              className="text-gray-300 transition hover:text-purple-400"
-            >
-              {language === "fi" ? "Uutiset" : "News"}
-            </a>
+  </div>
 
-            <a
-              href="#liity"
-              className="text-gray-300 transition hover:text-purple-400"
-            >
-              {language === "fi" ? "Liity" : "Join"}
-            </a>
+{/* NAV */}
 
-            <a
-              href="https://discord.gg/ZXgSS9v6ye"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-bold text-purple-400 transition hover:text-purple-300"
-            >
-              Discord
-            </a>
+<nav className="fixed left-0 right-0 top-0 z-50 border-b border-purple-500/20 bg-black/85 backdrop-blur-xl">
+  <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+    <a href="#" className="text-3xl font-black tracking-tight">
+      <span className="text-purple-500">KOPO</span>
+      <span className="text-white">SQUAD</span>
+    </a>
 
-            <button
-              type="button"
-              onClick={() =>
-                setLanguage((currentLanguage) =>
-                  currentLanguage === "fi" ? "en" : "fi"
-                )
-              }
-              className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-4 py-2 font-black text-purple-300 transition-all duration-300 hover:scale-105 hover:border-purple-400 hover:bg-purple-500/20 hover:text-white"
-              aria-label={
-                language === "fi"
-                  ? "Vaihda sivusto englanniksi"
-                  : "Switch website to Finnish"
-              }
-            >
-              {language === "fi" ? "EN" : "FI"}
-            </button>
-          </div>
-        </div>
-      </nav>
+    <div className="hidden items-center gap-7 text-sm font-semibold md:flex">
+      <a
+        href="#"
+        className="text-gray-300 transition hover:text-white"
+      >
+        {language === "fi" ? "Etusivu" : "Home"}
+      </a>
 
-      {/* HERO */}
+      <a
+        href="#live"
+        className="text-gray-300 transition hover:text-white"
+      >
+        Live
+      </a>
 
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-        <img
-          src="/images/hero-bg.png"
-          alt=""
-          className="animate-hero pointer-events-none absolute inset-0 h-full w-full scale-110 select-none object-cover opacity-90"
-        />
+      <a
+        href="#tiimi"
+        className="text-gray-300 transition hover:text-white"
+      >
+        {language === "fi" ? "Tiimi" : "Team"}
+      </a>
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/50" />
+      <a
+        href="#clips"
+        className="text-gray-300 transition hover:text-white"
+      >
+        Clips
+      </a>
 
-        <div className="slow-float absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700 opacity-20 blur-[220px]" />
+      <a
+        href="/tools"
+        className="text-gray-300 transition hover:text-purple-300"
+      >
+        {language === "fi" ? "Työkalut" : "Tools"}
+      </a>
 
-        <div className="relative z-10 -mt-28 px-6 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[14px] text-purple-400">
-            STREAM TEAM
-          </p>
+      <a
+        href="#uutiset"
+        className="text-gray-300 transition hover:text-white"
+      >
+        {language === "fi" ? "Uutiset" : "News"}
+      </a>
 
-          <h1 className="mt-6 text-8xl font-black uppercase leading-none md:text-[9rem] lg:text-[10rem]">
-            <span className="text-white drop-shadow-[0_0_35px_rgba(255,255,255,0.35)]">
-              KOPO
-            </span>
+      <a
+        href="#liity"
+        className="text-gray-300 transition hover:text-white"
+      >
+        {language === "fi" ? "Liity" : "Join"}
+      </a>
 
-            <span className="text-purple-500 drop-shadow-[0_0_55px_rgba(168,85,247,0.95)]">
-              SQUAD
-            </span>
-          </h1>
+      <a
+        href="https://discord.gg/ZXgSS9v6ye"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-black text-purple-400 transition hover:text-purple-300"
+      >
+        Discord
+      </a>
 
-<p className="mt-8 text-2xl text-gray-200">
-  {language === "fi"
-    ? "Suomen kasvava striimaajatiimi"
-    : "Finland's growing streaming team"}
-</p>
+      <button
+        type="button"
+        onClick={() =>
+          setLanguage((currentLanguage) =>
+            currentLanguage === "fi" ? "en" : "fi"
+          )
+        }
+        className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-4 py-2 font-black text-purple-300 transition hover:border-purple-400 hover:bg-purple-500/20 hover:text-white"
+        aria-label={
+          language === "fi"
+            ? "Vaihda sivusto englanniksi"
+            : "Switch website to Finnish"
+        }
+      >
+        {language === "fi" ? "EN" : "FI"}
+      </button>
+    </div>
+  </div>
+</nav>
 
-          <div className="mt-10">
-            <a
-              href="#rekry"
-              className="button-glow inline-block rounded-2xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-10 py-4 text-xl font-black shadow-[0_0_30px_rgba(168,85,247,0.45)] transition-all duration-300 hover:scale-105 hover:from-purple-500 hover:to-fuchsia-500"
-            >
-{language === "fi"
-  ? "HAE MUKAAN KOPOSQUADIIN"
-  : "APPLY TO JOIN KOPOSQUAD"}
-            </a>
-          </div>
+{/* HERO */}
 
-          <div className="mt-10 flex flex-wrap justify-center gap-5">
-            <a
-              href="https://www.twitch.tv/kopostream"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-xl bg-purple-600 px-8 py-4 font-bold shadow-lg transition-all duration-300 hover:scale-105 hover:bg-purple-500"
-            >
-              Twitch
-            </a>
+<section className="relative flex min-h-screen items-center justify-center overflow-hidden border-b border-purple-500/20 pt-24">
+  {/* VANHA SAVUTAUSTA */}
+  <img
+    src="/images/hero-bg.png"
+    alt=""
+    className="pointer-events-none absolute inset-0 h-full w-full scale-105 select-none object-cover opacity-90"
+  />
 
-            <a
-              href="https://www.youtube.com/@KopoVlog"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-xl bg-red-600 px-8 py-4 font-bold shadow-lg transition-all duration-300 hover:scale-105 hover:bg-red-500"
-            >
-              YouTube
-            </a>
+  {/* TUMMENNUS – TAUSTA JÄÄ SILTI NÄKYVIIN */}
+  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/15 via-black/20 to-black/55" />
 
-            <a
-              href="https://www.instagram.com/kopovirallinen/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-xl bg-pink-600 px-8 py-4 font-bold shadow-lg transition-all duration-300 hover:scale-105 hover:bg-pink-500"
-            >
-              Instagram
-            </a>
+  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(126,34,206,0.22),transparent_52%)]" />
 
-            <a
-              href="https://discord.gg/ZXgSS9v6ye"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-xl bg-indigo-600 px-8 py-4 font-bold shadow-lg transition-all duration-300 hover:scale-105 hover:bg-indigo-500"
-            >
-              Discord
-            </a>
-          </div>
-        </div>
+  {/* PEHMEÄ KESKIVALON HOHDE */}
+  <div className="pointer-events-none absolute left-1/2 top-[48%] h-[620px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700/20 blur-[210px]" />
 
-        <div className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2">
-          <a
-            href="#mika"
-            className="arrow-float flex flex-col items-center text-white/80 transition-all duration-300 hover:text-purple-400"
-          >
-<span className="mb-2 text-xs uppercase tracking-[5px]">
-  {language === "fi" ? "Vieritä alas" : "Scroll down"}
-</span>
+  {/* REUNOJEN VÄRIVALOT */}
+  <div className="pointer-events-none absolute -left-52 top-[20%] h-[520px] w-[520px] rounded-full bg-violet-700/15 blur-[180px]" />
 
-            <span className="text-4xl">↓</span>
-          </a>
-        </div>
-      </section>
+  <div className="pointer-events-none absolute -right-52 top-[18%] h-[540px] w-[540px] rounded-full bg-fuchsia-700/12 blur-[190px]" />
+
+  {/* HERO-SISÄLTÖ */}
+  <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-6 pb-28 pt-20 text-center">
+    <p className="text-sm font-black uppercase tracking-[0.65em] text-purple-300 sm:text-base">
+      STREAM TEAM
+    </p>
+
+    <h1 className="mt-7 text-6xl font-black uppercase leading-[0.86] tracking-[-0.05em] sm:text-7xl md:text-8xl lg:text-[9.5rem]">
+      <span className="text-white drop-shadow-[0_0_28px_rgba(255,255,255,0.22)]">
+        KOPO
+      </span>
+
+      <span className="bg-gradient-to-r from-purple-300 via-purple-500 to-fuchsia-500 bg-clip-text text-transparent drop-shadow-[0_0_45px_rgba(168,85,247,0.45)]">
+        SQUAD
+      </span>
+    </h1>
+
+    <p className="mt-8 max-w-3xl text-xl leading-8 text-gray-200 sm:text-2xl">
+      {language === "fi"
+        ? "Suomen kasvava striimaaja- ja sisällöntuottajayhteisö."
+        : "Finland's growing community for streamers and content creators."}
+    </p>
+
+    {/* PÄÄPAINIKKEET */}
+    <div className="mt-10 flex flex-wrap justify-center gap-4">
+      <a
+        href="#rekry"
+        className="group relative inline-flex min-w-[300px] items-center justify-center overflow-hidden rounded-2xl border border-fuchsia-400/60 bg-gradient-to-r from-purple-600 via-purple-500 to-fuchsia-600 px-9 py-4 text-lg font-black shadow-[0_0_38px_rgba(168,85,247,0.42)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_58px_rgba(217,70,239,0.55)]"
+      >
+        <span className="pointer-events-none absolute -left-20 top-0 h-full w-14 rotate-12 bg-white/20 blur-md transition-all duration-700 group-hover:left-[120%]" />
+
+        <span className="relative">
+          {language === "fi"
+            ? "HAE MUKAAN KOPOSQUADIIN"
+            : "APPLY TO JOIN KOPOSQUAD"}
+        </span>
+      </a>
+
+      <a
+        href="#live"
+        className="inline-flex min-w-[170px] items-center justify-center rounded-2xl border border-purple-400/50 bg-black/45 px-8 py-4 text-lg font-black text-purple-100 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-purple-300 hover:bg-purple-500/15 hover:text-white"
+      >
+        {language === "fi" ? "Katso livet" : "Watch live"}
+      </a>
+    </div>
+
+    {/* SOMEPAINIKKEET */}
+    <div className="mt-8 flex flex-wrap justify-center gap-3">
+      <a
+        href="https://www.twitch.tv/kopostream"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="rounded-xl border border-purple-400/50 bg-purple-600/20 px-6 py-3 font-bold backdrop-blur-md transition hover:-translate-y-1 hover:bg-purple-600/40"
+      >
+        Twitch
+      </a>
+
+      <a
+        href="https://www.youtube.com/@KopoVlog"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="rounded-xl border border-red-400/50 bg-red-600/20 px-6 py-3 font-bold backdrop-blur-md transition hover:-translate-y-1 hover:bg-red-600/40"
+      >
+        YouTube
+      </a>
+
+      <a
+        href="https://www.instagram.com/kopovirallinen/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="rounded-xl border border-pink-400/50 bg-pink-600/20 px-6 py-3 font-bold backdrop-blur-md transition hover:-translate-y-1 hover:bg-pink-600/40"
+      >
+        Instagram
+      </a>
+
+      <a
+        href="https://discord.gg/ZXgSS9v6ye"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="rounded-xl border border-indigo-400/50 bg-indigo-600/20 px-6 py-3 font-bold backdrop-blur-md transition hover:-translate-y-1 hover:bg-indigo-600/40"
+      >
+        Discord
+      </a>
+    </div>
+  </div>
+
+  {/* PIENEMPI KS-KORISTE OIKEAAN ALAREUNAAN */}
+  <div className="pointer-events-none absolute bottom-16 right-8 z-10 hidden opacity-55 lg:block xl:right-16">
+    <div className="absolute inset-0 scale-75 bg-purple-600/25 blur-[70px]" />
+
+    <img
+      src="/images/ks-logo.png.png"
+      alt=""
+      className="relative w-[180px] object-contain drop-shadow-[0_15px_20px_rgba(0,0,0,0.65)] drop-shadow-[0_0_22px_rgba(168,85,247,0.4)] xl:w-[220px]"
+    />
+  </div>
+
+  {/* VIERITÄ ALAS */}
+  <div className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2">
+    <a
+      href="#mika"
+      className="arrow-float flex flex-col items-center text-white/65 transition hover:text-purple-300"
+    >
+      <span className="mb-2 text-[10px] font-bold uppercase tracking-[0.45em] sm:text-xs">
+        {language === "fi" ? "Vieritä alas" : "Scroll down"}
+      </span>
+
+      <span className="text-3xl">↓</span>
+    </a>
+  </div>
+</section>
 
       {/* MIKÄ ON KOPOSQUAD */}
 
       <section
         id="mika"
-        className="relative overflow-hidden bg-black px-6 py-24"
+        className="relative overflow-hidden border-t border-purple-500/10 bg-[linear-gradient(to_bottom,#020202,#08030d,#020202)] px-6 py-24"
       >
-        <div className="ambient-glow absolute left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-purple-700 opacity-20 blur-[250px]" />
+        <div className="ambient-glow absolute left-1/2 top-0 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-purple-700/20 blur-[250px]" />
+        <div className="pointer-events-none absolute -left-52 top-0 h-[700px] w-[700px] rounded-full bg-fuchsia-600/10 blur-[220px]" />
+        <div className="pointer-events-none absolute -right-56 bottom-0 h-[650px] w-[650px] rounded-full bg-blue-600/10 blur-[220px]" />
+
+        <div className="pointer-events-none absolute -left-20 top-20 hidden lg:block">
+          <img
+            src="/images/ks-logo.png.png"
+            alt=""
+            className="w-[300px] rotate-[-14deg] object-contain opacity-[0.045]"
+          />
+        </div>
+
+        <div className="pointer-events-none absolute -right-20 bottom-6 hidden lg:block">
+          <img
+            src="/images/ks-logo.png.png"
+            alt=""
+            className="w-[250px] rotate-[14deg] object-contain opacity-[0.03]"
+          />
+        </div>
 
         <div className="relative z-10 mx-auto max-w-6xl">
           <h2 className="text-center text-5xl font-black">
@@ -387,7 +464,7 @@ const getProfileImage = (twitch: string) => {
     : "A community for streamers and content creators where everyone can grow"}
 </p>
 
-          <div className="polished-card mt-12 rounded-3xl border border-purple-500/30 bg-zinc-900 p-10 shadow-[0_0_40px_rgba(168,85,247,0.15)]">
+          <div className="polished-card relative mt-12 overflow-hidden rounded-3xl border border-purple-500/30 bg-gradient-to-br from-zinc-900/95 via-zinc-950/95 to-purple-950/30 p-10 shadow-[0_0_50px_rgba(168,85,247,0.18)] backdrop-blur-xl transition duration-500 hover:border-purple-400/50 hover:shadow-[0_0_65px_rgba(168,85,247,0.24)]">
 <p className="text-center text-xl leading-relaxed text-gray-300">
   {language === "fi" ? (
     <>
@@ -419,7 +496,7 @@ const getProfileImage = (twitch: string) => {
           </div>
 
           <div className="mt-12 grid gap-8 md:grid-cols-3">
-            <div className="polished-card relative overflow-hidden rounded-3xl border border-purple-500/30 bg-zinc-900 p-8 shadow-lg">
+            <div className="group polished-card relative overflow-hidden rounded-3xl border border-purple-500/25 bg-gradient-to-br from-zinc-900 via-zinc-950 to-purple-950/30 p-8 shadow-[0_18px_50px_rgba(0,0,0,0.38)] transition-all duration-500 hover:-translate-y-2 hover:border-purple-400/70 hover:shadow-[0_0_55px_rgba(168,85,247,0.28)]">
               <div className="absolute inset-0 bg-purple-600 opacity-10 blur-3xl" />
 
               <div className="relative z-10">
@@ -435,7 +512,7 @@ const getProfileImage = (twitch: string) => {
               </div>
             </div>
 
-            <div className="polished-card relative overflow-hidden rounded-3xl border border-purple-500/30 bg-zinc-900 p-8 shadow-lg">
+            <div className="group polished-card relative overflow-hidden rounded-3xl border border-purple-500/25 bg-gradient-to-br from-zinc-900 via-zinc-950 to-purple-950/30 p-8 shadow-[0_18px_50px_rgba(0,0,0,0.38)] transition-all duration-500 hover:-translate-y-2 hover:border-purple-400/70 hover:shadow-[0_0_55px_rgba(168,85,247,0.28)]">
               <div className="absolute inset-0 bg-purple-600 opacity-10 blur-3xl" />
 
               <div className="relative z-10">
@@ -451,7 +528,7 @@ const getProfileImage = (twitch: string) => {
               </div>
             </div>
 
-            <div className="polished-card relative overflow-hidden rounded-3xl border border-purple-500/30 bg-zinc-900 p-8 shadow-lg">
+            <div className="group polished-card relative overflow-hidden rounded-3xl border border-purple-500/25 bg-gradient-to-br from-zinc-900 via-zinc-950 to-purple-950/30 p-8 shadow-[0_18px_50px_rgba(0,0,0,0.38)] transition-all duration-500 hover:-translate-y-2 hover:border-purple-400/70 hover:shadow-[0_0_55px_rgba(168,85,247,0.28)]">
               <div className="absolute inset-0 bg-purple-600 opacity-10 blur-3xl" />
 
               <div className="relative z-10">
@@ -475,13 +552,27 @@ const getProfileImage = (twitch: string) => {
 
       <section
         id="live"
-        className="relative overflow-hidden bg-black px-6 py-24"
+        className="relative overflow-hidden border-t border-purple-500/10 bg-[linear-gradient(to_bottom,#020202,#08030d,#020202)] px-6 py-24"
       >
-        <div className="absolute left-1/2 top-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700/20 blur-[260px]" />
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[820px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700/22 blur-[270px]" />
+        <div className="pointer-events-none absolute -left-20 top-0 h-[500px] w-[500px] rounded-full bg-fuchsia-600/10 blur-[180px]" />
+        <div className="pointer-events-none absolute -right-20 bottom-0 h-[560px] w-[560px] rounded-full bg-blue-600/10 blur-[220px]" />
 
-        <div className="absolute left-0 top-20 h-[350px] w-[350px] rounded-full bg-fuchsia-600/10 blur-[180px]" />
+        <div className="pointer-events-none absolute right-[-100px] top-24 hidden lg:block">
+          <img
+            src="/images/ks-logo.png.png"
+            alt=""
+            className="w-[320px] rotate-[12deg] object-contain opacity-[0.04]"
+          />
+        </div>
 
-        <div className="absolute bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-blue-600/10 blur-[200px]" />
+        <div className="pointer-events-none absolute left-[-90px] bottom-16 hidden lg:block">
+          <img
+            src="/images/ks-logo.png.png"
+            alt=""
+            className="w-[260px] rotate-[-12deg] object-contain opacity-[0.03]"
+          />
+        </div>
 
         <div className="relative z-10 mx-auto max-w-7xl">
           <div className="text-center">
@@ -674,7 +765,7 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
                 </div>
               </div>
             ) : (
-              <div className="relative overflow-hidden rounded-[32px] border border-purple-500/20 bg-white/[0.05] px-8 py-20 text-center shadow-[0_30px_100px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+              <div className="relative overflow-hidden rounded-[32px] border border-purple-500/25 bg-gradient-to-br from-zinc-950/95 via-purple-950/25 to-zinc-950/95 px-8 py-20 text-center shadow-[0_0_60px_rgba(126,34,206,0.16),0_30px_100px_rgba(0,0,0,0.4)] backdrop-blur-xl">
                 <div className="absolute left-1/2 top-1/2 h-[350px] w-[350px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-600/10 blur-[130px]" />
 
                 <div className="relative z-10">
@@ -716,6 +807,12 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
   id="tiimi"
   className="relative overflow-hidden bg-zinc-950 px-4 py-24 sm:px-6"
 >
+<img
+  src="/images/ks-logo.png.png"
+  alt=""
+  className="pointer-events-none absolute -right-20 top-20 hidden w-[430px] rotate-[-8deg] object-contain opacity-[0.045] blur-[0.3px] lg:block"
+/>
+
   <div className="pointer-events-none absolute left-1/2 top-[-220px] h-[650px] w-[900px] -translate-x-1/2 rounded-full bg-purple-700/20 blur-[180px]" />
 
   <div className="pointer-events-none absolute bottom-[-260px] left-[-180px] h-[600px] w-[600px] rounded-full bg-fuchsia-700/10 blur-[180px]" />
@@ -1216,7 +1313,11 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
 <section
   id="roadmap"
   className="py-24 px-6 bg-black relative overflow-hidden"
->
+><img
+  src="/images/ks-logo.png.png"
+  alt=""
+  className="pointer-events-none absolute -left-20 top-1/2 hidden w-[420px] -translate-y-1/2 rotate-[8deg] object-contain opacity-[0.04] lg:block"
+/>
 
   <div className="absolute left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-purple-700 blur-[260px] opacity-20 rounded-full"></div>
 
@@ -1394,9 +1495,25 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
 
 <section
   id="rekry"
-  className="relative overflow-hidden bg-zinc-950 px-6 py-24"
+  className="relative overflow-hidden border-t border-purple-500/10 bg-zinc-950 px-6 py-24"
 >
-  <div className="absolute left-1/2 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-purple-700 opacity-20 blur-[250px]" />
+  {/* REKRYTOINNIN TAUSTAVALOT */}
+  <div className="pointer-events-none absolute left-1/2 top-0 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-purple-700/20 blur-[250px]" />
+
+  <div className="pointer-events-none absolute -left-40 top-1/3 h-[520px] w-[520px] rounded-full bg-violet-700/15 blur-[190px]" />
+
+  <div className="pointer-events-none absolute -right-40 bottom-[-120px] h-[580px] w-[580px] rounded-full bg-fuchsia-700/12 blur-[210px]" />
+
+  {/* HIMMEÄ KS-LOGO REKRYTOINNIN TAUSTALLA */}
+  <div className="pointer-events-none absolute -right-24 top-20 hidden lg:block">
+    <div className="absolute inset-0 scale-75 bg-purple-600/15 blur-[90px]" />
+
+    <img
+      src="/images/ks-logo.png.png"
+      alt=""
+      className="relative w-[430px] rotate-[-8deg] object-contain opacity-[0.045]"
+    />
+  </div>
 
   <div className="relative z-10 mx-auto max-w-6xl">
     <h2 className="text-center text-5xl font-black">
@@ -1452,7 +1569,7 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
       ].map((item) => (
         <div
           key={item.title}
-          className="rounded-3xl border border-purple-500/30 bg-zinc-900 p-8 transition hover:border-purple-500"
+className="group relative overflow-hidden rounded-3xl border border-purple-500/25 bg-gradient-to-br from-zinc-900 via-zinc-950 to-purple-950/30 p-8 shadow-[0_18px_50px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-2 hover:border-purple-400/70 hover:shadow-[0_0_40px_rgba(168,85,247,0.20)]"
         >
           <h3 className="text-3xl font-bold text-purple-400">
             {item.title}
@@ -1464,7 +1581,7 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
         </div>
       ))}
 
-      <div className="rounded-3xl bg-gradient-to-br from-purple-700 to-purple-900 p-8 shadow-[0_0_45px_rgba(168,85,247,0.35)]">
+<div className="group relative overflow-hidden rounded-3xl border border-fuchsia-400/40 bg-gradient-to-br from-purple-700 via-purple-800 to-fuchsia-800 p-8 shadow-[0_0_45px_rgba(168,85,247,0.35)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_55px_rgba(217,70,239,0.45)]">
         <h3 className="text-3xl font-black">
           {language === "fi" ? "Sinä?" : "You?"}
         </h3>
@@ -1504,11 +1621,28 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
 
 <section
   id="liity"
-  className="relative overflow-hidden px-6 py-24"
+  className="relative overflow-hidden border-t border-purple-500/20 bg-black px-6 py-24"
 >
-  <div className="absolute inset-0 bg-purple-900/20 blur-3xl" />
+  {/* HAKEMUSOSION TAUSTAVALOT */}
+  <div className="pointer-events-none absolute inset-0 bg-purple-900/15 blur-3xl" />
 
-  <div className="relative mx-auto max-w-4xl rounded-3xl border border-purple-900/50 bg-zinc-900 p-10 shadow-2xl">
+  <div className="pointer-events-none absolute -left-52 bottom-[-120px] h-[600px] w-[600px] rounded-full bg-purple-700/22 blur-[210px]" />
+
+  <div className="pointer-events-none absolute -right-52 top-[-120px] h-[580px] w-[580px] rounded-full bg-fuchsia-700/14 blur-[210px]" />
+
+  {/* KS-LOGO VASEMMALLE */}
+  <div className="pointer-events-none absolute left-[4%] top-1/2 hidden -translate-y-1/2 lg:block">
+    <div className="absolute inset-0 scale-75 bg-purple-600/20 blur-[100px]" />
+
+    <img
+      src="/images/ks-logo.png.png"
+      alt=""
+      className="relative w-[320px] rotate-[7deg] object-contain opacity-[0.065]"
+    />
+  </div>
+
+  {/* LOMAKE KESKELLÄ */}
+  <div className="relative z-10 mx-auto max-w-4xl rounded-3xl border border-purple-500/35 bg-gradient-to-br from-zinc-900/95 via-zinc-950/95 to-purple-950/35 p-10 shadow-[0_0_60px_rgba(126,34,206,0.18)] backdrop-blur-xl">
     <h2 className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-5xl font-black text-transparent">
       {language === "fi" ? "LIITY KOPOSQUADIIN" : "JOIN KOPOSQUAD"}
     </h2>
@@ -1616,24 +1750,29 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
 
 
 
-
-
-
 {/* FOOTER */}
 
-<footer className="border-t border-zinc-800 bg-zinc-950 py-12 text-center">
-  <h2 className="text-4xl font-black">
+<footer className="relative overflow-hidden border-t border-purple-500/20 bg-zinc-950 py-12 text-center">
+  <div className="pointer-events-none absolute left-1/2 top-1/2 h-[380px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700/10 blur-[150px]" />
+
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="pointer-events-none absolute -right-14 top-1/2 hidden w-[260px] -translate-y-1/2 rotate-[-8deg] object-contain opacity-[0.035] md:block"
+  />
+
+  <h2 className="relative z-10 text-4xl font-black">
     <span className="text-purple-500">K</span>
     OPOSQUAD
   </h2>
 
-  <p className="mt-4 text-lg text-gray-400">
+  <p className="relative z-10 mt-4 text-lg text-gray-400">
     {language === "fi"
       ? "Suomen kasvava striimaaja- ja sisällöntuottajatiimi"
       : "Finland's growing team of streamers and content creators"}
   </p>
 
-  <div className="mt-8 flex flex-wrap justify-center gap-5">
+  <div className="relative z-10 mt-8 flex flex-wrap justify-center gap-5">
     <a
       href="https://www.twitch.tv/kopostream"
       target="_blank"
@@ -1671,16 +1810,17 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
     </a>
   </div>
 
-  <p className="mt-10 text-gray-500">
+  <p className="relative z-10 mt-10 text-gray-500">
     © 2026 KOPOSQUAD
   </p>
 
-  <p className="mt-3 text-sm text-gray-600">
+  <p className="relative z-10 mt-3 text-sm text-gray-600">
     {language === "fi"
       ? "Sivuston tekijä: Kopo"
       : "Website created by Kopo"}
   </p>
-      </footer>
+</footer>
+
     </main>
   );
 }

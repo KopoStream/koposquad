@@ -108,56 +108,51 @@ export default function KopoProfilePage() {
   }, []);
 
   return (
-    <main className="min-h-screen overflow-hidden bg-black text-white">
+    <main className="relative min-h-screen overflow-hidden bg-black text-white">
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div className="absolute -left-72 top-[8%] h-[720px] w-[720px] rounded-full bg-purple-700/18 blur-[210px]" />
+        <div className="absolute -right-72 top-[34%] h-[760px] w-[760px] rounded-full bg-fuchsia-700/12 blur-[230px]" />
+        <div className="absolute -left-64 top-[68%] h-[680px] w-[680px] rounded-full bg-violet-700/12 blur-[220px]" />
+        <div className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-purple-500/30 to-transparent shadow-[0_0_24px_rgba(168,85,247,0.45)]" />
+        <div className="absolute right-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-fuchsia-500/20 to-transparent shadow-[0_0_24px_rgba(217,70,239,0.35)]" />
+      </div>
+
+      <div className="relative z-10">
       {/* YLÄVALIKKO */}
 
-      <nav className="fixed left-0 right-0 top-0 z-50 border-b border-purple-500/20 bg-black/80 backdrop-blur">
+      <nav className="fixed left-0 right-0 top-0 z-50 border-b border-purple-500/20 bg-black/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <a href="/" className="text-3xl font-black">
-            <span className="text-purple-500">K</span>
-            OPOSQUAD
+          <a href="/" className="text-3xl font-black tracking-tight">
+            <span className="text-purple-500">KOPO</span>
+            <span className="text-white">SQUAD</span>
           </a>
 
-          <div className="hidden items-center gap-6 text-sm md:flex">
-            <a
-              href="/"
-              className="text-gray-300 transition hover:text-purple-400"
-            >
+          <div className="hidden items-center gap-7 text-sm font-semibold md:flex">
+            <a href="/" className="text-gray-300 transition hover:text-white">
               Etusivu
             </a>
 
-            <a
-              href="/#live"
-              className="text-gray-300 transition hover:text-purple-400"
-            >
+            <a href="/#live" className="text-gray-300 transition hover:text-white">
               Live
             </a>
 
-            <a
-              href="/#clips"
-              className="text-gray-300 transition hover:text-purple-400"
-            >
-              Clips
-            </a>
-
-            <a
-              href="/#tiimi"
-              className="text-gray-300 transition hover:text-purple-400"
-            >
+            <a href="/#tiimi" className="text-gray-300 transition hover:text-white">
               Tiimi
             </a>
 
-            <a
-              href="/#uutiset"
-              className="text-gray-300 transition hover:text-purple-400"
-            >
+            <a href="/#clips" className="text-gray-300 transition hover:text-white">
+              Clips
+            </a>
+
+            <a href="/tools" className="text-gray-300 transition hover:text-purple-300">
+              Työkalut
+            </a>
+
+            <a href="/#uutiset" className="text-gray-300 transition hover:text-white">
               Uutiset
             </a>
 
-            <a
-              href="/#liity"
-              className="text-gray-300 transition hover:text-purple-400"
-            >
+            <a href="/#liity" className="text-gray-300 transition hover:text-white">
               Liity
             </a>
 
@@ -165,7 +160,7 @@ export default function KopoProfilePage() {
               href="https://discord.gg/ZXgSS9v6ye"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-bold text-purple-400 transition hover:text-purple-300"
+              className="font-black text-purple-400 transition hover:text-purple-300"
             >
               Discord
             </a>
@@ -173,15 +168,20 @@ export default function KopoProfilePage() {
         </div>
       </nav>
 
-      {/* TAUSTAHEHKUT */}
-
-      <div className="pointer-events-none fixed left-[-150px] top-[100px] h-[500px] w-[500px] rounded-full bg-purple-700/20 blur-[180px]" />
-
-      <div className="pointer-events-none fixed bottom-[-200px] right-[-100px] h-[600px] w-[600px] rounded-full bg-fuchsia-700/10 blur-[220px]" />
-
       {/* PROFIILIN YLÄOSA */}
 
-      <section className="relative mx-auto max-w-7xl px-6 pb-24 pt-32">
+      <section className="relative mx-auto max-w-7xl overflow-hidden px-6 pb-24 pt-32">
+        <div className="pointer-events-none absolute -right-24 top-28 hidden lg:block">
+          <div className="absolute inset-0 scale-75 bg-purple-600/18 blur-[95px]" />
+          <img
+            src="/images/ks-logo.png.png"
+            alt=""
+            className="relative w-[520px] rotate-[-7deg] object-contain opacity-[0.055]"
+          />
+        </div>
+
+        <div className="pointer-events-none absolute left-[38%] top-24 h-[420px] w-[620px] rounded-full bg-purple-700/10 blur-[170px]" />
+        <div className="pointer-events-none absolute -left-32 bottom-0 h-[360px] w-[360px] rounded-full bg-fuchsia-700/[0.08] blur-[150px]" />
         <a
           href="/#tiimi"
           className="inline-flex items-center gap-3 text-sm font-bold uppercase tracking-[2px] text-purple-400 transition hover:text-purple-300"
@@ -190,7 +190,7 @@ export default function KopoProfilePage() {
           Takaisin tiimiin
         </a>
 
-        <div className="mt-10 grid items-start gap-10 lg:grid-cols-[380px_1fr]">
+        <div className="relative mt-10 grid items-start gap-10 rounded-[32px] border border-purple-500/15 bg-gradient-to-br from-purple-950/20 via-black/35 to-fuchsia-950/10 p-6 shadow-[0_0_55px_rgba(126,34,206,0.10)] backdrop-blur-sm lg:grid-cols-[380px_1fr] lg:p-8">
           {/* PROFIILIKUVA */}
 
           <div className="flex flex-col items-center">
@@ -405,7 +405,14 @@ href={`https://www.twitch.tv/${twitchUsername}`}
 
 
 {/* LIVE PLAYER */}
-<section className="relative overflow-hidden border-t border-purple-500/20 bg-[radial-gradient(circle_at_center,rgba(126,34,206,0.22),transparent_45%),linear-gradient(to_bottom,#050208,#000000)] px-6 py-24">
+<section className="relative overflow-hidden border-t border-purple-500/20 bg-[radial-gradient(circle_at_center,rgba(126,34,206,0.26),transparent_48%),linear-gradient(to_bottom,#08030d,#000000)] px-6 py-24">
+  <div className="pointer-events-none absolute -right-20 top-10 hidden lg:block">
+    <img
+      src="/images/ks-logo.png.png"
+      alt=""
+      className="w-[420px] rotate-[8deg] object-contain opacity-[0.035]"
+    />
+  </div>
   <div className="absolute left-1/2 top-1/2 h-[400px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700/20 blur-[180px]" />
 
   <div className="relative z-10 mx-auto max-w-7xl">
@@ -507,8 +514,18 @@ href={`https://www.twitch.tv/${twitchUsername}`}
 
 <section
   id="clips"
-  className="relative overflow-hidden border-t border-purple-500/20 bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.18),transparent_38%),linear-gradient(to_bottom,#08040d,#030303)] px-6 py-24"
+  className="relative overflow-hidden border-t border-purple-500/20 bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.24),transparent_42%),linear-gradient(to_bottom,#0b0411,#030303)] px-6 py-24"
 >
+        <div className="pointer-events-none absolute -left-40 top-20 h-[520px] w-[520px] rounded-full bg-purple-700/14 blur-[180px]" />
+        <div className="pointer-events-none absolute -right-40 bottom-0 h-[520px] w-[520px] rounded-full bg-fuchsia-700/10 blur-[190px]" />
+
+        <div className="pointer-events-none absolute -right-20 top-16 hidden lg:block">
+          <img
+            src="/images/ks-logo.png.png"
+            alt=""
+            className="w-[420px] rotate-[7deg] object-contain opacity-[0.04]"
+          />
+        </div>
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700/15 blur-[220px]" />
 
         <div className="relative z-10 mx-auto max-w-7xl">
@@ -609,7 +626,7 @@ href={`https://www.twitch.tv/${twitchUsername}/clips`}
           )}
         </div>
       </section>
-
+      </div>
     </main>
   );
 }
