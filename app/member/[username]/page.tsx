@@ -111,9 +111,9 @@ export default function MemberProfilePage() {
           setStreamTitle("");
         }
 
-        setProfileImage(
-          memberImage || twitchUser?.profile_image_url || ""
-        );
+setProfileImage(
+  twitchUser?.profile_image_url || memberImage || ""
+);
       } catch (error) {
         console.error("Jäsenen Twitch-tietojen hakeminen epäonnistui:", error);
 

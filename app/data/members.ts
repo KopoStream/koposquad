@@ -136,4 +136,23 @@ export const members: Member[] = [
   games: "",
   content: "",
 },
+
+{
+  name: "nandoo",
+  role: "Striimaaja",
+
+  twitch: "nandoofv",
+  youtube: "",
+  instagram: "https://www.instagram.com/nixufv/",
+  tiktok: "",
+  kick: "",
+
+image: "/images/team/nandoofy.jpg",
+
+bio: "Olen KopoSquadin striimaaja. Olen Nea Parviainen, 18-vuotias, mutta minut tunnetaan paremmin nimimerkillä nandoo. Panostan pääsääntöisesti Twitchiin, joten sieltä minut löytää. Livetän pelejä laidasta laitaan, joten tule ihmeessä mukaan seuraamaan lähetyksiä.",
+  country: "Suomi",
+
+  games: "Pelejä laidasta laitaan",
+  content: "Twitch-livestreamit",
+},
 ];
