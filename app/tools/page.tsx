@@ -45,6 +45,17 @@ const categories: ToolCategory[] = [
         buttonText: "Lataa Streamlabs",
       },
       {
+  name: "PRISM Live Studio",
+  description:
+    "Tehokas ilmainen striimausohjelma Windowsille ja macOS:lle. Erinomainen vaihtoehto OBS Studiolle.",
+  price: "ILMAINEN",
+  link: "https://prismlive.com/en_us/",
+  logo: "PL",
+logoImage:
+  "https://www.google.com/s2/favicons?domain=prismlive.com&sz=128",
+  buttonText: "Lataa PRISM",
+},
+      {
         name: "Twitch Studio",
         description:
           "Twitchin oma striimausohjelma uusille sisällöntuottajille ja aloittelijoille.",
@@ -56,6 +67,80 @@ const categories: ToolCategory[] = [
       },
     ],
   },
+
+  {
+  title: "MOBIILISTRIIMAUS / IRL",
+  icon: "📱",
+  tools: [
+    {
+      name: "Streamlabs Mobile",
+      description:
+        "Striimaa puhelimella Twitchiin, YouTubeen ja Facebookiin.",
+      price: "ILMAINEN",
+      link: "https://play.google.com/store/apps/details?id=com.streamlabs",
+      logo: "SL",
+      logoImage: "https://cdn.simpleicons.org/streamlabs/ffffff",
+      buttonText: "Avaa Google Play",
+    },
+
+    {
+      name: "StreamElements Mobile",
+      description:
+        "Firestream-sovellus laadukkaaseen IRL-striimaukseen.",
+      price: "ILMAINEN",
+      link: "https://play.google.com/store/apps/details?id=com.streamelements.firestream&pli=1",
+      logo: "SE",
+logoImage:
+  "https://www.google.com/s2/favicons?domain=streamelements.com&sz=128",
+      buttonText: "Avaa Google Play",
+    },
+
+    {
+      name: "PRISM Live",
+      description:
+        "Yksi suosituimmista mobiilistriimaussovelluksista.",
+      price: "ILMAINEN",
+      link: "https://play.google.com/store/apps/details?id=com.prism.live",
+      logo: "PL",
+logoImage:
+  "https://www.google.com/s2/favicons?domain=prismlive.com&sz=128",
+      buttonText: "Avaa Google Play",
+    },
+    {
+  name: "Moblin",
+  description:
+    "Suosittu iPhone-sovellus laadukkaaseen IRL-striimaukseen Twitchiin.",
+  price: "ILMAINEN",
+  link: "https://moblin.tv/",
+  logo: "MO",
+logoImage:
+  "https://play-lh.googleusercontent.com/FsZQ2ch37S6k1pdbru_Mhb-nyd8b88xF1nqrx37pNMfZtCHL9_8ljbKaGPJI4SOGUiS0mz9UFI2fTGWznfFm3A=w240-h480-rw",
+  buttonText: "Avaa sivusto",
+},
+{
+  name: "Larix Broadcaster",
+  description:
+    "Ammattitasoinen RTMP/SRT-striimaussovellus IRL-lähetyksiin.",
+  price: "ILMAINEN",
+  link: "https://softvelum.com/larix/",
+  logo: "LB",
+  logoImage: "https://www.google.com/s2/favicons?domain=softvelum.com&sz=128",
+  buttonText: "Avaa sivusto",
+},
+    {
+      name: "IRL Pro",
+      description:
+        "Ammattitasoinen IRL-lähetyssovellus Twitchiin.",
+      price: "MAKSULLINEN",
+      link: "https://play.google.com/store/apps/details?id=app.irlpro.android&hl=fi",
+      logo: "IP",
+logoImage:
+  "https://play-lh.googleusercontent.com/wVEmW1E_2txFRm2E1-Dt2FQYLqtInj9QiG13bxfKKqINiP9DWKe_GWvEp7lYxqa6CU7VUTlIlBjVf_ZFFXdgsg",
+      buttonText: "Avaa Google Play",
+    },
+  ],
+},
+
   {
     title: "BOTIT",
     icon: "♙",
@@ -114,6 +199,18 @@ const categories: ToolCategory[] = [
           "https://www.google.com/s2/favicons?domain=mixitupapp.com&sz=128",
         buttonText: "Avaa sivusto",
       },
+
+      {
+  name: "Sery Bot",
+  description:
+    "Suojaa Twitch-kanavasi hate raideilta, follow boteilta, roskapostilta ja tarjoaa hyödyllisiä moderointityökaluja.",
+  price: "ILMAINEN",
+  link: "https://docs.sery.bot/",
+  logo: "SB",
+  logoImage: "https://docs.sery.bot/img/seryLOVE.png",
+  buttonText: "Avaa sivusto",
+},
+
     ],
   },
   {
