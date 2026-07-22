@@ -26,9 +26,14 @@ export default function KopoProfilePage() {
   const [viewerCount, setViewerCount] = useState(0);
   const [streamTitle, setStreamTitle] = useState("");
   const [liveLoading, setLiveLoading] = useState(true);
+  const [twitchParent, setTwitchParent] = useState("");
 
   const [clips, setClips] = useState<TwitchClip[]>([]);
   const [clipsLoading, setClipsLoading] = useState(true);
+
+  useEffect(() => {
+    setTwitchParent(window.location.hostname);
+  }, []);
 
   useEffect(() => {
     async function checkLive() {
@@ -450,21 +455,25 @@ href={`https://www.twitch.tv/${twitchUsername}`}
       <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_400px]">
         <div className="overflow-hidden rounded-3xl border border-purple-500/30 bg-zinc-950 shadow-[0_0_60px_rgba(147,51,234,0.18)]">
           <div className="aspect-video w-full">
-            <iframe
-src={`https://player.twitch.tv/?channel=${twitchUsername}&parent=localhost`}
-              title="KopoStream Twitch-lähetys"
-              className="h-full w-full"
-              allowFullScreen
-            />
+            {twitchParent && (
+              <iframe
+                src={`https://player.twitch.tv/?channel=${twitchUsername}&parent=${twitchParent}&autoplay=true&muted=true`}
+                title="KopoStream Twitch-lähetys"
+                className="h-full w-full"
+                allowFullScreen
+              />
+            )}
           </div>
         </div>
 
         <div className="h-[650px] overflow-hidden rounded-3xl border border-purple-500/30 bg-white shadow-[0_0_60px_rgba(147,51,234,0.12)] lg:h-auto">
-          <iframe
-src={`https://www.twitch.tv/embed/${twitchUsername}/chat?parent=localhost`}
-            title="KopoStream Twitch-chat"
-            className="h-full min-h-[650px] w-full"
-          />
+          {twitchParent && (
+            <iframe
+              src={`https://www.twitch.tv/embed/${twitchUsername}/chat?parent=${twitchParent}&darkpopout`}
+              title="KopoStream Twitch-chat"
+              className="h-full min-h-[650px] w-full"
+            />
+          )}
         </div>
       </div>
     ) : (

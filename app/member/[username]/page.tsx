@@ -54,9 +54,14 @@ export default function MemberProfilePage() {
   const [streamTitle, setStreamTitle] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const [liveLoading, setLiveLoading] = useState(true);
+  const [twitchParent, setTwitchParent] = useState("");
 
   const [clips, setClips] = useState<TwitchClip[]>([]);
   const [clipsLoading, setClipsLoading] = useState(true);
+
+  useEffect(() => {
+    setTwitchParent(window.location.hostname);
+  }, []);
 
   useEffect(() => {
     if (!memberTwitch) {
@@ -111,9 +116,9 @@ export default function MemberProfilePage() {
           setStreamTitle("");
         }
 
-setProfileImage(
-  twitchUser?.profile_image_url || memberImage || ""
-);
+        setProfileImage(
+          memberImage || twitchUser?.profile_image_url || ""
+        );
       } catch (error) {
         console.error("Jäsenen Twitch-tietojen hakeminen epäonnistui:", error);
 
@@ -602,21 +607,25 @@ setProfileImage(
             <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_400px]">
               <div className="overflow-hidden rounded-3xl border border-purple-500/30 bg-zinc-950 shadow-[0_0_60px_rgba(147,51,234,0.18)]">
                 <div className="aspect-video w-full">
-                  <iframe
-                    src={`https://player.twitch.tv/?channel=${memberTwitch}&parent=${typeof window !== "undefined" ? window.location.hostname : "localhost"}&autoplay=true&muted=true`}
-                    title={`${member.name} Twitch-lähetys`}
-                    className="h-full w-full"
-                    allowFullScreen
-                  />
+                  {twitchParent && (
+                    <iframe
+                      src={`https://player.twitch.tv/?channel=${memberTwitch}&parent=${twitchParent}&autoplay=true&muted=true`}
+                      title={`${member.name} Twitch-lähetys`}
+                      className="h-full w-full"
+                      allowFullScreen
+                    />
+                  )}
                 </div>
               </div>
 
               <div className="h-[650px] overflow-hidden rounded-3xl border border-purple-500/30 bg-white shadow-[0_0_60px_rgba(147,51,234,0.12)] lg:h-auto">
-                <iframe
-                  src={`https://www.twitch.tv/embed/${memberTwitch}/chat?parent=${typeof window !== "undefined" ? window.location.hostname : "localhost"}&darkpopout`}
-                  title={`${member.name} Twitch-chat`}
-                  className="h-full min-h-[650px] w-full"
-                />
+                {twitchParent && (
+                  <iframe
+                    src={`https://www.twitch.tv/embed/${memberTwitch}/chat?parent=${twitchParent}&darkpopout`}
+                    title={`${member.name} Twitch-chat`}
+                    className="h-full min-h-[650px] w-full"
+                  />
+                )}
               </div>
             </div>
           ) : (

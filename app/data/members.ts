@@ -155,4 +155,50 @@ bio: "Olen KopoSquadin striimaaja. Olen Nea Parviainen, 18-vuotias, mutta minut 
   games: "Pelejä laidasta laitaan",
   content: "Twitch-livestreamit",
 },
+{
+  name: "Jenniah",
+  role: "Striimaaja",
+  twitch: "jenniah",
+
+  instagram: "https://www.instagram.com/jenni.a/",
+
+  image: "",
+
+  bio: "Olen KOPOSQUADin striimaaja. Tahdon olla ensimmäisen kymmenen jäsenen joukossa mukana ja saada uuden yhteisön kautta lisää motivaatiota striimaamiseen. Myös yhteislivet ja yhteistyöt kiinnostavat.\n\nMinulla on kuulemma myös visuaalista silmää, joten voisin joskus auttaa erilaisissa striimijutuissa. Syksyllä aloitan tieto- ja viestintätekniikan insinööriopinnot, joten ehkä pystyn tulevaisuudessa hyödyntämään osaamistani myös striimimaailmassa.\n\nStriimaan pääsääntöisesti Just Chatting -sisältöä ja kännistriimejä. Uuden näytönohjaimen myötä tarkoituksena on alkaa striimata kunnolla myös vaativampia pelejä.",
+
+  country: "Suomi",
+
+  games: "Vaihtelevat pelit",
+  content: "Just Chatting, kännistriimit ja pelit",
+},
+
+{
+  name: "Skikkefins",
+  role: "Striimaaja",
+  twitch: "skikkefins",
+
+  image: "",
+
+  bio: "Olen KOPOSQUADin striimaaja. Morjesta! Olen suomalainen striimaaja ja tykkään pelailla kauhupelejä, ajopelejä sekä erilaisia simulaattoripelejä.\n\nHarrastuksia löytyy paljon, mutta eläimet ovat lähellä sydäntäni. Minulta löytyy kolme kissaa ja yksi koira. Tykkään myös kuunnella musiikkia ja tehdä kaikenlaista tietokoneen äärellä.",
+
+  country: "Suomi",
+
+  games: "Kauhupelit, ajopelit ja simulaattorit",
+  content: "Pelistriimit ja rento jutustelu",
+},
+
+{
+  name: "Kenraali",
+  role: "Moderaattori",
+  twitch: "kenraalimrbean",
+
+  image: "",
+
+  bio: "Olen KOPOSQUADin moderaattori. Minulta löytyy paljon aiempaa kokemusta moderoinnista, joten sääntöjen valvominen ja chatin dynamiikka ovat minulle täysin tuttuja. Olen kylmäpäinen, en provosoidu turhasta nettiväittelystä ja osaan puuttua tilanteisiin nopeasti.\n\nHaluan olla mukana KOPOSQUADissa, koska tiimissä on hyvä yhteishenki ja haluan auttaa pitämään keskustelun asiallisena. Tunnistan trollauksen, spämmäämisen ja muun häiriköinnin nopeasti sekä osaan käyttää jäähyjä ja estoja silloin, kun niitä tarvitaan.\n\nMinusta tiimi saa aktiivisen ja luotettavan moderaattorin, joka valvoo sääntöjä tasapuolisesti ja pitää chatin järjestyksessä.",
+
+  country: "Suomi",
+
+  games: "",
+  content: "Moderointi ja yhteisön valvominen",
+},
 ];
