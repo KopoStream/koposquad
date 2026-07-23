@@ -201,4 +201,20 @@ bio: "Olen KopoSquadin striimaaja. Olen Nea Parviainen, 18-vuotias, mutta minut 
   games: "",
   content: "Moderointi ja yhteisön valvominen",
 },
+{
+  name: "PandaPlayer",
+  role: "Striimaaja",
+  twitch: "pandaplayertwitch",
+
+  youtube: "https://www.youtube.com/channel/UCuTNm9_DZAF3faKZNBmEHyw?view_as=subscriber",
+
+  image: "",
+
+  bio: "Olen KOPOSQUADin striimaaja. Olen neljänkymmenen ikävuoden hujakoilla oleva turkulainen mies, joka striimailee töiden ohessa rennosti harrastuksena.\n\nPääasiassa kanavalla nähdään Souls-tyylisiä pelejä sekä kauhupelejä, mutta välillä innostun myös speedrunaamaan erilaisia pelejä. Streamiin saa aina tulla moikkaamaan, juttelemaan ja tutustumaan myös muihin katsojiin.\n\nOlen toiminut sisällöntuottajana jo pidemmän aikaa. Aloitin aikoinaan YouTubessa ja siirryin myöhemmin Twitchiin, jossa olen striimannut jo noin kuuden vuoden ajan. Pienenä sisällöntuottajana olisi hienoa kuulua mukaan KOPOSQUAD-yhteisöön.",
+
+  country: "Suomi",
+
+  games: "Souls-pelit, kauhupelit ja speedrunit",
+  content: "Pelistriimit ja YouTube-sisältö",
+},
 ];
