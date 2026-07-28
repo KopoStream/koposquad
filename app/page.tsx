@@ -22,9 +22,19 @@ type TwitchUser = {
 export default function Home() {
   const [streams, setStreams] = useState<Stream[]>([]);
   const [twitchUsers, setTwitchUsers] = useState<TwitchUser[]>([]);
+
+  const [koposquadTvStream, setKoposquadTvStream] =
+    useState<Stream | null>(null);
+
+  const [koposquadTvUser, setKoposquadTvUser] =
+    useState<TwitchUser | null>(null);
+
+  const [koposquadTvLoading, setKoposquadTvLoading] = useState(true);
+
   const [language, setLanguage] = useState<"fi" | "en">("fi");
 
   const [memberSearch, setMemberSearch] = useState("");
+
   const [memberFilter, setMemberFilter] = useState<
     | "all"
     | "streamer"
@@ -149,6 +159,36 @@ useEffect(() => {
   return () => clearInterval(timer);
 }, []);
 
+useEffect(() => {
+  async function fetchKoposquadTv() {
+    try {
+const response = await fetch("/api/live/koposquadtv", {
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error("KOPOSQUADTV-tietojen hakeminen epäonnistui.");
+      }
+
+      const data = await response.json();
+
+      setKoposquadTvStream(data.stream || null);
+      setKoposquadTvUser(data.user || null);
+    } catch {
+      setKoposquadTvStream(null);
+      setKoposquadTvUser(null);
+    } finally {
+      setKoposquadTvLoading(false);
+    }
+  }
+
+  fetchKoposquadTv();
+
+  const timer = setInterval(fetchKoposquadTv, 60000);
+
+  return () => clearInterval(timer);
+}, []);
+
 const getProfileImage = (twitch: string) => {
   if (!twitch) {
     return "/members/default.jpg";
@@ -162,27 +202,27 @@ const getProfileImage = (twitch: string) => {
 };
 
 
-  useEffect(() => {
-    async function fetchClips() {
-      try {
-        const response = await fetch("/api/live/clips");
+useEffect(() => {
+  async function fetchClips() {
+    try {
+      const response = await fetch("/api/live/clips");
 
-        if (!response.ok) {
-          throw new Error("Klippien hakeminen epäonnistui.");
-        }
-
-        const data = await response.json();
-
-        setClips(data.data || []);
-      } catch {
-        setClips([]);
-      } finally {
-        setClipsLoading(false);
+      if (!response.ok) {
+        throw new Error("Klippien hakeminen epäonnistui.");
       }
-    }
 
-    fetchClips();
-  }, []);
+      const data = await response.json();
+
+      setClips(data.data || []);
+    } catch {
+      setClips([]);
+    } finally {
+      setClipsLoading(false);
+    }
+  }
+
+  fetchClips();
+}, []);
 
   return (
 <main className="page-fade-in relative min-h-screen overflow-hidden bg-black text-white">
@@ -548,6 +588,318 @@ const getProfileImage = (twitch: string) => {
       </section>
 
 
+{/* KOPOSQUAD TV */}
+
+<section
+  id="koposquadtv"
+  className="relative overflow-hidden border-b border-t border-purple-500/15 bg-[linear-gradient(to_bottom,#020202,#0b0311,#020202)] px-4 py-24 sm:px-6"
+>
+  {/* TAUSTAVALOT */}
+
+  <div className="pointer-events-none absolute left-1/2 top-1/2 h-[900px] w-[1100px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700/20 blur-[280px]" />
+
+  <div className="pointer-events-none absolute -left-56 top-10 h-[600px] w-[600px] rounded-full bg-fuchsia-700/10 blur-[210px]" />
+
+  <div className="pointer-events-none absolute -right-56 bottom-0 h-[650px] w-[650px] rounded-full bg-violet-700/12 blur-[220px]" />
+
+  {/* HIMMEÄ KS-LOGO */}
+
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="pointer-events-none absolute -right-24 top-24 hidden w-[440px] rotate-[-10deg] object-contain opacity-[0.04] lg:block"
+  />
+
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="pointer-events-none absolute -left-20 bottom-10 hidden w-[320px] rotate-[12deg] object-contain opacity-[0.025] lg:block"
+  />
+
+  <div className="relative z-10 mx-auto max-w-7xl">
+    {/* OTSIKKO */}
+
+    <div className="text-center">
+      <div className="mb-5 inline-flex items-center gap-3 rounded-full border border-purple-400/30 bg-purple-500/10 px-5 py-2 backdrop-blur-xl">
+        <span className="h-2.5 w-2.5 rounded-full bg-purple-400 shadow-[0_0_15px_rgba(192,132,252,0.9)]" />
+
+        <span className="text-xs font-black uppercase tracking-[0.35em] text-purple-300">
+          KOPOSQUAD OFFICIAL CHANNEL
+        </span>
+      </div>
+
+      <h2 className="text-5xl font-black uppercase tracking-tight sm:text-6xl md:text-7xl">
+        <span className="text-white">KOPOSQUAD</span>
+
+        <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(168,85,247,0.45)]">
+          TV
+        </span>
+      </h2>
+
+      <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-gray-400 sm:text-xl">
+        {language === "fi"
+          ? "Koposquadin virallinen Twitch-kanava yhteisön lähetyksille, tapahtumille ja yhteiselle sisällölle."
+          : "The official Koposquad Twitch channel for community streams, events and shared content."}
+      </p>
+    </div>
+
+    {/* LATAUS */}
+
+    {koposquadTvLoading ? (
+      <div className="mt-14 rounded-[32px] border border-purple-500/25 bg-white/[0.04] px-6 py-24 text-center shadow-[0_30px_100px_rgba(0,0,0,0.4)] backdrop-blur-xl">
+        <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-purple-500/20 border-t-purple-400" />
+
+        <p className="mt-5 font-bold text-gray-400">
+          {language === "fi"
+            ? "Ladataan KOPOSQUADTV-kanavaa..."
+            : "Loading the KOPOSQUADTV channel..."}
+        </p>
+      </div>
+    ) : koposquadTvStream ? (
+      /* LIVE-TILA */
+
+      <div className="mt-14 overflow-hidden rounded-[32px] border border-red-500/35 bg-white/[0.05] shadow-[0_0_60px_rgba(239,68,68,0.12),0_30px_100px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+        {/* LIVE-YLÄPALKKI */}
+
+        <div className="flex flex-col gap-5 border-b border-white/10 bg-gradient-to-r from-red-950/70 via-zinc-950 to-purple-950/80 p-5 sm:p-6 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-4">
+            {koposquadTvUser?.profile_image_url ? (
+              <div className="relative shrink-0">
+<img
+  src={koposquadTvUser.profile_image_url}
+  alt={koposquadTvUser.display_name || "KopoSquadTV"}
+  className="relative h-52 w-52 rounded-full border-4 border-purple-400/70 object-cover shadow-[0_0_25px_rgba(168,85,247,0.65),0_0_70px_rgba(126,34,206,0.45)] transition duration-500 hover:scale-[1.03] hover:border-purple-300 sm:h-60 sm:w-60"
+/>
+
+                <span className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-[3px] border-zinc-950 bg-red-500 shadow-[0_0_12px_rgba(239,68,68,0.9)]" />
+              </div>
+            ) : (
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-purple-400/40 bg-purple-500/10 text-xl font-black text-purple-300">
+                KS
+              </div>
+            )}
+
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-3 w-3">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-500" />
+                </span>
+
+                <p className="text-sm font-black uppercase tracking-[0.25em] text-red-400">
+                  {language === "fi"
+                    ? "Lähetys käynnissä"
+                    : "Live now"}
+                </p>
+              </div>
+
+              <h3 className="mt-1 text-2xl font-black sm:text-3xl">
+                KOPOSQUADTV
+              </h3>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="rounded-xl border border-white/10 bg-black/35 px-4 py-2 text-sm font-bold text-gray-300">
+              👀 {koposquadTvStream.viewer_count}{" "}
+              {language === "fi" ? "katsojaa" : "viewers"}
+            </span>
+
+            <a
+              href="https://www.twitch.tv/koposquadtv"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl bg-red-600 px-5 py-2 font-black text-white transition hover:scale-105 hover:bg-red-500"
+            >
+              {language === "fi"
+                ? "Avaa Twitchissä"
+                : "Open on Twitch"}
+            </a>
+          </div>
+        </div>
+
+        {/* TWITCH PLAYER JA CHAT */}
+
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_360px]">
+          <div className="aspect-video min-h-[350px] bg-black sm:min-h-[450px]">
+            <iframe
+              src={`https://player.twitch.tv/?channel=koposquadtv&parent=${window.location.hostname}&autoplay=true&muted=true`}
+              title="KOPOSQUADTV Twitch-lähetys"
+              className="h-full w-full"
+              allowFullScreen
+            />
+          </div>
+
+          <div className="h-[500px] border-t border-white/10 bg-zinc-950 lg:h-auto lg:border-l lg:border-t-0">
+            <iframe
+              src={`https://www.twitch.tv/embed/koposquadtv/chat?parent=${window.location.hostname}&darkpopout`}
+              title="KOPOSQUADTV Twitch-chat"
+              className="h-full min-h-[500px] w-full"
+            />
+          </div>
+        </div>
+
+        {/* LÄHETYKSEN TIEDOT */}
+
+        <div className="border-t border-white/10 bg-black/45 p-6">
+          <p className="text-lg font-black text-white sm:text-xl">
+            {koposquadTvStream.title}
+          </p>
+
+          <p className="mt-2 text-sm leading-6 text-gray-500">
+            {language === "fi"
+              ? "Katso KOPOSQUADTV:n lähetystä ja osallistu Twitch-chattiin suoraan tältä sivulta."
+              : "Watch KOPOSQUADTV and join the Twitch chat directly from this website."}
+          </p>
+        </div>
+      </div>
+    ) : (
+      /* OFFLINE-TILA */
+
+<div className="koposquadtv-reveal relative mt-14 overflow-hidden rounded-[32px] border border-purple-500/30 bg-gradient-to-br from-zinc-950/95 via-purple-950/35 to-zinc-950/95 shadow-[0_0_70px_rgba(126,34,206,0.18),0_30px_100px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-600/10 blur-[170px]" />
+
+        <div className="relative z-10 grid items-center gap-10 px-6 py-12 md:px-10 lg:grid-cols-[280px_1fr] lg:px-14 lg:py-16">
+          {/* KANAVAN KUVA */}
+
+          <div className="mx-auto">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-full bg-purple-600/25 blur-[50px]" />
+
+              {koposquadTvUser?.profile_image_url ? (
+<img
+  src={koposquadTvUser.profile_image_url}
+  alt={koposquadTvUser.display_name || "KopoSquadTV"}
+  className="relative h-52 w-52 rounded-full border-4 border-purple-400/70 object-cover shadow-[0_0_25px_rgba(168,85,247,0.65),0_0_70px_rgba(126,34,206,0.45)] transition duration-500 hover:scale-[1.03] hover:border-purple-300 sm:h-60 sm:w-60"
+/>
+              ) : (
+                <div className="relative flex h-52 w-52 items-center justify-center rounded-full border-4 border-purple-500/50 bg-purple-500/10 text-5xl font-black text-purple-300 shadow-[0_0_45px_rgba(168,85,247,0.35)] sm:h-60 sm:w-60">
+                  KS
+                </div>
+              )}
+
+<span
+  title={language === "fi" ? "Kanava ei ole livenä" : "Channel is offline"}
+  className="absolute bottom-5 right-5 h-5 w-5 rounded-full border-4 border-zinc-950 bg-zinc-600 shadow-[0_0_12px_rgba(0,0,0,0.8)]"
+/>
+            </div>
+          </div>
+
+          {/* OFFLINE-TEKSTI */}
+
+          <div className="text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 rounded-full border border-gray-700 bg-black/35 px-4 py-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-gray-600" />
+
+              <span className="text-xs font-black uppercase tracking-[0.25em] text-gray-400">
+                OFFLINE
+              </span>
+            </div>
+
+<h3 className="mt-5 text-3xl font-black sm:text-4xl">
+  {language === "fi"
+    ? "KOPOSQUADTV ei ole juuri nyt livenä"
+    : "KOPOSQUADTV is currently offline"}
+</h3>
+
+<p className="mt-4 max-w-2xl text-lg leading-8 text-gray-400">
+  {language === "fi"
+    ? "Tälle kanavalle tulee Koposquadin yhteisiä lähetyksiä, tapahtumia, haastatteluja ja muuta yhteisön sisältöä. Seuraa kanavaa, jotta et missaa seuraavaa lähetystä."
+    : "This channel will feature Koposquad community streams, events, interviews and other shared content. Follow the channel so you do not miss the next broadcast."}
+</p>
+
+<div className="mt-8 flex flex-wrap justify-center gap-4 lg:justify-start">
+  <a
+    href="https://www.twitch.tv/koposquadtv"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-7 py-3 font-black text-white shadow-[0_0_30px_rgba(168,85,247,0.3)] transition duration-300 hover:scale-105 hover:from-purple-500 hover:to-fuchsia-500 hover:shadow-[0_0_45px_rgba(168,85,247,0.5)]"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className="h-5 w-5 fill-current"
+    >
+      <path d="M4.3 2 2.8 5.8v15.1h5.3V24l3.1-3.1h4.1L21.2 15V2H4.3Zm14.6 11.9-3.4 3.4h-4.8l-2.8 2.8v-2.8H5V4.2h13.9v9.7Zm-3.8-6.1v5.7h-2.2V7.8h2.2Zm-4.1 0v5.7H8.8V7.8H11Z" />
+    </svg>
+
+    <span>
+      {language === "fi"
+        ? "Seuraa Twitchissä"
+        : "Follow on Twitch"}
+    </span>
+  </a>
+
+  <a
+    href="#live"
+    className="inline-flex items-center justify-center gap-3 rounded-xl border border-purple-400/40 bg-black/40 px-7 py-3 font-black text-purple-200 transition duration-300 hover:scale-105 hover:border-purple-300 hover:bg-purple-500/15 hover:text-white"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      className="h-5 w-5"
+    >
+      <path
+        d="M12 5v14M6 13l6 6 6-6"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+
+    <span>
+      {language === "fi"
+        ? "Katso tiimin livet"
+        : "Watch team streams"}
+    </span>
+  </a>
+</div>
+</div>
+</div>
+
+{/* ALAPALKKI */}
+
+<div className="relative z-10 grid border-t border-white/10 bg-black/35 sm:grid-cols-3">
+  <div className="border-b border-white/10 px-6 py-5 text-center sm:border-b-0 sm:border-r">
+    <p className="text-xs font-black uppercase tracking-[0.2em] text-purple-400">
+      {language === "fi" ? "Kanava" : "Channel"}
+    </p>
+
+    <p className="mt-2 font-bold text-white">KOPOSQUADTV</p>
+  </div>
+
+  <div className="border-b border-white/10 px-6 py-5 text-center sm:border-b-0 sm:border-r">
+    <p className="text-xs font-black uppercase tracking-[0.2em] text-purple-400">
+      {language === "fi" ? "Seuraava lähetys" : "Next stream"}
+    </p>
+
+    <p className="mt-2 font-bold text-gray-300">
+      {language === "fi"
+        ? "Ilmoitetaan myöhemmin"
+        : "To be announced"}
+    </p>
+  </div>
+
+          <div className="px-6 py-5 text-center">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-purple-400">
+              {language === "fi" ? "Sisältö" : "Content"}
+            </p>
+
+            <p className="mt-2 font-bold text-gray-300">
+              {language === "fi"
+                ? "Yhteisölähetykset"
+                : "Community streams"}
+            </p>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
       {/* LIVE CENTER */}
 
       <section
@@ -605,7 +957,7 @@ const getProfileImage = (twitch: string) => {
 
           {/* JÄSENTEN LIVE-KORTIT */}
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+<div className="mt-12 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {members.map((member) => {
               const stream = streams.find(
                 (item) => item.user_login === member.twitch
@@ -614,7 +966,7 @@ const getProfileImage = (twitch: string) => {
               return (
                 <div
                   key={member.name}
-                  className={`group relative overflow-hidden rounded-3xl border p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 ${
+className={`group relative min-h-[150px] overflow-hidden rounded-2xl border p-4 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 ${
                     stream
                       ? "border-red-500/40 bg-red-500/[0.07] shadow-[0_20px_60px_rgba(239,68,68,0.15)] hover:border-red-400 hover:shadow-[0_25px_80px_rgba(239,68,68,0.25)]"
                       : "border-white/10 bg-white/[0.05] shadow-[0_20px_60px_rgba(0,0,0,0.35)] hover:border-purple-500/50 hover:bg-white/[0.08]"
@@ -625,21 +977,21 @@ const getProfileImage = (twitch: string) => {
                   <div className="relative z-10">
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <h3 className="text-2xl font-black">
-                          {member.name}
-                        </h3>
+<h3 className="text-xl font-black">
+  {member.name}
+</h3>
 
-                        <p className="mt-1 text-sm font-semibold text-purple-400">
-                          {member.role}
-                        </p>
+<p className="mt-0.5 text-xs font-semibold text-purple-400">
+  {member.role}
+</p>
                       </div>
 
                       {stream ? (
-                        <div className="flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1">
-                          <span className="relative flex h-2.5 w-2.5">
+<div className="flex items-center gap-1.5 rounded-full border border-red-500/30 bg-red-500/10 px-2.5 py-1">
+<span className="relative flex h-2 w-2">
                             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
 
-                            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-red-500" />
+<span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
                           </span>
 
                           <span className="text-xs font-black text-red-400">
@@ -648,7 +1000,7 @@ const getProfileImage = (twitch: string) => {
                         </div>
                       ) : (
                         <div className="flex items-center gap-2 rounded-full border border-gray-700 bg-black/30 px-3 py-1">
-                          <span className="h-2.5 w-2.5 rounded-full bg-gray-600" />
+<span className="h-2 w-2 rounded-full bg-gray-600" />
 
                           <span className="text-xs font-black text-gray-500">
                             OFFLINE
@@ -659,12 +1011,12 @@ const getProfileImage = (twitch: string) => {
 
                     {stream ? (
                       <>
-                        <p className="mt-5 line-clamp-2 min-h-[48px] text-gray-300">
-                          {stream.title}
-                        </p>
+<p className="mt-3 line-clamp-2 min-h-[40px] text-sm leading-5 text-gray-300">
+  {stream.title}
+</p>
 
-                        <div className="mt-4 flex items-center justify-between">
-                          <span className="text-sm font-bold text-gray-400">
+<div className="mt-3 flex items-center justify-between gap-3">
+<span className="text-xs font-bold text-gray-400">
                             👀 {stream.viewer_count} katsojaa
                           </span>
 
@@ -672,14 +1024,14 @@ const getProfileImage = (twitch: string) => {
                             href={`https://www.twitch.tv/${member.twitch}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="rounded-lg bg-red-600 px-4 py-2 text-sm font-black transition hover:scale-105 hover:bg-red-500"
+className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-black transition hover:scale-105 hover:bg-red-500"
                           >
                             Katso
                           </a>
                         </div>
                       </>
                     ) : (
-                      <p className="mt-5 text-sm text-gray-500">
+<p className="mt-3 text-xs leading-5 text-gray-500">
 {language === "fi"
   ? "Lähetys ei ole tällä hetkellä käynnissä."
   : "This channel is currently offline."}
