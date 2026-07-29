@@ -288,6 +288,13 @@ useEffect(() => {
       </a>
 
       <a
+  href="/tietoa"
+  className="text-gray-300 transition hover:text-purple-300"
+>
+  {language === "fi" ? "Tietoa" : "About"}
+</a>
+
+      <a
         href="#uutiset"
         className="text-gray-300 transition hover:text-white"
       >
@@ -1664,119 +1671,264 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
 
 <section
   id="roadmap"
-  className="py-24 px-6 bg-black relative overflow-hidden"
-><img
-  src="/images/ks-logo.png.png"
-  alt=""
-  className="pointer-events-none absolute -left-20 top-1/2 hidden w-[420px] -translate-y-1/2 rotate-[8deg] object-contain opacity-[0.04] lg:block"
-/>
+  className="relative overflow-hidden bg-black px-6 py-24"
+>
+  {/* TAUSTAN KS-LOGO */}
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="pointer-events-none absolute -left-20 top-1/2 hidden w-[420px] -translate-y-1/2 rotate-[8deg] object-contain opacity-[0.04] lg:block"
+  />
 
-  <div className="absolute left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-purple-700 blur-[260px] opacity-20 rounded-full"></div>
+  {/* TAUSTAN HEHKUT */}
+  <div className="pointer-events-none absolute left-1/2 top-20 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-purple-700/20 blur-[260px]" />
 
-  <div className="relative z-10">
+  <div className="pointer-events-none absolute bottom-0 right-[-250px] h-[550px] w-[550px] rounded-full bg-blue-900/10 blur-[220px]" />
 
-<h2 className="text-5xl font-black text-center">
-  <span className="text-purple-500">KOPOSQUAD</span> ROADMAP
-</h2>
+  <div className="relative z-10 mx-auto max-w-6xl">
+    {/* OTSIKKO */}
+    <div className="text-center">
+      <p className="text-sm font-black uppercase tracking-[0.35em] text-purple-400">
+        {language === "fi" ? "Kehityksen seuranta" : "Development progress"}
+      </p>
 
-<p className="text-center text-gray-400 mt-5 text-xl max-w-3xl mx-auto">
-  {language === "fi"
-    ? "Koposquad on vasta alussa. Tavoitteena on rakentaa Suomen yksi aktiivisimmista striimaaja- ja sisällöntuottajayhteisöistä."
-    : "Koposquad is only getting started. Our goal is to build one of Finland's most active communities for streamers and content creators."}
-</p>
+      <h2 className="mt-4 text-4xl font-black uppercase sm:text-5xl">
+        <span className="text-purple-500">KOPOSQUADIN</span>{" "}
+        {language === "fi" ? "TAVOITTEET" : "GOALS"}
+      </h2>
 
-<div className="max-w-4xl mx-auto mt-16 space-y-6">
+      <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-zinc-400 md:text-lg">
+        {language === "fi"
+          ? "Tästä näet, mitä olemme jo saaneet aikaan ja mitä KOPOSQUADille suunnitellaan seuraavaksi."
+          : "See what we have already achieved and what is planned next for KOPOSQUAD."}
+      </p>
+    </div>
 
-  <div className="bg-zinc-900 border border-green-500/40 rounded-3xl p-6 shadow-[0_0_35px_rgba(34,197,94,0.15)]">
-    <div className="flex justify-between items-center">
-      <h3 className="text-2xl font-bold">
-        {language === "fi" ? "Sivusto luotu" : "Website launched"}
-      </h3>
+    {/* TAVOITEKORTIT */}
+    <div className="mt-14 grid gap-5 md:grid-cols-2">
+      {[
+        {
+          fiTitle: "KOPOSQUAD perustettu",
+          enTitle: "KOPOSQUAD founded",
+          fiDescription:
+            "Yhteisön ensimmäinen pohja, nimi ja toimintasuunnitelma on rakennettu.",
+          enDescription:
+            "The foundation, name and initial plan for the community have been created.",
+          status: "completed",
+        },
+        {
+          fiTitle: "Verkkosivusto julkaistu",
+          enTitle: "Website launched",
+          fiDescription:
+            "KOPOSQUADin verkkosivusto on julkaistu ja sitä kehitetään jatkuvasti.",
+          enDescription:
+            "The KOPOSQUAD website has been launched and is continuously developed.",
+          status: "completed",
+        },
+        {
+          fiTitle: "Jäsenprofiilit julkaistu",
+          enTitle: "Member profiles launched",
+          fiDescription:
+            "Jäsenille on rakennettu omat profiilisivut sisältöineen ja kanavalinkkeineen.",
+          enDescription:
+            "Dedicated profile pages with content and channel links have been created for members.",
+          status: "completed",
+        },
+        {
+          fiTitle: "10 aktiivista tekijää",
+          enTitle: "10 active creators",
+          fiDescription:
+            "Ensimmäinen merkittävä jäsenmäärätavoite on saavutettu.",
+          enDescription:
+            "The first major membership milestone has been achieved.",
+          status: "completed",
+        },
+        {
+          fiTitle: "KOPOSQUADTV avattu",
+          enTitle: "KOPOSQUADTV launched",
+          fiDescription:
+            "Yhteisön yhteinen Twitch-kanava on avattu tulevia lähetyksiä varten.",
+          enDescription:
+            "The community Twitch channel has been launched for future broadcasts.",
+          status: "completed",
+        },
+        {
+          fiTitle: "Ensimmäinen yhteistyökumppani",
+          enTitle: "First collaboration partner",
+          fiDescription:
+            "Etsimme ensimmäistä yhteistyökumppania tukemaan yhteisön kasvua ja tulevaa toimintaa.",
+          enDescription:
+            "We are looking for our first collaboration partner to support the community's growth.",
+          status: "progress",
+        },
+        {
+          fiTitle: "1 000 Discord-jäsentä",
+          enTitle: "1,000 Discord members",
+          fiDescription:
+            "Kasvatamme Discordista aktiivista kohtaamispaikkaa jäsenille, katsojille ja uusille tekijöille.",
+          enDescription:
+            "We are growing Discord into an active meeting place for members, viewers and creators.",
+          status: "progress",
+        },
+        {
+          fiTitle: "1 000 Twitch-seuraajaa",
+          enTitle: "1,000 Twitch followers",
+          fiDescription:
+            "KOPOSQUADTV-kanavan seuraajamäärää kasvatetaan yhteisön yhteisillä lähetyksillä.",
+          enDescription:
+            "The KOPOSQUADTV audience is being grown through shared community broadcasts.",
+          status: "progress",
+        },
+        {
+          fiTitle: "Twitch Affiliate KOPOSQUADTV:lle",
+          enTitle: "Twitch Affiliate for KOPOSQUADTV",
+          fiDescription:
+            "Kanavan ensimmäinen suuri kasvutavoite mahdollistaa yhteisön toiminnan kehittämisen.",
+          enDescription:
+            "The channel's first major growth milestone will help develop community activities.",
+          status: "coming",
+        },
+        {
+          fiTitle: "KOPOSQUAD Merch",
+          enTitle: "KOPOSQUAD Merch",
+          fiDescription:
+            "Tulevaisuudessa tavoitteena on julkaista yhteisön omia paitoja ja muita tuotteita.",
+          enDescription:
+            "The goal is to release community shirts and other products in the future.",
+          status: "coming",
+        },
+        {
+          fiTitle: "Ensimmäinen KOPOSQUAD-miitti",
+          enTitle: "First KOPOSQUAD meetup",
+          fiDescription:
+            "Järjestetään jäsenille ensimmäinen yhteinen tapaaminen ja mahdollisuus tutustua kasvotusten.",
+          enDescription:
+            "The first community meetup will give members a chance to meet in person.",
+status: "future",
+        },
+        {
+          fiTitle: "Jäsenten omat KOPOSQUAD-paidat",
+          enTitle: "Personal KOPOSQUAD shirts",
+          fiDescription:
+            "Aktiivisille jäsenille tehdään tulevaisuudessa omat paidat heidän nimimerkeillään.",
+          enDescription:
+            "Active members will receive personal shirts featuring their creator names.",
+          status: "future",
+        },
+        {
+          fiTitle: "Yhteinen lanitapahtuma",
+          enTitle: "Community LAN event",
+          fiDescription:
+            "Jäsenet kokoontuvat pelaamaan, striimaamaan ja tekemään sisältöä yhdessä.",
+          enDescription:
+            "Members will gather to play, stream and create content together.",
+          status: "future",
+        },
+        {
+          fiTitle: "Assembly tai Vectorama",
+          enTitle: "Assembly or Vectorama",
+          fiDescription:
+            "Tavoitteena on osallistua yhdessä suureen peli- tai verkkotapahtumaan.",
+          enDescription:
+            "The goal is to attend a major gaming or digital event together.",
+          status: "future",
+        },
+      ].map((goal, index) => {
+        const completed = goal.status === "completed";
+        const progress = goal.status === "progress";
+        const coming = goal.status === "coming";
 
-      <span className="text-green-400 font-bold">
-        {language === "fi" ? "✓ VALMIS" : "✓ COMPLETED"}
-      </span>
+        const statusText =
+          language === "fi"
+            ? completed
+              ? "Valmis"
+              : progress
+                ? "Työn alla"
+                : coming
+                  ? "Tulossa"
+                  : "Tulevaisuudessa"
+            : completed
+              ? "Completed"
+              : progress
+                ? "In progress"
+                : coming
+                  ? "Coming soon"
+                  : "Future";
+
+        return (
+          <article
+            key={goal.fiTitle}
+            className={`group relative overflow-hidden rounded-2xl border p-6 transition duration-300 hover:-translate-y-1 ${
+              completed
+                ? "border-green-500/30 bg-green-500/[0.06] hover:border-green-400/50"
+                : progress
+                  ? "border-purple-500/30 bg-purple-500/[0.06] hover:border-purple-400/50"
+                  : "border-white/10 bg-white/[0.035] hover:border-purple-500/35 hover:bg-purple-500/[0.05]"
+            }`}
+          >
+            <div className="flex items-start gap-5">
+              {/* NUMERO TAI VALMIS-MERKKI */}
+              <div
+                className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full border text-lg font-black ${
+                  completed
+                    ? "border-green-400/40 bg-green-500/15 text-green-300"
+                    : progress
+                      ? "border-purple-400/40 bg-purple-500/15 text-purple-300"
+                      : "border-purple-500/25 bg-purple-500/10 text-purple-300"
+                }`}
+              >
+                {completed ? "✓" : index + 1}
+              </div>
+
+              <div className="min-w-0 flex-1">
+                {/* OTSIKKO JA TILA */}
+                <div className="flex flex-wrap items-center gap-3">
+                  <h3 className="text-lg font-black uppercase leading-snug text-white">
+                    {language === "fi" ? goal.fiTitle : goal.enTitle}
+                  </h3>
+
+                  <span
+                    className={`rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wider ${
+                      completed
+                        ? "bg-green-500/15 text-green-300"
+                        : progress
+                          ? "bg-purple-500/15 text-purple-300"
+                          : coming
+                            ? "bg-fuchsia-500/10 text-fuchsia-300"
+                            : "bg-white/[0.07] text-zinc-400"
+                    }`}
+                  >
+                    {statusText}
+                  </span>
+                </div>
+
+                {/* KUVAUS */}
+                <p className="mt-3 text-sm leading-7 text-zinc-400 md:text-base">
+                  {language === "fi"
+                    ? goal.fiDescription
+                    : goal.enDescription}
+                </p>
+              </div>
+            </div>
+
+            {/* HIENO HIMMEÄ KORISTEHEHKU */}
+            <div
+              className={`pointer-events-none absolute -bottom-16 -right-16 h-36 w-36 rounded-full blur-[70px] transition duration-300 ${
+                completed
+                  ? "bg-green-500/10"
+                  : progress
+                    ? "bg-purple-500/15"
+                    : "bg-purple-500/5 group-hover:bg-purple-500/10"
+              }`}
+            />
+          </article>
+        );
+      })}
     </div>
   </div>
-
-  <div className="bg-zinc-900 border border-green-500/40 rounded-3xl p-6 shadow-[0_0_35px_rgba(34,197,94,0.15)]">
-    <div className="flex justify-between items-center">
-      <h3 className="text-2xl font-bold">
-        {language === "fi" ? "Jäsenprofiilit" : "Member profiles"}
-      </h3>
-
-      <span className="text-green-400 font-bold">
-        {language === "fi" ? "✓ VALMIS" : "✓ COMPLETED"}
-      </span>
-    </div>
-  </div>
-<div className="bg-zinc-900 border border-green-500/40 rounded-3xl p-6 shadow-[0_0_35px_rgba(34,197,94,0.15)]">
-  <div className="flex justify-between items-center">
-    <h3 className="text-2xl font-bold">
-      {language === "fi" ? "10 aktiivista tekijää" : "10 active creators"}
-    </h3>
-
-    <span className="text-green-400 font-bold">
-      {language === "fi" ? "✓ VALMIS" : "✓ COMPLETED"}
-    </span>
-  </div>
-</div>
-
-  <div className="bg-zinc-900 border border-purple-500/40 rounded-3xl p-6 shadow-[0_0_35px_rgba(168,85,247,0.15)]">
-    <div className="flex justify-between items-center">
-      <h3 className="text-2xl font-bold">
-{language === "fi"
-  ? "Ensimmäinen yhteistyökumppani"
-  : "First collaboration partner"}
-      </h3>
-
-      <span className="text-purple-400 font-bold">
-{language === "fi" ? "TYÖN ALLA" : "IN PROGRESS"}
-      </span>
-    </div>
-  </div>
-
-  <div className="bg-zinc-900 border border-zinc-700 rounded-3xl p-6 hover:border-purple-500 transition">
-    <div className="flex justify-between items-center">
-      <h3 className="text-2xl font-bold">
-{language === "fi" ? "1 000 Discord-jäsentä" : "1,000 Discord members"}
-      </h3>
-
-      <span className="text-gray-400 font-bold">
-{language === "fi" ? "TULOSSA" : "COMING SOON"}
-      </span>
-    </div>
-  </div>
-
-  <div className="bg-zinc-900 border border-zinc-700 rounded-3xl p-6 hover:border-purple-500 transition">
-    <div className="flex justify-between items-center">
-      <h3 className="text-2xl font-bold">
-        KOPOSQUAD Merch
-      </h3>
-
-      <span className="text-gray-400 font-bold">
-{language === "fi" ? "TULOSSA" : "COMING SOON"}
-      </span>
-    </div>
-  </div>
-
-  <div className="bg-zinc-900 border border-zinc-700 rounded-3xl p-6 hover:border-purple-500 transition">
-    <div className="flex justify-between items-center">
-      <h3 className="text-2xl font-bold">
-{language === "fi" ? "Oma KOPOSQUAD-tapahtuma" : "KOPOSQUAD event"}
-      </h3>
-
-      <span className="text-gray-400 font-bold">
-{language === "fi" ? "TULEVAISUUDESSA" : "IN THE FUTURE"}
-      </span>
-    </div>
-  </div>
-
-</div>
-
-  </div>
-
 </section>
+
+
 
 {/* UUTISET */}
 
