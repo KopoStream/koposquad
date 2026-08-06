@@ -242,6 +242,21 @@ export const members: Member[] = [
     content: "Variety-striimit, pelit ja yhteisöllinen sisältö",
   },
 
+{
+  name: "Kona_Samppa",
+  role: "Moderaattori",
+  twitch: "kona_samppa",
+
+  image: "",
+
+  bio: "Olen sosiaalinen, rento ja asiallinen kaveri, joka viihtyy Twitch-yhteisöissä ja nauttii moderaattorin tehtävistä.\n\nHaluan olla mukana pitämässä chatin mukavana, turvallisena ja asiallisena kaikille katsojille. Minulta löytyy kokemusta moderaattorin tehtävistä, olen luotettava, aktiivinen erityisesti iltaisin ja viikonloppuisin sekä aina valmis oppimaan uutta. Pyrin huomioimaan kaikki tasapuolisesti ja tekemään moderaattorin tehtävät huolellisesti ja vastuullisesti.\n\nHaluan olla juuri KOPOSQUADin moderaattori, koska uskon yhteisön tavoitteisiin ja haluan olla mukana rakentamassa siitä entistä parempaa paikkaa niin striimaajille kuin katsojillekin.",
+
+  country: "Suomi",
+
+  games: "Vaihtelevat pelit",
+  content: "Twitch-moderaattori",
+},
+
   {
     name: "t0xikki",
     role: "Striimaaja",
