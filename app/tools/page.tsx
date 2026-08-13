@@ -24,16 +24,17 @@ const categories: ToolCategory[] = [
     title: "STRIIMAUSOHJELMAT",
     icon: "▣",
     tools: [
-      {
-        name: "OBS Studio",
-        description:
-          "Suosituin ilmainen striimausohjelma. Kevyt, tehokas ja täysin muokattavissa.",
-        price: "ILMAINEN",
-        link: "https://obsproject.com/",
-        logo: "OBS",
-        logoImage: "https://cdn.simpleicons.org/obsstudio/ffffff",
-        buttonText: "Lataa OBS Studio",
-      },
+{
+  name: "OBS Studio",
+  description:
+    "Suosituin ilmainen striimausohjelma. Kevyt, tehokas ja täysin muokattavissa.",
+  price: "ILMAINEN",
+  link: "https://obsproject.com/",
+  logo: "OBS",
+  logoImage: "https://cdn.simpleicons.org/obsstudio/ffffff",
+  buttonText: "Lataa OBS Studio",
+  guideLink: "/tools/obs-studio",
+},
       {
         name: "Streamlabs Desktop",
         description:
@@ -43,6 +44,7 @@ const categories: ToolCategory[] = [
         logo: "SL",
         logoImage: "https://cdn.simpleicons.org/streamlabs/ffffff",
         buttonText: "Lataa Streamlabs",
+        guideLink: "/tools/streamlabs-desktop",
       },
       {
   name: "PRISM Live Studio",
@@ -54,17 +56,9 @@ const categories: ToolCategory[] = [
 logoImage:
   "https://www.google.com/s2/favicons?domain=prismlive.com&sz=128",
   buttonText: "Lataa PRISM",
+  guideLink: "/tools/prism-live-studio",
 },
-      {
-        name: "Twitch Studio",
-        description:
-          "Twitchin oma striimausohjelma uusille sisällöntuottajille ja aloittelijoille.",
-        price: "ILMAINEN",
-        link: "https://www.twitch.tv/broadcast/studio",
-        logo: "TW",
-        logoImage: "https://cdn.simpleicons.org/twitch/9146FF",
-        buttonText: "Avaa Twitch Studio",
-      },
+
     ],
   },
 
