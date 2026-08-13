@@ -46,6 +46,7 @@ export default function Home() {
 
   const [clips, setClips] = useState<any[]>([]);
   const [clipsLoading, setClipsLoading] = useState(true);
+  const [showAllClips, setShowAllClips] = useState(false);
 
   const [applicationForm, setApplicationForm] = useState({
     name: "",
@@ -1587,31 +1588,65 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
 
 <section
   id="clips"
-  className="relative overflow-hidden bg-zinc-950 px-6 py-20"
+  className="relative overflow-hidden border-y border-purple-500/10 bg-[linear-gradient(180deg,#050008_0%,#0b0012_45%,#050008_100%)] px-6 py-24"
 >
-  <div className="absolute left-1/2 h-[450px] w-[700px] -translate-x-1/2 rounded-full bg-purple-700 opacity-20 blur-[220px]" />
+  {/* TAUSTAN HEHKUT */}
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute -left-52 top-20 h-[700px] w-[700px] rounded-full bg-purple-700/25 blur-[220px]" />
+    <div className="absolute -right-52 top-[500px] h-[700px] w-[700px] rounded-full bg-blue-900/20 blur-[220px]" />
+    <div className="absolute left-1/2 bottom-[-250px] h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-fuchsia-900/15 blur-[240px]" />
+  </div>
+
+  {/* HIMMEÄT KS-LOGOT */}
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    aria-hidden="true"
+    className="pointer-events-none absolute -left-24 top-[260px] hidden w-[360px] -rotate-12 object-contain opacity-[0.045] lg:block"
+  />
+
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    aria-hidden="true"
+    className="pointer-events-none absolute -right-24 bottom-[220px] hidden w-[380px] rotate-12 object-contain opacity-[0.04] lg:block"
+  />
 
   <div className="relative z-10 mx-auto max-w-[1500px]">
-    <h2 className="text-center text-4xl font-black md:text-5xl">
-      KOPOSQUAD CLIPS
-    </h2>
+    {/* OTSIKKO */}
+    <div className="text-center">
+      <p className="text-sm font-black uppercase tracking-[0.35em] text-purple-400">
+        KOPOSQUAD CREATOR HUB
+      </p>
 
-    <p className="mt-4 text-center text-base text-gray-400 md:text-lg">
-      {language === "fi"
-        ? "Katso tiimin parhaat Twitch-klipit yhdestä paikasta."
-        : "Watch the best Twitch clips from the team in one place."}
-    </p>
+      <h2 className="mt-4 text-4xl font-black md:text-5xl">
+        KOPOSQUAD <span className="text-purple-500">CLIPS</span>
+      </h2>
 
+      <p className="mx-auto mt-4 max-w-2xl text-base text-gray-400 md:text-lg">
+        {language === "fi"
+          ? "Katso tiimin parhaat Twitch-klipit yhdestä paikasta."
+          : "Watch the best Twitch clips from the team in one place."}
+      </p>
+    </div>
+
+    {/* KLIPIT */}
     <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5">
       {clipsLoading ? (
         <p className="col-span-full text-center text-gray-400">
           {language === "fi" ? "Ladataan klippejä..." : "Loading clips..."}
         </p>
+      ) : clips.length === 0 ? (
+        <p className="col-span-full text-center text-gray-400">
+          {language === "fi"
+            ? "Klippejä ei löytynyt tällä hetkellä."
+            : "No clips found right now."}
+        </p>
       ) : (
-        clips.map((clip, index) => (
+        (showAllClips ? clips : clips.slice(0, 15)).map((clip, index) => (
           <article
             key={`${clip.id || "clip"}-${index}`}
-            className="group overflow-hidden rounded-2xl border border-purple-500/20 bg-zinc-900 shadow-[0_0_20px_rgba(168,85,247,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-purple-500 hover:shadow-[0_0_25px_rgba(168,85,247,0.20)]"
+            className="group overflow-hidden rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-950/25 via-zinc-900 to-blue-950/10 shadow-[0_0_20px_rgba(168,85,247,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/60 hover:shadow-[0_0_30px_rgba(168,85,247,0.20)]"
           >
             <a
               href={clip.url}
@@ -1627,7 +1662,7 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
                 />
 
                 <div className="absolute inset-0 flex items-center justify-center bg-black/15 transition group-hover:bg-black/30">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-black/70 text-xl shadow-lg transition group-hover:scale-110">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/70 text-xl shadow-lg transition group-hover:scale-110 group-hover:border-purple-400/50">
                     ▶
                   </span>
                 </div>
@@ -1661,6 +1696,25 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
         ))
       )}
     </div>
+
+    {/* NÄYTÄ KAIKKI / VÄHEMMÄN */}
+    {!clipsLoading && clips.length > 15 && (
+      <div className="mt-10 text-center">
+        <button
+          type="button"
+          onClick={() => setShowAllClips((current) => !current)}
+          className="inline-flex items-center justify-center rounded-xl border border-purple-500/40 bg-purple-500/10 px-8 py-4 font-black text-purple-200 transition hover:border-purple-400 hover:bg-purple-500/20 hover:text-white"
+        >
+          {showAllClips
+            ? language === "fi"
+              ? "Näytä vähemmän ↑"
+              : "Show less ↑"
+            : language === "fi"
+            ? `Näytä kaikki klipit (${clips.length}) ↓`
+            : `Show all clips (${clips.length}) ↓`}
+        </button>
+      </div>
+    )}
   </div>
 </section>
 
@@ -1930,65 +1984,203 @@ status: "future",
 
 
 
-{/* UUTISET */}
+{/* UUTISET / AJANKOHTAISTA */}
 
 <section
   id="uutiset"
-  className="relative overflow-hidden bg-zinc-950 px-6 py-24"
+  className="relative overflow-hidden border-y border-purple-500/10 bg-[linear-gradient(180deg,#050008_0%,#09000f_50%,#03040a_100%)] px-6 py-24"
 >
-  <div className="absolute right-0 top-1/3 h-[500px] w-[500px] rounded-full bg-blue-600 opacity-20 blur-[220px]" />
+  {/* TAUSTAN HEHKUT */}
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute -left-48 top-20 h-[650px] w-[650px] rounded-full bg-purple-700/20 blur-[220px]" />
+    <div className="absolute -right-48 bottom-0 h-[650px] w-[650px] rounded-full bg-blue-700/15 blur-[220px]" />
+    <div className="absolute left-1/2 top-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-fuchsia-900/10 blur-[240px]" />
+  </div>
 
-  <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-purple-700 opacity-20 blur-[200px]" />
+  {/* HIMMEÄT KS-LOGOT */}
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    aria-hidden="true"
+    className="pointer-events-none absolute -left-20 top-28 hidden w-[330px] -rotate-12 object-contain opacity-[0.04] lg:block"
+  />
 
-  <div className="relative z-10">
-    <h2 className="text-center text-5xl font-black">
-<span className="text-purple-500">
-  {language === "fi" ? "UUTISET" : "NEWS"}
-</span>
-    </h2>
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    aria-hidden="true"
+    className="pointer-events-none absolute -right-20 bottom-20 hidden w-[360px] rotate-12 object-contain opacity-[0.035] lg:block"
+  />
 
-<p className="mt-5 text-center text-xl text-gray-400">
-  {language === "fi"
-    ? "Viimeisimmät tapahtumat, julkaisut ja tulevat projektit"
-    : "Latest events, releases and upcoming projects"}
-</p>
+  <div className="relative z-10 mx-auto max-w-6xl">
 
-    <div className="mx-auto mt-12 grid max-w-6xl gap-8 md:grid-cols-3">
-      <div className="rounded-3xl border border-purple-500/30 bg-zinc-900 p-8 transition hover:-translate-y-2 hover:border-purple-500">
-<h3 className="text-3xl font-bold text-purple-400">
-  {language === "fi" ? "Uusia sisältöjä tulossa" : "New content coming"}
-</h3>
+    {/* OTSIKKO */}
+    <div className="text-center">
+      <p className="text-sm font-black uppercase tracking-[0.35em] text-purple-400">
+        KOPOSQUAD
+      </p>
 
-<p className="mt-4 text-gray-400">
-  {language === "fi"
-    ? "KOPOSQUAD tuo tulevaisuudessa lisää sisältöä, tapahtumia ja yhteisön aktiviteetteja."
-    : "KOPOSQUAD will bring more content, events and community activities in the future."}
-</p>
+      <h2 className="mt-3 text-4xl font-black md:text-5xl">
+        {language === "fi" ? (
+          <>
+            <span className="text-white">AJAN</span>
+            <span className="text-purple-500">KOHTAISTA</span>
+          </>
+        ) : (
+          <>
+            <span className="text-white">LATEST </span>
+            <span className="text-purple-500">NEWS</span>
+          </>
+        )}
+      </h2>
+
+      <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-gray-400 md:text-lg">
+        {language === "fi"
+          ? "Seuraa KOPOSQUADin uusimpia päivityksiä, yhteisön kehitystä, projekteja ja tulevia tapahtumia."
+          : "Follow the latest KOPOSQUAD updates, community development, projects and upcoming events."}
+      </p>
+    </div>
+
+    {/* PÄÄUUTINEN */}
+    <div className="relative mt-14 overflow-hidden rounded-3xl border border-purple-500/40 bg-gradient-to-br from-purple-950/60 via-zinc-950 to-blue-950/30 p-8 shadow-[0_0_50px_rgba(168,85,247,0.12)] md:p-10">
+
+      <div className="absolute right-0 top-0 h-[300px] w-[300px] rounded-full bg-purple-600/15 blur-[100px]" />
+
+      <div className="relative z-10 max-w-3xl">
+        <div className="mb-5 flex flex-wrap items-center gap-3">
+          <span className="rounded-full border border-purple-400/30 bg-purple-500/10 px-3 py-1 text-xs font-black uppercase tracking-wider text-purple-300">
+            {language === "fi" ? "UUTTA" : "NEW"}
+          </span>
+
+          <span className="text-xs font-bold text-gray-500">
+            13.08.2026
+          </span>
+        </div>
+
+        <h3 className="text-3xl font-black md:text-4xl">
+          {language === "fi"
+            ? "KOPOSQUAD CREATOR HUB ON AVATTU"
+            : "KOPOSQUAD CREATOR HUB IS NOW OPEN"}
+        </h3>
+
+        <p className="mt-5 max-w-2xl leading-7 text-gray-300">
+          {language === "fi"
+            ? "KOPOSQUAD Creator Hub kokoaa striimaajien ja sisällöntuottajien hyödylliset työkalut ja oppaat yhteen paikkaan. Ensimmäiset oppaat ovat nyt saatavilla ja lisää sisältöä rakennetaan jatkuvasti."
+            : "KOPOSQUAD Creator Hub brings useful tools and guides for streamers and content creators together in one place. The first guides are now available and more content is being added continuously."}
+        </p>
+
+        <a
+          href="/tools"
+          className="mt-7 inline-flex items-center rounded-xl bg-purple-600 px-6 py-3 text-sm font-black transition hover:bg-purple-500"
+        >
+          {language === "fi"
+            ? "Tutustu Creator Hubiin →"
+            : "Explore Creator Hub →"}
+        </a>
       </div>
+    </div>
 
-      <div className="rounded-3xl border border-pink-500/30 bg-zinc-900 p-8 transition hover:-translate-y-2 hover:border-pink-500">
-<h3 className="text-3xl font-bold text-pink-400">
-  {language === "fi" ? "Tulevat striimit" : "Upcoming streams"}
-</h3>
+    {/* PIENEMMÄT UUTISET */}
+    <div className="mt-6 grid gap-6 md:grid-cols-3">
 
-<p className="mt-4 text-gray-400">
-  {language === "fi"
-    ? "Seuraa tulevia lähetyksiä ja katso, milloin Koposquad on livenä."
-    : "Follow upcoming broadcasts and see when Koposquad is live."}
-</p>
-      </div>
+      {/* KOPOSQUAD KASVAA */}
+      <article className="group rounded-3xl border border-purple-500/25 bg-gradient-to-br from-purple-950/30 via-zinc-900/90 to-zinc-950 p-7 transition duration-300 hover:-translate-y-1 hover:border-purple-500/60">
 
-      <div className="rounded-3xl border border-blue-500/30 bg-zinc-900 p-8 transition hover:-translate-y-2 hover:border-blue-500">
-<h3 className="text-3xl font-bold text-blue-400">
-  {language === "fi" ? "KOPOSQUAD-projektit" : "KOPOSQUAD projects"}
-</h3>
+        <div className="mb-5 flex items-center justify-between">
+          <span className="text-xs font-black uppercase tracking-[0.2em] text-purple-400">
+            YHTEISÖ
+          </span>
 
-<p className="mt-4 text-gray-400">
-  {language === "fi"
-    ? "Uusia projekteja, yhteistyökuvioita ja suurempia suunnitelmia on tulossa."
-    : "New projects, collaborations and bigger plans are on the way."}
-</p>
-      </div>
+          <span className="text-xs text-gray-500">
+            13.08.2026
+          </span>
+        </div>
+
+        <h3 className="text-2xl font-black">
+          {language === "fi"
+            ? "KOPOSQUAD KASVAA"
+            : "KOPOSQUAD IS GROWING"}
+        </h3>
+
+        <p className="mt-4 leading-7 text-gray-400">
+          {language === "fi"
+            ? "Yhteisöön liittyy uusia tekijöitä ja KOPOSQUADia rakennetaan jatkuvasti suuremmaksi. Tavoitteena on tuoda erilaisia sisällöntuottajia yhteen ja rakentaa aktiivinen yhteisö."
+            : "New creators are joining the community as KOPOSQUAD continues to grow. The goal is to bring different creators together and build an active community."}
+        </p>
+
+        <a
+          href="#tiimi"
+          className="mt-6 inline-block text-sm font-black text-purple-400 transition group-hover:text-purple-300"
+        >
+          {language === "fi" ? "Tutustu tiimiin →" : "Meet the team →"}
+        </a>
+      </article>
+
+      {/* KOPOSQUADTV */}
+      <article className="group rounded-3xl border border-pink-500/25 bg-gradient-to-br from-pink-950/20 via-zinc-900/90 to-zinc-950 p-7 transition duration-300 hover:-translate-y-1 hover:border-pink-500/60">
+
+        <div className="mb-5 flex items-center justify-between">
+          <span className="text-xs font-black uppercase tracking-[0.2em] text-pink-400">
+            TWITCH
+          </span>
+
+          <span className="text-xs text-gray-500">
+            13.08.2026
+          </span>
+        </div>
+
+        <h3 className="text-2xl font-black text-white">
+          KOPOSQUADTV
+        </h3>
+
+        <p className="mt-4 leading-7 text-gray-400">
+          {language === "fi"
+            ? "KOPOSQUADin yhteinen Twitch-kanava tarjoaa jäsenille mahdollisuuden pitää omia lähetyksiä sekä osallistua yhteisliveihin, tapahtumiin ja muihin yhteisiin projekteihin."
+            : "KOPOSQUAD's shared Twitch channel gives members the opportunity to host their own streams and participate in collaborative broadcasts, events and other projects."}
+        </p>
+
+        <a
+          href="https://www.twitch.tv/koposquadtv"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 inline-block text-sm font-black text-pink-400 transition group-hover:text-pink-300"
+        >
+          {language === "fi"
+            ? "Avaa KOPOSQUADTV →"
+            : "Open KOPOSQUADTV →"}
+        </a>
+      </article>
+
+      {/* TULEVAT PROJEKTIT */}
+      <article className="group rounded-3xl border border-blue-500/25 bg-gradient-to-br from-blue-950/30 via-zinc-900/90 to-zinc-950 p-7 transition duration-300 hover:-translate-y-1 hover:border-blue-500/60">
+
+        <div className="mb-5 flex items-center justify-between">
+          <span className="text-xs font-black uppercase tracking-[0.2em] text-blue-400">
+            {language === "fi" ? "TULEVAISUUS" : "FUTURE"}
+          </span>
+
+          <span className="text-xs text-gray-500">
+            13.08.2026
+          </span>
+        </div>
+
+        <h3 className="text-2xl font-black">
+          {language === "fi"
+            ? "TULEVAT PROJEKTIT"
+            : "UPCOMING PROJECTS"}
+        </h3>
+
+        <p className="mt-4 leading-7 text-gray-400">
+          {language === "fi"
+            ? "KOPOSQUADille suunnitellaan yhteisiä projekteja, tapahtumia, miittejä ja tulevia yhteistyökuvioita. Uusista suunnitelmista kerrotaan täällä niiden edetessä."
+            : "KOPOSQUAD is planning collaborative projects, events, meetups and future partnerships. New plans will be announced here as they develop."}
+        </p>
+
+        <span className="mt-6 inline-block text-sm font-black text-blue-400">
+          {language === "fi" ? "Lisää tulossa..." : "More coming..."}
+        </span>
+      </article>
+
     </div>
   </div>
 </section>
