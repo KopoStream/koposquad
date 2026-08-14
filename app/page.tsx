@@ -345,7 +345,7 @@ useEffect(() => {
   <img
     src="/images/hero-bg.png"
     alt=""
-    className="pointer-events-none absolute inset-0 h-full w-full scale-105 select-none object-cover opacity-90"
+className="hero-slow-zoom pointer-events-none absolute inset-0 h-full w-full select-none object-cover opacity-90"
   />
 
   {/* TUMMENNUS – TAUSTA JÄÄ SILTI NÄKYVIIN */}
@@ -355,6 +355,7 @@ useEffect(() => {
 
   {/* PEHMEÄ KESKIVALON HOHDE */}
   <div className="pointer-events-none absolute left-1/2 top-[48%] h-[620px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700/20 blur-[210px]" />
+<div className="hero-moving-glow pointer-events-none absolute left-1/2 top-[48%] h-[440px] w-[760px] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-600/20 via-fuchsia-500/20 to-purple-700/20 blur-[150px]" />
 
   {/* REUNOJEN VÄRIVALOT */}
   <div className="pointer-events-none absolute -left-52 top-[20%] h-[520px] w-[520px] rounded-full bg-violet-700/15 blur-[180px]" />
@@ -362,19 +363,42 @@ useEffect(() => {
   <div className="pointer-events-none absolute -right-52 top-[18%] h-[540px] w-[540px] rounded-full bg-fuchsia-700/12 blur-[190px]" />
 
   {/* HERO-SISÄLTÖ */}
+  {/* HIMMEÄT PARTIKKELIT */}
+<div className="pointer-events-none absolute inset-0 overflow-hidden">
+  {[
+    ["12%", "78%", "0s"],
+    ["22%", "64%", "2s"],
+    ["34%", "82%", "5s"],
+    ["48%", "70%", "1s"],
+    ["62%", "80%", "6s"],
+    ["74%", "66%", "3s"],
+    ["86%", "76%", "7s"],
+  ].map(([left, top, delay], index) => (
+    <span
+      key={index}
+      className="hero-particle absolute h-1.5 w-1.5 rounded-full bg-purple-300/50 shadow-[0_0_12px_rgba(216,180,254,0.55)]"
+      style={{
+        left,
+        top,
+        animationDelay: delay,
+      }}
+    />
+  ))}
+</div>
   <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-6 pb-28 pt-20 text-center">
     <p className="text-sm font-black uppercase tracking-[0.65em] text-purple-300 sm:text-base">
       STREAM TEAM
     </p>
 
+<div className="title-aura pointer-events-none absolute left-1/2 top-[46%] h-[320px] w-[760px] rounded-full bg-gradient-to-r from-purple-600/20 via-fuchsia-500/20 to-purple-600/20 blur-[120px]" />
     <h1 className="mt-7 text-6xl font-black uppercase leading-[0.86] tracking-[-0.05em] sm:text-7xl md:text-8xl lg:text-[9.5rem]">
       <span className="text-white drop-shadow-[0_0_28px_rgba(255,255,255,0.22)]">
         KOPO
       </span>
 
-      <span className="bg-gradient-to-r from-purple-300 via-purple-500 to-fuchsia-500 bg-clip-text text-transparent drop-shadow-[0_0_45px_rgba(168,85,247,0.45)]">
-        SQUAD
-      </span>
+<span className="squad-shine bg-[linear-gradient(110deg,#d8b4fe_0%,#a855f7_30%,#ffffff_45%,#d946ef_55%,#9333ea_80%,#d8b4fe_100%)] bg-clip-text text-transparent drop-shadow-[0_0_45px_rgba(168,85,247,0.45)]">
+  SQUAD
+</span>
     </h1>
 
     <p className="mt-8 max-w-3xl text-xl leading-8 text-gray-200 sm:text-2xl">
@@ -406,56 +430,76 @@ useEffect(() => {
       </a>
     </div>
 
-    {/* SOMEPAINIKKEET */}
-    <div className="mt-8 flex flex-wrap justify-center gap-3">
-      <a
-        href="https://www.twitch.tv/kopostream"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="rounded-xl border border-purple-400/50 bg-purple-600/20 px-6 py-3 font-bold backdrop-blur-md transition hover:-translate-y-1 hover:bg-purple-600/40"
-      >
-        Twitch
-      </a>
+{/* SOMEPAINIKKEET */}
+<div className="mt-8 flex flex-wrap justify-center gap-3">
+  <a
+    href="https://www.twitch.tv/kopostream"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="rounded-xl border border-purple-400/50 bg-purple-600/20 px-6 py-3 font-bold backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-purple-300 hover:bg-purple-600/45 hover:shadow-[0_0_25px_rgba(168,85,247,0.55)]"
+  >
+    Twitch
+  </a>
 
-      <a
-        href="https://www.youtube.com/@KopoVlog"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="rounded-xl border border-red-400/50 bg-red-600/20 px-6 py-3 font-bold backdrop-blur-md transition hover:-translate-y-1 hover:bg-red-600/40"
-      >
-        YouTube
-      </a>
+  <a
+    href="https://www.youtube.com/@KopoVlog"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="rounded-xl border border-red-400/50 bg-red-600/20 px-6 py-3 font-bold backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-red-300 hover:bg-red-600/45 hover:shadow-[0_0_25px_rgba(239,68,68,0.55)]"
+  >
+    YouTube
+  </a>
 
-      <a
-        href="https://www.instagram.com/kopovirallinen/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="rounded-xl border border-pink-400/50 bg-pink-600/20 px-6 py-3 font-bold backdrop-blur-md transition hover:-translate-y-1 hover:bg-pink-600/40"
-      >
-        Instagram
-      </a>
+  <a
+    href="https://www.instagram.com/kopovirallinen/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="rounded-xl border border-pink-400/50 bg-pink-600/20 px-6 py-3 font-bold backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-pink-300 hover:bg-pink-600/45 hover:shadow-[0_0_25px_rgba(236,72,153,0.55)]"
+  >
+    Instagram
+  </a>
 
-      <a
-        href="https://discord.gg/ZXgSS9v6ye"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="rounded-xl border border-indigo-400/50 bg-indigo-600/20 px-6 py-3 font-bold backdrop-blur-md transition hover:-translate-y-1 hover:bg-indigo-600/40"
-      >
-        Discord
-      </a>
-    </div>
+  <a
+    href="https://discord.gg/ZXgSS9v6ye"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="rounded-xl border border-indigo-400/50 bg-indigo-600/20 px-6 py-3 font-bold backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-indigo-300 hover:bg-indigo-600/45 hover:shadow-[0_0_25px_rgba(99,102,241,0.55)]"
+  >
+    Discord
+  </a>
+</div>
   </div>
 
-  {/* PIENEMPI KS-KORISTE OIKEAAN ALAREUNAAN */}
-  <div className="pointer-events-none absolute bottom-16 right-8 z-10 hidden opacity-55 lg:block xl:right-16">
-    <div className="absolute inset-0 scale-75 bg-purple-600/25 blur-[70px]" />
+{/* PIENEMPI KS-KORISTE OIKEAAN ALAREUNAAN */}
+<div className="group absolute bottom-16 right-8 z-10 hidden lg:block xl:right-16">
 
-    <img
-      src="/images/ks-logo.png.png"
-      alt=""
-      className="relative w-[180px] object-contain drop-shadow-[0_15px_20px_rgba(0,0,0,0.65)] drop-shadow-[0_0_22px_rgba(168,85,247,0.4)] xl:w-[220px]"
-    />
-  </div>
+  {/* ISO HENGITTÄVÄ VIOLETTI HEHKU */}
+  <div className="ks-glow-pulse pointer-events-none absolute inset-[-55px] rounded-full bg-purple-600/35 blur-[95px]" />
+
+  {/* FUKSIA SISÄHEHKU */}
+  <div className="pointer-events-none absolute inset-[-25px] rounded-full bg-fuchsia-500/20 blur-[55px]" />
+
+  {/* VALO LOGON ALLA */}
+  <div className="ks-glow-pulse pointer-events-none absolute -bottom-5 left-1/2 h-[22px] w-[150px] -translate-x-1/2 rounded-[100%] bg-purple-400/50 blur-[22px]" />
+
+  {/* HIMMEÄ LEVEÄ VALOPINTA */}
+  <div className="pointer-events-none absolute -bottom-8 left-1/2 h-[30px] w-[210px] -translate-x-1/2 rounded-[100%] bg-fuchsia-600/20 blur-[30px]" />
+
+  {/* KS LOGO */}
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="relative w-[180px] object-contain opacity-80
+    drop-shadow-[0_18px_22px_rgba(0,0,0,0.75)]
+    drop-shadow-[0_0_25px_rgba(168,85,247,0.75)]
+    transition duration-500
+    group-hover:scale-105
+    group-hover:opacity-100
+    group-hover:drop-shadow-[0_0_45px_rgba(217,70,239,0.95)]
+    xl:w-[220px]"
+  />
+
+</div>
 
   {/* VIERITÄ ALAS */}
   <div className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2">
