@@ -271,4 +271,19 @@ export const members: Member[] = [
     games: "Vaihtelevat pelit",
     content: "Pelistriimit ja rento yhdessäolo",
   },
+  
+    {
+    name: "Nikke",
+    role: "Striimaaja",
+    twitch: "nikke_09",
+
+    image: "",
+
+    bio: "Olen aktiivinen ja sosiaalinen striimaaja, joka tykkää tehdä livejä ja olla vuorovaikutuksessa muiden kanssa. Striimaan aktiivisesti ja nautin sisällön tekemisestä sekä katsojien kanssa kommunikoinnista.\n\nOlen kiinnostunut myös mainostamisesta ja erilaisten tuotteiden sekä asioiden esille tuomisesta kiinnostavalla tavalla. Haluan tuoda KOPOSQUADiin aktiivisuutta, hyvää energiaa ja olla mukana kehittämässä yhteisöä.",
+
+    country: "Suomi",
+
+    games: "Vaihtelevat pelit",
+    content: "Aktiiviset striimit ja vuorovaikutus katsojien kanssa",
+  },
 ];
