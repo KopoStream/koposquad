@@ -34,6 +34,8 @@ export default function Home() {
   const [language, setLanguage] = useState<"fi" | "en">("fi");
 
   const [memberSearch, setMemberSearch] = useState("");
+  const [showAllMembers, setShowAllMembers] = useState(false);
+  const [showAllLiveMembers, setShowAllLiveMembers] = useState(false);
 
   const [memberFilter, setMemberFilter] = useState<
     | "all"
@@ -1010,7 +1012,23 @@ className="hero-slow-zoom pointer-events-none absolute inset-0 h-full w-full sel
           {/* JÄSENTEN LIVE-KORTIT */}
 
 <div className="mt-12 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {members.map((member) => {
+{[...members]
+  .sort((a, b) => {
+    const aLive = streams.some(
+      (stream) => stream.user_login.toLowerCase() === a.twitch.toLowerCase()
+    );
+
+    const bLive = streams.some(
+      (stream) => stream.user_login.toLowerCase() === b.twitch.toLowerCase()
+    );
+
+    if (aLive && !bLive) return -1;
+    if (!aLive && bLive) return 1;
+
+    return 0;
+  })
+.slice(0, showAllLiveMembers ? undefined : 15)
+.map((member) => {
               const stream = streams.find(
                 (item) => item.user_login === member.twitch
               );
@@ -1018,28 +1036,36 @@ className="hero-slow-zoom pointer-events-none absolute inset-0 h-full w-full sel
               return (
                 <div
                   key={member.name}
-className={`group relative min-h-[150px] overflow-hidden rounded-2xl border p-4 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 ${
+className={`group relative min-h-[165px] overflow-hidden rounded-[22px] border p-4 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 ${
                     stream
-                      ? "border-red-500/40 bg-red-500/[0.07] shadow-[0_20px_60px_rgba(239,68,68,0.15)] hover:border-red-400 hover:shadow-[0_25px_80px_rgba(239,68,68,0.25)]"
-                      : "border-white/10 bg-white/[0.05] shadow-[0_20px_60px_rgba(0,0,0,0.35)] hover:border-purple-500/50 hover:bg-white/[0.08]"
+? "border-red-500/45 bg-[radial-gradient(circle_at_20%_0%,rgba(239,68,68,0.18),transparent_45%),linear-gradient(180deg,rgba(35,15,20,0.96),rgba(18,12,20,0.98))] shadow-[0_18px_55px_rgba(239,68,68,0.12)] hover:border-red-400/80 hover:shadow-[0_22px_70px_rgba(239,68,68,0.22)]"
+: "border-purple-500/20 bg-[radial-gradient(circle_at_20%_0%,rgba(168,85,247,0.16),transparent_45%),linear-gradient(180deg,rgba(28,20,34,0.96),rgba(16,12,20,0.98))] shadow-[0_18px_55px_rgba(0,0,0,0.40)] hover:border-purple-400/60 hover:shadow-[0_22px_70px_rgba(168,85,247,0.18)]"
                   }`}
                 >
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-purple-500/10 opacity-50" />
 
+<img
+  src="/images/ks-logo.png.png"
+  alt=""
+  className="pointer-events-none absolute right-[-30px] bottom-[-25px] w-[135px] rotate-[-10deg] object-contain opacity-[0.025] transition-all duration-500 group-hover:opacity-[0.05] group-hover:scale-105"
+/>
+
                   <div className="relative z-10">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
+<div className="flex flex-col items-start">
+<div className="min-w-0 w-full">
 <h3 className="text-xl font-black">
   {member.name}
 </h3>
 
-<p className="mt-0.5 text-xs font-semibold text-purple-400">
-  {member.role}
-</p>
+<div className="mt-1.5">
+  <span className="inline-flex rounded-full border border-purple-400/30 bg-purple-500/10 px-2.5 py-1 text-[11px] font-bold text-purple-300">
+    {member.role}
+  </span>
+</div>
                       </div>
 
                       {stream ? (
-<div className="flex items-center gap-1.5 rounded-full border border-red-500/30 bg-red-500/10 px-2.5 py-1">
+<div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-red-400/60 bg-red-500/15 px-3 py-1 shadow-[0_0_20px_rgba(239,68,68,0.28)]">
 <span className="relative flex h-2 w-2">
                             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
 
@@ -1051,7 +1077,7 @@ className={`group relative min-h-[150px] overflow-hidden rounded-2xl border p-4 
                           </span>
                         </div>
                       ) : (
-                        <div className="flex items-center gap-2 rounded-full border border-gray-700 bg-black/30 px-3 py-1">
+<div className="mt-2 inline-flex items-center gap-2 rounded-full border border-purple-400/20 bg-black/45 px-3 py-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
 <span className="h-2 w-2 rounded-full bg-gray-600" />
 
                           <span className="text-xs font-black text-gray-500">
@@ -1094,6 +1120,24 @@ className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-black transition hover
               );
             })}
           </div>
+
+{members.length > 15 && (
+  <div className="mt-8 flex justify-center">
+    <button
+      type="button"
+      onClick={() => setShowAllLiveMembers((current) => !current)}
+      className="inline-flex items-center justify-center rounded-xl border border-purple-500/40 bg-purple-500/10 px-8 py-4 font-black text-purple-200 transition-all duration-300 hover:-translate-y-1 hover:border-purple-400 hover:bg-purple-500/20 hover:text-white hover:shadow-[0_0_30px_rgba(168,85,247,0.20)]"
+    >
+      {showAllLiveMembers
+        ? language === "fi"
+          ? "Näytä vähemmän ↑"
+          : "Show less ↑"
+        : language === "fi"
+          ? `Näytä kaikki jäsenet (${members.length}) ↓`
+          : `Show all members (${members.length}) ↓`}
+    </button>
+  </div>
+)}
 
           {/* TWITCH PLAYER JA CHAT */}
 
@@ -1241,7 +1285,7 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
 
           {/* HAKUKENTTÄ JA SUODATTIMET */}
 
-          <div className="mt-10 flex flex-col gap-4 xl:flex-row">
+<div className="mx-auto mt-10 flex max-w-6xl flex-col gap-4 rounded-2xl border border-purple-500/20 bg-gradient-to-r from-purple-950/20 via-white/[0.035] to-fuchsia-950/20 p-4 shadow-[0_15px_45px_rgba(0,0,0,0.35),0_0_30px_rgba(168,85,247,0.06)] backdrop-blur-xl xl:flex-row">
             <div className="relative xl:w-[390px]">
               <svg
                 viewBox="0 0 24 24"
@@ -1272,11 +1316,11 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
                 placeholder={
                   language === "fi" ? "Hae jäsentä..." : "Search members..."
                 }
-                className="w-full rounded-xl border border-purple-500/30 bg-black/40 py-3 pl-12 pr-4 text-white outline-none transition placeholder:text-gray-500 focus:border-purple-400 focus:shadow-[0_0_25px_rgba(168,85,247,0.15)]"
+className="w-full rounded-xl border border-purple-500/30 bg-black/50 py-3 pl-12 pr-4 text-white shadow-[inset_0_0_20px_rgba(168,85,247,0.03)] outline-none transition-all duration-300 placeholder:text-gray-500 hover:border-purple-400/50 focus:border-purple-400 focus:bg-purple-950/20 focus:shadow-[0_0_30px_rgba(168,85,247,0.18),inset_0_0_20px_rgba(168,85,247,0.06)]"
               />
             </div>
 
-            <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
+<div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-[0.9fr_1fr_1.35fr_1fr_1.1fr]">
               {[
                 {
                   value: "all",
@@ -1319,11 +1363,11 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
                         | "graphic"
                     )
                   }
-                  className={`rounded-xl border px-3 py-3 text-sm font-bold transition-all duration-300 ${
-                    memberFilter === filter.value
-                      ? "border-purple-400 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-[0_0_25px_rgba(168,85,247,0.3)]"
-                      : "border-white/15 bg-white/[0.04] text-gray-300 hover:border-purple-400/60 hover:bg-purple-500/10 hover:text-white"
-                  }`}
+className={`relative overflow-hidden rounded-xl border px-2 py-3 text-sm font-black transition-all duration-300 ${
+  memberFilter === filter.value
+    ? "border-purple-300/70 bg-gradient-to-r from-purple-600 via-purple-500 to-fuchsia-600 text-white shadow-[0_0_28px_rgba(168,85,247,0.28),inset_0_1px_0_rgba(255,255,255,0.18)]"
+    : "border-white/15 bg-gradient-to-b from-white/[0.07] to-white/[0.025] text-gray-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:-translate-y-[2px] hover:border-purple-400/50 hover:bg-purple-500/10 hover:text-white hover:shadow-[0_8px_25px_rgba(168,85,247,0.12)]"
+}`}
                 >
                   {language === "fi" ? filter.fi : filter.en}
                 </button>
@@ -1359,9 +1403,17 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
                 const matchesFilter =
                   memberFilter === "all" || memberFilter === roleCategory;
 
-                return matchesSearch && matchesFilter;
-              })
-              .map((member) => {
+return matchesSearch && matchesFilter;
+})
+.slice(
+  0,
+  showAllMembers ||
+    memberSearch.trim() !== "" ||
+    memberFilter !== "all"
+    ? undefined
+    : 15
+)
+.map((member) => {
                 const stream = streams.find(
                   (item) =>
                     item.user_login.toLowerCase() ===
@@ -1374,9 +1426,17 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
                   <a
                     key={member.name}
                     href={`/member/${member.twitch}`}
-                    className="group relative flex min-h-[290px] flex-col overflow-hidden rounded-2xl border border-white/15 bg-white/[0.045] px-5 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.4)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-purple-400/70 hover:bg-purple-500/[0.08] hover:shadow-[0_24px_70px_rgba(168,85,247,0.2)]"
+className="group relative flex min-h-[300px] flex-col overflow-hidden rounded-[24px] border border-purple-500/25 bg-[radial-gradient(circle_at_50%_5%,rgba(168,85,247,0.22),transparent_42%),linear-gradient(180deg,rgba(30,22,36,0.96)_0%,rgba(20,15,25,0.98)_55%,rgba(35,12,48,0.96)_100%)] px-5 py-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_55px_rgba(0,0,0,0.45),0_0_30px_rgba(168,85,247,0.06)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-purple-400/65 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_25px_70px_rgba(0,0,0,0.50),0_0_35px_rgba(168,85,247,0.20)]"
                   >
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-fuchsia-500/5 opacity-70" />
+<div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-fuchsia-500/5 opacity-70" />
+
+<div className="pointer-events-none absolute left-1/2 top-0 h-[2px] w-[65%] -translate-x-1/2 bg-gradient-to-r from-transparent via-purple-400 to-fuchsia-400 opacity-60 shadow-[0_0_18px_rgba(168,85,247,0.45)] transition-all duration-500 group-hover:w-[85%] group-hover:opacity-100 group-hover:shadow-[0_0_26px_rgba(217,70,239,0.7)]" />
+
+<img
+  src="/images/ks-logo.png.png"
+  alt=""
+className="pointer-events-none absolute right-[-28px] top-[115px] w-[180px] rotate-[-12deg] object-contain opacity-[0.028] transition-all duration-500 group-hover:opacity-[0.06] group-hover:scale-105"
+/>
 
                     {isLive && (
                       <div className="absolute right-3 top-3 z-20 flex items-center gap-1.5 rounded-md border border-green-400/50 bg-green-500/10 px-2 py-1">
@@ -1410,11 +1470,11 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
                         />
                       </div>
 
-<h3 className="mt-4 text-2xl font-black text-white transition group-hover:text-purple-200">
+<h3 className="mt-4 bg-gradient-to-r from-white via-white to-purple-300 bg-clip-text text-2xl font-black tracking-tight text-transparent drop-shadow-[0_0_12px_rgba(168,85,247,0.18)] transition-all duration-300 group-hover:drop-shadow-[0_0_18px_rgba(192,132,252,0.40)]">
   {member.name}
 </h3>
 
-<p className="mt-1 text-sm font-bold text-purple-400">
+<p className="mt-2 inline-flex items-center rounded-full border border-purple-400/40 bg-gradient-to-r from-purple-500/15 to-fuchsia-500/10 px-3.5 py-1 text-xs font-black text-purple-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_18px_rgba(168,85,247,0.12)] transition group-hover:border-purple-300/60 group-hover:text-white group-hover:shadow-[0_0_20px_rgba(168,85,247,0.22)]">
   {member.role === "Perustaja / Striimaaja"
     ? language === "fi"
       ? "Perustaja / Striimaaja"
@@ -1435,7 +1495,7 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
 </p>
 
 <div className="mt-auto pt-5">
-  <span className="inline-flex items-center gap-2 text-sm font-black text-purple-400 transition group-hover:text-purple-300">
+<span className="relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-xl border border-purple-400/35 bg-gradient-to-r from-purple-600/20 via-fuchsia-600/15 to-purple-600/20 px-5 py-2.5 text-sm font-black text-purple-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-purple-300/70 group-hover:bg-purple-500/25 group-hover:shadow-[0_0_25px_rgba(168,85,247,0.30)]">
     {language === "fi" ? "Avaa profiili" : "Open profile"}
 
     <span className="transition-transform duration-300 group-hover:translate-x-1">
@@ -1447,6 +1507,27 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
 </a>
 );
 })}
+
+{/* NÄYTÄ KAIKKI JÄSENET / VÄHEMMÄN */}
+
+{memberSearch.trim() === "" &&
+  memberFilter === "all" &&
+  members.filter((member) => member.twitch).length > 15 && (
+    <div className="col-span-full flex justify-center py-5">
+      <button
+        type="button"
+        onClick={() => setShowAllMembers((current) => !current)}
+className="group inline-flex items-center justify-center gap-3 rounded-xl border border-purple-400/35 bg-gradient-to-r from-purple-600/15 via-fuchsia-600/10 to-purple-600/15 px-8 py-4 font-black text-purple-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_12px_30px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1 hover:border-purple-300/70 hover:bg-purple-500/20 hover:text-white hover:shadow-[0_0_28px_rgba(168,85,247,0.25),0_16px_35px_rgba(0,0,0,0.4)]"      >
+        {showAllMembers
+          ? language === "fi"
+            ? "Näytä vähemmän ↑"
+            : "Show less ↑"
+          : language === "fi"
+            ? `Näytä kaikki jäsenet (${members.filter((member) => member.twitch).length}) ↓`
+            : `Show all members (${members.filter((member) => member.twitch).length}) ↓`}
+      </button>
+    </div>
+  )}
 
             {/* VAPAAT PAIKAT */}
 
@@ -1495,10 +1576,12 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
                 <a
                   key={position.category}
                   href="#rekry"
-                  className="group relative flex min-h-[290px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] px-5 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-purple-400/60 hover:bg-purple-500/[0.07] hover:shadow-[0_24px_70px_rgba(168,85,247,0.16)]"
+className="group relative flex min-h-[290px] flex-col overflow-hidden rounded-[24px] border border-dashed border-purple-400/35 bg-[radial-gradient(circle_at_50%_10%,rgba(168,85,247,0.12),transparent_42%),linear-gradient(180deg,rgba(24,18,30,0.92)_0%,rgba(17,13,22,0.96)_100%)] px-5 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-purple-300/70 hover:shadow-[0_24px_70px_rgba(168,85,247,0.18)]"
                 >
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-fuchsia-500/5" />
-
+<div className="absolute right-4 top-4 z-20 rounded-full border border-fuchsia-300/60 bg-gradient-to-r from-purple-600/90 to-fuchsia-600/90 px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white shadow-[0_0_18px_rgba(217,70,239,0.35)]">
+  {language === "fi" ? "Avoin paikka" : "Open position"}
+</div>
                   <div className="relative z-10 flex h-full flex-col items-center text-center">
                     <div className="relative flex h-32 w-32 items-center justify-center rounded-full border-2 border-purple-500 bg-purple-500/[0.06] shadow-[0_0_28px_rgba(168,85,247,0.25)] transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(168,85,247,0.45)]">
                       <svg
@@ -1532,18 +1615,18 @@ src={`https://www.twitch.tv/embed/${streams[0].user_login}/chat?parent=${window.
                         : "Open position"}
                     </h3>
 
-                    <p className="mt-1 text-sm font-bold text-purple-400">
+<p className="mt-2 inline-flex items-center rounded-full border border-purple-400/35 bg-purple-500/10 px-3.5 py-1 text-xs font-black text-purple-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_0_16px_rgba(168,85,247,0.10)]">
                       {language === "fi" ? position.fi : position.en}
                     </p>
 
-                    <p className="mt-3 text-sm text-gray-400">
-                      {language === "fi"
-                        ? "Etsimme sinua!"
-                        : "We are looking for you!"}
-                    </p>
+<p className="mt-3 text-center text-sm leading-6 text-gray-400">
+  {language === "fi"
+    ? "Voisiko tämä paikka olla sinun?"
+    : "Could this be your place?"}
+</p>
 
                     <div className="mt-auto pt-5">
-                      <span className="inline-flex items-center gap-2 text-sm font-black text-purple-400 transition group-hover:text-purple-300">
+<span className="inline-flex items-center justify-center gap-3 rounded-xl border border-purple-400/35 bg-gradient-to-r from-purple-600/15 via-fuchsia-600/10 to-purple-600/15 px-5 py-2.5 text-sm font-black text-purple-100 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-purple-300/70 group-hover:bg-purple-500/20 group-hover:text-white group-hover:shadow-[0_0_24px_rgba(168,85,247,0.25)]">
                         {language === "fi" ? "Hae mukaan" : "Apply now"}
 
                         <span className="transition-transform duration-300 group-hover:translate-x-1">
