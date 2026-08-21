@@ -286,4 +286,23 @@ export const members: Member[] = [
     games: "Vaihtelevat pelit",
     content: "Aktiiviset striimit ja vuorovaikutus katsojien kanssa",
   },
+  {
+  name: "OfficialGlacier",
+  role: "Sisällöntuottaja",
+  twitch: "officialglacier",
+
+  youtube: "https://www.youtube.com/@officialglacierart",
+  instagram: "https://www.instagram.com/officialglacier/",
+  tiktok: "https://www.tiktok.com/@officialglacier",
+  kick: "https://kick.com/officialglacier",
+
+  image: "",
+
+  bio: "Olen itseoppinut taiteilija Tampereelta ja YouTube-videoiden kasvatti. Sisältöni keskittyy piirtämiseen, maalaamiseen, 3D-mallintamiseen, graafiseen suunnitteluun sekä pelaamiseen.\n\nErityisesti nautin erilaisten hahmojen ja olentojen suunnittelusta sekä kauhun, scifin ja fantasian elementtien yhdistelemisestä. Työskentelen mielelläni sekä digitaalisen että perinteisen taiteen parissa, ja työvälineinä käytän esimerkiksi sivellinkyniä, tusseja ja erilaisia lyijykyniä.\n\nAmmatikseni työskentelen taiteen ja median parissa tuntiopettajana. KOPOSQUADissa haluan olla mukana osana yhteisöä, verkostoitua muiden tekijöiden kanssa ja tuoda mukaan omaa taide- ja mediasisältöäni.",
+
+  country: "Suomi",
+
+  games: "Vaihtelevat pelit",
+  content: "Piirtäminen, maalaaminen, 3D-mallinnus, graafinen suunnittelu ja pelisisältö",
+},
 ];

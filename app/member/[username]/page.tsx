@@ -378,9 +378,15 @@ export default function MemberProfilePage() {
               KOPOSQUAD-JÄSEN
             </p>
 
-            <h1 className="mt-4 text-6xl font-black uppercase md:text-8xl">
-              {member.name}
-            </h1>
+<h1
+  className={`mt-4 font-black uppercase leading-[0.95] ${
+    member.name.length > 12
+      ? "text-4xl md:text-6xl"
+      : "text-6xl md:text-8xl"
+  }`}
+>
+  {member.name}
+</h1>
 
             <p className="mt-4 text-2xl font-black text-purple-400">
               {member.role}
