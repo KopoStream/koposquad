@@ -80,9 +80,9 @@ export const metadata: Metadata = {
     google: "7KJbKnOqmo4lHjSyuaErpxESJjJDT-D9iHLizhszdQ4",
   },
 
-  icons: {
-    icon: "/favicon.ico",
-  },
+icons: {
+  icon: "/icon.png",
+},
 };
 
 export default function RootLayout({
