@@ -1,25 +1,50 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Header from "../../components/Header";
 
 const services = [
-  {
-    category: "CUSTOM DESIGN",
-    title: "Stream Overlay",
-    description:
-      "Täysin oman kanavasi tyyliin suunniteltu overlay-kokonaisuus. Värit, grafiikat, nimi ja yleisilme rakennetaan toiveidesi mukaan.",
-    price: "Hinta tulossa",
-    status: "TULOSSA",
-    accent:
-      "from-purple-500/20 via-fuchsia-500/10 to-transparent",
-    glow: "bg-purple-600/25",
-    features: [
-      "Starting Soon -ruutu",
-      "BRB-ruutu",
-      "Ending-ruutu",
-      "Gameplay / kamera-overlay",
-      "Oma väriteema ja tyyli",
-      "2 korjauskierrosta",
-    ],
-  },
+{
+  category: "CUSTOM DESIGN",
+  title: "Stream Overlay",
+  description:
+    "Täysin oman kanavasi tyyliin suunniteltu overlay-kokonaisuus. Valitse kuvallinen tai animoitu tyyli – värit, grafiikat, nimi ja yleisilme rakennetaan toiveidesi mukaan.",
+
+  price: "59,99 €",
+  oldPrice: "99,99 €",
+  discount: "-40 %",
+  offer: true,
+
+  status: "",
+  accent:
+    "from-purple-500/20 via-fuchsia-500/10 to-transparent",
+  glow: "bg-purple-600/25",
+
+  features: [
+    "Starting Soon -ruutu",
+    "BRB-ruutu",
+    "Ending-ruutu",
+    "Gameplay / kamera-overlay",
+    "Kuvallinen tai animoitu toteutus",
+    "Oma väriteema ja tyyli",
+    "2 korjauskierrosta",
+  ],
+  detailsTitle: "Mitä Stream Overlay tarkoittaa?",
+  detailsIntro:
+    "Stream Overlay on kanavallesi suunniteltu visuaalinen kokonaisuus. Toteutus tehdään sinun tyylisi, värien ja toiveiden mukaan eikä valmiista massapohjasta.",
+  details: [
+    "Kuvallinen tai animoitu toteutus",
+    "Starting Soon, BRB ja Ending -ruudut",
+    "Gameplay- ja kamera-overlay",
+    "Värit, fontit ja tunnelma kanavasi mukaan",
+    "Omat logot ja grafiikat voidaan huomioida",
+    "Toteutus sopivaan resoluutioon ja käyttötarkoitukseen",
+    "2 sovittua korjauskierrosta",
+  ],
+  detailsNote:
+    "Tilauksen yhteydessä kerrot mahdollisimman tarkasti millaisen tyylin haluat. Jos et vielä tiedä tarkkaa lopputulosta, suunnitellaan suunta yhdessä.",
+},
+
   {
     category: "TWITCH & DISCORD",
     title: "Emote-paketti",
@@ -37,6 +62,19 @@ const services = [
       "Läpinäkyvä PNG",
       "Oma tyyli ja värit",
     ],
+    detailsTitle: "Mitä Emote-paketti tarkoittaa?",
+    detailsIntro:
+      "Emote-paketissa suunnitellaan kanavallesi omia emoteja ideasi, hahmosi, ilmeesi tai brändisi pohjalta.",
+    details: [
+      "Oma idea tai hahmo lähtökohdaksi",
+      "Twitchiin sopivat emote-koot",
+      "Discord-käyttö huomioituna",
+      "Läpinäkyvät PNG-tiedostot",
+      "Värimaailma kanavasi mukaan",
+      "Mahdollisuus rakentaa yhtenäinen emote-sarja",
+    ],
+    detailsNote:
+      "Emotet suunnitellaan tilaajan toiveiden mukaan. Tarkempi määrä, tyyli ja hinta vahvistetaan ennen työn aloittamista.",
   },
   {
     category: "KANAVAN ILME",
@@ -55,6 +93,19 @@ const services = [
       "Somegrafiikat",
       "Yhtenäinen visuaalinen tyyli",
     ],
+    detailsTitle: "Mitä Grafiikkapaketti tarkoittaa?",
+    detailsIntro:
+      "Grafiikkapaketilla rakennetaan kanavalle yhtenäinen visuaalinen ilme eri alustoille ilman että jokainen kuva näyttää eri sarjalta.",
+    details: [
+      "Bannerit eri alustoille",
+      "Profiilikuva tai kanavakuva",
+      "Twitch-paneelit",
+      "Somegrafiikat",
+      "Yhtenäiset värit ja fontit",
+      "Kanavasi nimen ja brändin huomiointi",
+    ],
+    detailsNote:
+      "Paketin tarkka sisältö sovitaan ennen työn aloittamista sen mukaan mitä kanavia ja grafiikoita tarvitset.",
   },
   {
     category: "HENKILÖKOHTAINEN APU",
@@ -74,6 +125,19 @@ const services = [
       "Kuvanlaadun optimointi",
       "Henkilökohtainen opastus",
     ],
+    detailsTitle: "Mitä Starttipaketti tarkoittaa?",
+    detailsIntro:
+      "Starttipaketti on henkilökohtaista apua striimin rakentamiseen ja asetusten kuntoon laittamiseen alusta lähtien.",
+    details: [
+      "OBS- tai Streamlabs-asetukset",
+      "Mikrofonin ja äänen perussäädöt",
+      "Twitchin tärkeät asetukset",
+      "Overlayt ja alertit käyttöön",
+      "Kuvanlaadun ja bittivirran läpikäynti",
+      "Henkilökohtainen opastus vaihe vaiheelta",
+    ],
+    detailsNote:
+      "Tarkoitus ei ole vain antaa ohjetta, vaan käydä asetukset yhdessä läpi niin että tiedät myös itse mitä on tehty.",
   },
   {
     category: "FYYSISET TUOTTEET",
@@ -91,6 +155,17 @@ const services = [
       "Useita kokoja",
       "Fyysinen toimitus",
     ],
+    detailsTitle: "Mitä Tarrat-palvelu tarkoittaa?",
+    detailsIntro:
+      "Tarravalikoimaan on tarkoitus tuoda KOPOSQUAD-aiheisia designeja ja myöhemmin myös omalla nimellä tai grafiikalla tehtäviä vaihtoehtoja.",
+    details: [
+      "KOPOSQUAD-designit",
+      "Useita kokoja suunnitteilla",
+      "Custom-vaihtoehdot myöhemmässä vaiheessa",
+      "Fyysinen toimitus",
+    ],
+    detailsNote:
+      "Tämä palvelu on vielä rakenteilla. Materiaalit, koot, hinnat ja toimitustavat ilmoitetaan ennen avaamista.",
   },
   {
     category: "KOPOSQUAD MERCH",
@@ -108,6 +183,17 @@ const services = [
       "Muut tuotteet",
       "Erikoiserät",
     ],
+    detailsTitle: "Mitä Paidat & merch tarkoittaa?",
+    detailsIntro:
+      "KOPOSQUAD-merchiin on tarkoitus rakentaa oma pieni tuotevalikoima yhteisön visuaalisella tyylillä.",
+    details: [
+      "KOPOSQUAD-paidat",
+      "Hupparit myöhemmässä vaiheessa",
+      "Muita tuotteita suunnitteilla",
+      "Mahdollisia erikoiseriä",
+    ],
+    detailsNote:
+      "Merch on vielä suunnitteluvaiheessa. Tuotteet, hinnat, koot ja toimitustavat julkaistaan myöhemmin.",
   },
 ];
 
@@ -156,7 +242,7 @@ const benefits = [
 const faqs = [
   [
     "Milloin palvelut avautuvat?",
-    "Palvelut ovat vielä valmistelussa. Tilaaminen avataan, kun tilauslomake, maksaminen ja toimitusprosessi ovat valmiina.",
+    "Stream Overlay avataan ensimmäisenä tilattavaksi. Muut palvelut viimeistellään ja avataan myöhemmin.",
   ],
   [
     "Voinko kertoa itse millaisen overlayn haluan?",
@@ -164,7 +250,7 @@ const faqs = [
   ],
   [
     "Näkyykö hinta jo nyt?",
-    "Ei vielä. Kaikki hinnat julkaistaan vasta, kun palvelupaketit ja tilausprosessi ovat täysin valmiina.",
+    "Stream Overlayn avaushinta näkyy jo sivulla. Muiden palveluiden hinnat julkaistaan myöhemmin.",
   ],
   [
     "Miten digitaalinen tuote toimitetaan?",
@@ -173,6 +259,213 @@ const faqs = [
 ];
 
 export default function PalvelutPage() {
+  const [selectedService, setSelectedService] =
+    useState<(typeof services)[number] | null>(null);
+  const [orderOpen, setOrderOpen] = useState(false);
+  const [selectedOverlayItems, setSelectedOverlayItems] = useState<string[]>([]);
+  const [orderSending, setOrderSending] = useState(false);
+  const [orderStatus, setOrderStatus] = useState("");
+  const [paymentStep, setPaymentStep] = useState(false);
+  const [pendingOrderData, setPendingOrderData] = useState<FormData | null>(null);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const paypalContainerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!paymentStep || !pendingOrderData) return;
+
+const clientId = process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID;
+
+    if (!clientId) {
+      setOrderStatus("PayPal Client ID puuttuu .env.local-tiedostosta.");
+      return;
+    }
+
+    let cancelled = false;
+
+    const renderButtons = async () => {
+      try {
+        let paypal = (window as any).paypal;
+
+        if (!paypal) {
+          const existingScript = document.querySelector<HTMLScriptElement>(
+            'script[data-koposquad-paypal="true"]'
+          );
+
+          if (existingScript) {
+            await new Promise<void>((resolve, reject) => {
+              if ((window as any).paypal) {
+                resolve();
+                return;
+              }
+
+              existingScript.addEventListener("load", () => resolve(), {
+                once: true,
+              });
+              existingScript.addEventListener(
+                "error",
+                () => reject(new Error("PayPal SDK:n lataus epäonnistui.")),
+                { once: true }
+              );
+            });
+          } else {
+            await new Promise<void>((resolve, reject) => {
+              const script = document.createElement("script");
+              script.src =
+                `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(
+                  clientId
+                )}&currency=EUR&intent=capture`;
+              script.async = true;
+              script.dataset.koposquadPaypal = "true";
+              script.onload = () => resolve();
+              script.onerror = () =>
+                reject(new Error("PayPal SDK:n lataus epäonnistui."));
+              document.body.appendChild(script);
+            });
+          }
+
+          paypal = (window as any).paypal;
+        }
+
+        if (cancelled || !paypalContainerRef.current || !paypal) return;
+
+        paypalContainerRef.current.innerHTML = "";
+
+        await paypal
+          .Buttons({
+            style: {
+              layout: "vertical",
+              shape: "rect",
+              label: "paypal",
+            },
+
+            createOrder: async () => {
+              setOrderStatus("Luodaan PayPal-maksua...");
+
+              const response = await fetch("/api/paypal/create-order", {
+                method: "POST",
+              });
+
+              const data = await response.json();
+
+              if (!response.ok || !data?.id) {
+                throw new Error(
+                  data?.error || "PayPal-maksun luominen epäonnistui."
+                );
+              }
+
+              return data.id;
+            },
+
+            onApprove: async (data: { orderID: string }) => {
+              try {
+                setOrderSending(true);
+                setOrderStatus("Vahvistetaan PayPal-maksua...");
+
+                const captureResponse = await fetch(
+                  "/api/paypal/capture-order",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      orderID: data.orderID,
+                    }),
+                  }
+                );
+
+                const captureData = await captureResponse.json();
+
+                if (
+                  !captureResponse.ok ||
+                  captureData?.status !== "COMPLETED"
+                ) {
+                  throw new Error(
+                    captureData?.error ||
+                      "PayPal-maksun vahvistaminen epäonnistui."
+                  );
+                }
+
+                setOrderStatus(
+                  "Maksu onnistui. Lähetetään tilausta sähköpostiin..."
+                );
+
+                const orderData = new FormData();
+
+                pendingOrderData.forEach((value, key) => {
+                  orderData.append(key, value);
+                });
+
+                orderData.append("paypalOrderId", data.orderID);
+                orderData.append(
+                  "paypalCaptureId",
+                  String(captureData?.captureId || "")
+                );
+
+                const orderResponse = await fetch("/api/order", {
+                  method: "POST",
+                  body: orderData,
+                });
+
+                const orderResult = await orderResponse.json();
+
+                if (!orderResponse.ok) {
+                  throw new Error(
+                    orderResult?.error ||
+                      "Maksu onnistui, mutta tilauksen sähköpostin lähetys epäonnistui."
+                  );
+                }
+
+                setOrderStatus("");
+                setPaymentSuccess(true);
+
+                setSelectedOverlayItems([]);
+                setPendingOrderData(null);
+                setPaymentStep(false);
+              } catch (error) {
+                setOrderStatus(
+                  error instanceof Error
+                    ? error.message
+                    : "Maksun käsittelyssä tapahtui virhe."
+                );
+              } finally {
+                setOrderSending(false);
+              }
+            },
+
+            onCancel: () => {
+              setOrderStatus(
+                "PayPal-maksu peruutettiin. Voit yrittää uudelleen."
+              );
+            },
+
+            onError: (error: unknown) => {
+              console.error("PayPal error:", error);
+              setOrderStatus(
+                "PayPal-maksussa tapahtui virhe. Yritä uudelleen."
+              );
+            },
+          })
+          .render(paypalContainerRef.current);
+      } catch (error) {
+        setOrderStatus(
+          error instanceof Error
+            ? error.message
+            : "PayPal-maksuvaiheen lataaminen epäonnistui."
+        );
+      }
+    };
+
+    renderButtons();
+
+    return () => {
+      cancelled = true;
+      if (paypalContainerRef.current) {
+        paypalContainerRef.current.innerHTML = "";
+      }
+    };
+  }, [paymentStep, pendingOrderData]);
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#030104] text-white">
       {/* KIINTEÄ TAUSTA */}
@@ -237,131 +530,319 @@ export default function PalvelutPage() {
 
               <div className="flex items-center gap-3 rounded-2xl border border-purple-400/30 bg-black/35 px-6 py-4 font-bold text-purple-200 backdrop-blur-xl">
                 <span className="h-2 w-2 rounded-full bg-purple-400 shadow-[0_0_12px_rgba(192,132,252,0.8)]" />
-                Palvelut avautuvat pian
+                Stream Overlay tilattavissa
               </div>
             </div>
           </div>
         </section>
 
-        {/* PALVELUT */}
-        <section
-          id="palvelut"
-          className="relative overflow-hidden px-6 py-24"
+{/* PALVELUT */
+<section
+  id="palvelut"
+  className="relative overflow-hidden px-6 py-24"
+>
+  {/* TAUSTAN HIMMEÄT KS-LOGOT */}
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="pointer-events-none absolute -left-28 top-[18%] hidden w-[360px] rotate-[-12deg] object-contain opacity-[0.025] lg:block"
+  />
+
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="pointer-events-none absolute -right-28 top-[58%] hidden w-[390px] rotate-[12deg] object-contain opacity-[0.025] lg:block"
+  />
+
+  <div className="pointer-events-none absolute left-1/2 top-[45%] h-[850px] w-[1100px] -translate-x-1/2 rounded-full bg-purple-700/10 blur-[240px]" />
+  <div className="pointer-events-none absolute -left-40 top-[38%] h-[420px] w-[420px] rounded-full bg-fuchsia-700/10 blur-[150px]" />
+  <div className="pointer-events-none absolute -right-40 top-[72%] h-[420px] w-[420px] rounded-full bg-violet-700/10 blur-[150px]" />
+  <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-purple-500/10 to-transparent" />
+
+  <div className="relative mx-auto max-w-7xl">
+    {/* OTSIKKO */}
+    <div className="text-center">
+      <div className="mx-auto mb-5 flex w-fit items-center gap-3 rounded-full border border-purple-400/25 bg-purple-500/[0.06] px-4 py-2">
+        <span className="h-1.5 w-1.5 rounded-full bg-purple-400 shadow-[0_0_10px_rgba(192,132,252,0.9)]" />
+        <p className="text-xs font-black uppercase tracking-[0.35em] text-purple-400">
+          KOPOSQUAD CREATIVE
+        </p>
+      </div>
+
+      <h2 className="text-4xl font-black uppercase md:text-6xl">
+        Valitse mitä tarvitset
+      </h2>
+
+      <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-gray-400">
+        Jokainen palvelu rakennetaan asiakkaan omien tarpeiden ja toiveiden
+        mukaan. Stream Overlay on ensimmäisenä tilattavissa avaustarjouksella.
+      </p>
+
+      <div className="mx-auto mt-8 h-px max-w-3xl bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+    </div>
+
+    {/* PALVELUKORTIT */}
+    <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {services.map((service, index) => (
+        <article
+          key={service.title}
+          className={`group relative flex min-h-[575px] flex-col overflow-hidden rounded-[30px] border p-8 transition-all duration-300 hover:-translate-y-2 ${
+            service.title === "Stream Overlay"
+              ? "border-fuchsia-400/35 bg-[linear-gradient(145deg,rgba(47,21,60,0.98),rgba(9,6,12,0.99))] shadow-[0_24px_80px_rgba(168,85,247,0.16)] hover:border-fuchsia-300/60 hover:shadow-[0_30px_95px_rgba(217,70,239,0.22)]"
+              : "border-purple-500/25 bg-[linear-gradient(145deg,rgba(31,18,39,0.97),rgba(8,6,11,0.99))] shadow-[0_20px_60px_rgba(0,0,0,0.45)] hover:border-purple-400/60 hover:shadow-[0_28px_90px_rgba(168,85,247,0.18)]"
+          }`}
         >
+          {/* YLÄHEHKU */}
+          <div
+            className={`pointer-events-none absolute inset-x-0 top-0 h-52 bg-gradient-to-b ${service.accent}`}
+          />
+
+          <div
+            className={`pointer-events-none absolute -right-20 -top-20 h-52 w-52 rounded-full ${service.glow} blur-[85px] transition duration-500 group-hover:scale-125`}
+          />
+
+          {/* HIMMEÄ KS LOGO */}
           <img
             src="/images/ks-logo.png.png"
             alt=""
-            className="pointer-events-none absolute -left-28 top-[16%] hidden w-[360px] rotate-[-12deg] object-contain opacity-[0.025] lg:block"
+            className="pointer-events-none absolute -right-12 top-[110px] w-[200px] rotate-[-12deg] object-contain opacity-[0.028] transition duration-500 group-hover:opacity-[0.05]"
           />
 
-          <img
-            src="/images/ks-logo.png.png"
-            alt=""
-            className="pointer-events-none absolute -right-24 top-[58%] hidden w-[390px] rotate-[13deg] object-contain opacity-[0.028] lg:block"
-          />
+          {/* ISO NUMERO TAUSTALLA */}
+          <span className="pointer-events-none absolute -right-2 top-5 text-[112px] font-black leading-none text-white/[0.025]">
+            {String(index + 1).padStart(2, "0")}
+          </span>
 
-          <div className="pointer-events-none absolute left-1/2 top-[40%] h-[850px] w-[1100px] -translate-x-1/2 rounded-full bg-purple-700/10 blur-[240px]" />
+          {/* KULMAKORISTEET */}
+          <div className="pointer-events-none absolute left-0 top-0 h-24 w-24">
+            <div className="absolute left-0 top-0 h-px w-16 bg-gradient-to-r from-purple-400/70 to-transparent" />
+            <div className="absolute left-0 top-0 h-16 w-px bg-gradient-to-b from-purple-400/70 to-transparent" />
+          </div>
 
-          <div className="relative mx-auto max-w-7xl">
-            <div className="text-center">
-              <p className="text-sm font-black uppercase tracking-[0.35em] text-purple-400">
-                KOPOSQUAD CREATIVE
+          <div className="pointer-events-none absolute bottom-0 right-0 h-24 w-24">
+            <div className="absolute bottom-0 right-0 h-px w-16 bg-gradient-to-l from-fuchsia-400/50 to-transparent" />
+            <div className="absolute bottom-0 right-0 h-16 w-px bg-gradient-to-t from-fuchsia-400/50 to-transparent" />
+          </div>
+
+          {/* YLÄRIVI */}
+          <div className="relative flex items-start justify-between gap-5">
+            <div>
+              <span className="text-xs font-black uppercase tracking-[0.32em] text-purple-400">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+
+              <p className="mt-3 text-xs font-black uppercase tracking-[0.25em] text-purple-300">
+                {service.category}
               </p>
-
-              <h2 className="mt-4 text-4xl font-black uppercase md:text-6xl">
-                Valitse mitä tarvitset
-              </h2>
-
-              <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-gray-400">
-                Jokainen työ tehdään asiakkaan oman tyylin ja toiveiden mukaan.
-                Hinnat julkaistaan vasta, kun tilausjärjestelmä on täysin valmis.
-              </p>
-
-              <div className="mx-auto mt-8 h-px max-w-3xl bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
             </div>
 
-            <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {services.map((service) => (
-                <article
-                  key={service.title}
-                  className="group relative flex min-h-[690px] flex-col overflow-hidden rounded-[30px] border border-purple-500/25 bg-[linear-gradient(180deg,rgba(27,18,34,0.97),rgba(8,6,11,0.99))] p-7 pt-16 shadow-[0_22px_70px_rgba(0,0,0,0.48)] transition-all duration-300 hover:-translate-y-2 hover:border-purple-400/60 hover:shadow-[0_28px_90px_rgba(168,85,247,0.18)]"
+            {service.status && (
+              <span className="shrink-0 rounded-full border border-purple-400/35 bg-purple-500/10 px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.13em] text-purple-200 shadow-[0_0_18px_rgba(168,85,247,0.10)] backdrop-blur-xl">
+                {service.status}
+              </span>
+            )}
+          </div>
+
+          {service.title === "Stream Overlay" && (
+            <div className="relative mt-5 flex w-fit items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
+              <span className="text-[9px] font-black uppercase tracking-[0.18em] text-emerald-300">
+                Tilattavissa
+              </span>
+            </div>
+          )}
+
+          {/* NIMI */}
+<h3
+  className={`relative mt-7 font-black uppercase leading-[1.05] ${
+    service.title === "Grafiikkapaketti"
+      ? "text-[26px] md:text-[28px]"
+      : "text-3xl md:text-[34px]"
+  }`}
+>
+            {service.title}
+          </h3>
+
+          {/* KORISTEVIIVA */}
+          <div className="relative mt-6 flex items-center gap-3">
+            <div className="h-[2px] w-14 bg-gradient-to-r from-purple-500 to-fuchsia-500" />
+            <div className="h-1.5 w-1.5 rotate-45 bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.7)]" />
+            <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
+          </div>
+
+          {/* KUVAUS */}
+          <p className="relative mt-6 min-h-[105px] text-[15px] leading-7 text-gray-400">
+            {service.description}
+          </p>
+
+{/* SISÄLTÖ */}
+<div className="relative mt-7 overflow-hidden rounded-2xl border border-purple-500/15 bg-black/25 p-5 shadow-[inset_0_0_35px_rgba(168,85,247,0.035)]">
+
+  {/* HIMMEÄ KS SISÄLTÖBOKSIN TAUSTALLA */}
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="pointer-events-none absolute -right-8 bottom-[-30px] w-[135px] rotate-[-12deg] object-contain opacity-[0.025]"
+  />
+
+  {/* HIMMEÄ VIOLETTI HEHKU */}
+  <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-purple-600/10 blur-[55px]" />
+
+  {/* YLÄREUNAN VÄRIVIIVA */}
+  <div className="pointer-events-none absolute left-5 right-5 top-0 h-px bg-gradient-to-r from-transparent via-purple-400/30 to-transparent" />
+
+  <p className="relative mb-4 text-[10px] font-black uppercase tracking-[0.28em] text-gray-500">
+    Palveluun kuuluu
+  </p>
+
+  <div className="relative grid gap-3">
+    {service.features.map((feature) => (
+      <div
+        key={feature}
+        className="group/item flex items-center gap-3 rounded-lg px-1 py-0.5 text-sm text-gray-300 transition hover:bg-purple-500/[0.04]"
+      >
+        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-purple-400/35 bg-purple-500/10 text-[10px] font-black text-purple-300 shadow-[0_0_10px_rgba(168,85,247,0.08)]">
+          ✓
+        </span>
+
+        <span className="transition group-hover/item:text-white">
+          {feature}
+        </span>
+      </div>
+    ))}
+  </div>
+
+  {/* ALAREUNAN PIENI DESIGN-YKSITYISKOHTA */}
+  <div className="relative mt-5 flex items-center gap-2">
+    <div className="h-px w-8 bg-purple-500/40" />
+    <div className="h-1 w-1 rotate-45 bg-purple-400/60" />
+    <div className="h-px w-14 bg-gradient-to-r from-purple-500/25 to-transparent" />
+  </div>
+
+</div>
+
+          {/* PALVELUN TYYPPI */}
+          <div className="relative mt-6 flex flex-wrap gap-2">
+            <span className="rounded-full border border-purple-400/20 bg-purple-500/[0.07] px-3 py-1 text-[9px] font-black uppercase tracking-[0.18em] text-purple-300">
+              {index === 4 || index === 5
+                ? "Fyysinen tuote"
+                : index === 3
+                ? "Henkilökohtainen"
+                : "Digitaalinen"}
+            </span>
+
+            {index < 4 && (
+              <span className="rounded-full border border-fuchsia-400/15 bg-fuchsia-500/[0.05] px-3 py-1 text-[9px] font-black uppercase tracking-[0.18em] text-fuchsia-200">
+                {index === 3 ? "Online" : "Custom"}
+              </span>
+            )}
+          </div>
+
+          {/* ALAOSA */}
+          <div className="relative mt-auto pt-8">
+            <div className="border-t border-purple-500/15 pt-6">
+              <div className="flex items-end justify-between gap-4">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-[0.25em] text-gray-500">
+                    Hinta
+                  </p>
+
+{service.offer ? (
+  <div className="mt-2">
+    <div className="flex flex-wrap items-center gap-3">
+      <span className="text-lg font-bold text-gray-500 line-through">
+        {service.oldPrice}
+      </span>
+
+      <span className="rounded-lg border border-fuchsia-400/40 bg-fuchsia-500/10 px-2.5 py-1 text-xs font-black text-fuchsia-300 shadow-[0_0_16px_rgba(217,70,239,0.15)]">
+        {service.discount}
+      </span>
+    </div>
+
+    <p className="mt-1 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text text-4xl font-black text-transparent">
+      {service.price}
+    </p>
+
+    <div className="mt-4 rounded-xl border border-purple-500/20 bg-black/30 px-4 py-3">
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <p className="text-[9px] font-black uppercase tracking-[0.22em] text-gray-500">
+            Avaustarjous
+          </p>
+
+          <p className="mt-1 text-xs font-bold text-purple-200">
+            Voimassa rajoitetun ajan
+          </p>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+) : (
+  <p className="mt-2 text-3xl font-black text-purple-300">
+    {service.price}
+  </p>
+)}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setSelectedService(service)}
+                  aria-label={`Lisätiedot palvelusta ${service.title}`}
+                  className="group/more hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-purple-500/30 bg-purple-500/[0.07] shadow-[0_0_18px_rgba(168,85,247,0.08)] transition hover:-translate-y-0.5 hover:border-purple-300/60 hover:bg-purple-500/[0.14] hover:shadow-[0_0_26px_rgba(168,85,247,0.18)] sm:flex"
+                  title="Lisätiedot"
                 >
-                  <div
-                    className={`pointer-events-none absolute inset-x-0 top-0 h-52 bg-gradient-to-b ${service.accent}`}
-                  />
+                  <span className="text-lg font-black text-purple-300 transition group-hover/more:translate-x-0.5 group-hover/more:text-white">
+                    →
+                  </span>
+                </button>
+              </div>
 
-                  <div
-                    className={`pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full ${service.glow} blur-[70px] transition duration-500 group-hover:scale-125`}
-                  />
-
-                  <div className="absolute right-5 top-5 z-20 rounded-full border border-purple-400/40 bg-black/35 px-3 py-1 text-[9px] font-black uppercase tracking-[0.13em] text-purple-200 shadow-[0_0_18px_rgba(168,85,247,0.15)] backdrop-blur-xl">
-                    {service.status}
-                  </div>
-
-                  {/* KS PREVIEW */}
-                  <div className="relative mb-7 flex h-[185px] items-center justify-center overflow-hidden rounded-2xl border border-purple-500/25 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.22),rgba(0,0,0,0.70)_67%)] shadow-[inset_0_0_45px_rgba(168,85,247,0.08)]">
-                    <div className="pointer-events-none absolute h-[170px] w-[170px] rounded-full bg-purple-600/20 blur-[60px]" />
-                    <div className="pointer-events-none absolute inset-x-10 bottom-2 h-px bg-gradient-to-r from-transparent via-purple-400/55 to-transparent" />
-
-                    <img
-                      src="/images/ks-logo.png.png"
-                      alt=""
-                      className="relative h-[130px] w-[130px] object-contain opacity-50 drop-shadow-[0_0_32px_rgba(168,85,247,0.6)] transition-all duration-500 group-hover:scale-110 group-hover:opacity-80"
-                    />
-                  </div>
-
-                  <p className="text-xs font-black uppercase tracking-[0.28em] text-purple-400">
-                    {service.category}
-                  </p>
-
-                  <h3 className="mt-3 text-3xl font-black uppercase leading-tight">
-                    {service.title}
-                  </h3>
-
-                  <p className="mt-4 min-h-[112px] leading-7 text-gray-400">
-                    {service.description}
-                  </p>
-
-                  <div className="mt-6 space-y-3 border-t border-white/10 pt-6">
-                    {service.features.map((feature) => (
-                      <div
-                        key={feature}
-                        className="flex items-center gap-3 text-sm text-gray-300"
-                      >
-                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-purple-400/35 bg-purple-500/10 text-[10px] font-black text-purple-300">
-                          ✓
-                        </span>
-
-                        <span>{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-auto pt-8">
-                    <div className="border-t border-purple-500/15 pt-6">
-                      <p className="text-3xl font-black text-purple-300">
-                        {service.price}
-                      </p>
-
-                      <button
-                        type="button"
-                        disabled
-                        className="mt-6 w-full cursor-not-allowed rounded-xl border border-purple-500/30 bg-gradient-to-r from-purple-500/10 to-fuchsia-500/10 px-5 py-3.5 text-sm font-black uppercase tracking-wide text-purple-300 opacity-80"
-                      >
-                        Tilaus avautuu pian
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="pointer-events-none absolute inset-x-14 bottom-0 h-px bg-gradient-to-r from-transparent via-purple-400/30 to-transparent" />
-                </article>
-              ))}
+              {service.title === "Stream Overlay" ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPaymentSuccess(false);
+                    setOrderStatus("");
+                    setOrderOpen(true);
+                  }}
+                  className="mt-6 w-full rounded-xl border border-fuchsia-400/45 bg-gradient-to-r from-purple-600/80 to-fuchsia-600/70 px-5 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(168,85,247,0.20)] transition hover:-translate-y-0.5 hover:border-fuchsia-300/70 hover:shadow-[0_0_38px_rgba(217,70,239,0.28)]"
+                >
+                  Tilaa Stream Overlay
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  disabled
+                  className="mt-6 w-full cursor-not-allowed rounded-xl border border-purple-500/30 bg-[linear-gradient(90deg,rgba(126,34,206,0.14),rgba(192,38,211,0.08))] px-5 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-purple-300 opacity-80 shadow-[inset_0_0_20px_rgba(168,85,247,0.04)]"
+                >
+                  Tilaus avautuu pian
+                </button>
+              )}
             </div>
           </div>
-        </section>
 
-{/* PALVELUT RAKENTEILLA */}
-        <section className="relative overflow-hidden border-y border-purple-500/15 bg-[linear-gradient(110deg,rgba(88,28,135,0.12),rgba(3,1,5,0.98),rgba(112,26,117,0.08))] px-6 py-16">
+          {/* KORTIN ALAOSAN HIMMEÄ VÄRI */}
+          <div className="pointer-events-none absolute -bottom-24 left-1/2 h-64 w-[92%] -translate-x-1/2 rounded-full bg-purple-600/[0.13] blur-[85px]" />
+
+          {/* HIMMEÄ KS ALAKULMASSA */}
+          <img
+            src="/images/ks-logo.png.png"
+            alt=""
+            className="pointer-events-none absolute -bottom-12 -left-10 w-[170px] rotate-[12deg] object-contain opacity-[0.024] transition duration-500 group-hover:opacity-[0.04]"
+          />
+
+          {/* ALAREUNAN HEHKU */}
+          <div className="pointer-events-none absolute inset-x-16 bottom-0 h-px bg-gradient-to-r from-transparent via-purple-400/40 to-transparent" />
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+/* PALVELUT RAKENTEILLA */}
+        <section className="relative overflow-hidden border-y border-purple-500/15 bg-[linear-gradient(110deg,rgba(88,28,135,0.20),rgba(3,1,5,0.98),rgba(112,26,117,0.16))] px-6 py-16">
           <div className="pointer-events-none absolute left-1/2 top-1/2 h-[300px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700/10 blur-[150px]" />
 
           <img
@@ -376,14 +857,14 @@ export default function PalvelutPage() {
                 KOPOSQUAD CREATIVE
               </p>
               <h2 className="mt-3 text-2xl font-black uppercase md:text-3xl">
-                Palvelut ovat vielä
+                Muut palvelut ovat vielä
                 <span className="ml-2 bg-gradient-to-r from-purple-300 to-fuchsia-400 bg-clip-text text-transparent">
                   rakenteilla.
                 </span>
               </h2>
               <p className="mt-3 max-w-2xl leading-7 text-gray-400">
-                Viimeistelemme parhaillaan palvelupaketteja, hintoja ja tilausjärjestelmää.
-                Tilaaminen avataan, kun kokonaisuus on valmis.
+                Stream Overlay on ensimmäinen avattu palvelu. Muita palvelupaketteja, hintoja ja tilausjärjestelmää viimeistellään parhaillaan.
+                Loput palvelut avataan vaiheittain, kun kokonaisuus on valmis.
               </p>
             </div>
 
@@ -554,20 +1035,608 @@ export default function PalvelutPage() {
             </p>
 
             <h2 className="relative mt-5 text-3xl font-black uppercase md:text-5xl">
-              Ensimmäiset palvelut tulossa pian
+              Stream Overlay nyt tilattavissa
             </h2>
 
             <p className="relative mx-auto mt-5 max-w-2xl text-lg leading-8 text-gray-400">
-              Rakennamme parhaillaan tilausjärjestelmää, viimeistelemme
-              palvelupaketteja ja teemme maksamisesta mahdollisimman selkeän.
+              Ensimmäinen KOPOSQUAD Creative -palvelu on avattu.
+              Muut palvelupaketit ja tilausjärjestelmän seuraavat vaiheet valmistuvat vähitellen.
             </p>
 
             <div className="relative mx-auto mt-8 inline-flex items-center gap-3 rounded-full border border-purple-400/30 bg-black/35 px-5 py-2 text-sm font-black uppercase tracking-[0.15em] text-purple-300">
               <span className="h-2 w-2 rounded-full bg-purple-400 shadow-[0_0_12px_rgba(192,132,252,0.8)]" />
-              Tulossa
+              Tilattavissa
             </div>
           </div>
         </section>
+
+        {/* PALVELUN LISÄTIEDOT - MODAALI */}
+        {selectedService && (
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/80 px-4 py-8 backdrop-blur-md"
+            onClick={() => setSelectedService(null)}
+          >
+            <div
+              className="relative my-auto w-full max-w-3xl overflow-hidden rounded-[32px] border border-purple-400/35 bg-[radial-gradient(circle_at_20%_0%,rgba(168,85,247,0.20),transparent_42%),linear-gradient(145deg,rgba(24,12,31,0.99),rgba(5,3,8,0.99))] p-6 shadow-[0_0_100px_rgba(126,34,206,0.30)] sm:p-8 md:p-10"
+              onClick={(event) => event.stopPropagation()}
+            >
+              {/* MODAALIN TAUSTAELEMENTIT */}
+              <div className="pointer-events-none absolute -right-28 -top-28 h-72 w-72 rounded-full bg-fuchsia-600/15 blur-[90px]" />
+              <div className="pointer-events-none absolute -bottom-32 -left-28 h-72 w-72 rounded-full bg-purple-700/15 blur-[100px]" />
+
+              <img
+                src="/images/ks-logo.png.png"
+                alt=""
+                className="pointer-events-none absolute -right-14 bottom-[-20px] w-[260px] rotate-[-12deg] object-contain opacity-[0.035]"
+              />
+
+              {/* SULJE */}
+              <button
+                type="button"
+                onClick={() => setSelectedService(null)}
+                className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-xl border border-purple-400/30 bg-black/40 text-xl font-black text-purple-200 transition hover:border-purple-300/60 hover:bg-purple-500/10 hover:text-white"
+                aria-label="Sulje lisätiedot"
+              >
+                ×
+              </button>
+
+              <div className="relative z-10">
+                <div className="flex flex-wrap items-center gap-3 pr-14">
+                  <span className="rounded-full border border-purple-400/25 bg-purple-500/[0.08] px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] text-purple-300">
+                    {selectedService.category}
+                  </span>
+
+                  <span className="rounded-full border border-fuchsia-400/20 bg-fuchsia-500/[0.06] px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-fuchsia-200">
+                    Lisätiedot
+                  </span>
+                </div>
+
+                <h2 className="mt-6 max-w-2xl text-3xl font-black uppercase leading-[1.05] sm:text-4xl md:text-5xl">
+                  {selectedService.detailsTitle}
+                </h2>
+
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="h-[2px] w-16 bg-gradient-to-r from-purple-500 to-fuchsia-500" />
+                  <div className="h-1.5 w-1.5 rotate-45 bg-purple-300 shadow-[0_0_10px_rgba(216,180,254,0.8)]" />
+                  <div className="h-px flex-1 bg-gradient-to-r from-purple-500/20 to-transparent" />
+                </div>
+
+                <p className="mt-6 max-w-2xl text-base leading-8 text-gray-300 sm:text-lg">
+                  {selectedService.detailsIntro}
+                </p>
+
+                <div className="mt-8 rounded-2xl border border-purple-500/20 bg-black/30 p-5 sm:p-6">
+                  <p className="text-[10px] font-black uppercase tracking-[0.28em] text-purple-300">
+                    Tarkemmin palvelusta
+                  </p>
+
+                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                    {selectedService.details.map((detail) => (
+                      <div
+                        key={detail}
+                        className="flex items-start gap-3 rounded-xl border border-purple-500/10 bg-purple-500/[0.035] px-4 py-3 text-sm leading-6 text-gray-300"
+                      >
+                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-purple-400/35 bg-purple-500/10 text-[10px] font-black text-purple-200">
+                          ✓
+                        </span>
+                        <span>{detail}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-6 rounded-2xl border border-fuchsia-500/15 bg-fuchsia-500/[0.035] p-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.25em] text-fuchsia-300">
+                    Hyvä tietää
+                  </p>
+                  <p className="mt-3 leading-7 text-gray-400">
+                    {selectedService.detailsNote}
+                  </p>
+                </div>
+
+                <div className="mt-6 rounded-2xl border border-purple-500/20 bg-purple-500/[0.035] p-4">
+                  <p className="text-sm leading-6 text-gray-400">
+                    Stream Overlay -tilaus avautuu omassa tilauslomakkeessaan, jossa tiedot tarkistetaan ennen maksua.
+                  </p>
+                </div>
+
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedService(null)}
+                    className="rounded-xl border border-purple-500/30 bg-black/30 px-5 py-3 text-sm font-black uppercase tracking-[0.08em] text-purple-200 transition hover:border-purple-300/50 hover:bg-purple-500/[0.08]"
+                  >
+                    Sulje
+                  </button>
+
+                  {selectedService.title === "Stream Overlay" ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedService(null);
+                        setOrderOpen(true);
+                      }}
+                      className="rounded-xl border border-fuchsia-400/45 bg-gradient-to-r from-purple-600 to-fuchsia-600 px-6 py-3 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(168,85,247,0.22)] transition hover:-translate-y-0.5 hover:shadow-[0_0_38px_rgba(217,70,239,0.30)]"
+                    >
+                      Tilaa Stream Overlay
+                    </button>
+                  ) : (
+                    <span className="rounded-xl border border-purple-500/20 bg-purple-500/[0.05] px-5 py-3 text-center text-xs font-black uppercase tracking-[0.10em] text-purple-300">
+                      Tilaus avautuu myöhemmin
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* STREAM OVERLAY - TILAUSMODAALI */}
+        {orderOpen && (
+          <div
+            className="fixed inset-0 z-[110] flex items-center justify-center overflow-y-auto bg-black/85 px-4 py-8 backdrop-blur-md animate-[fadeIn_180ms_ease-out]"
+            onClick={() => {
+              setOrderOpen(false);
+              setPaymentStep(false);
+              setPendingOrderData(null);
+              setOrderStatus("");
+              setPaymentSuccess(false);
+            }}
+          >
+            <form
+              className="relative my-auto w-full max-w-4xl overflow-hidden rounded-[32px] border border-fuchsia-400/35 bg-[radial-gradient(circle_at_20%_0%,rgba(168,85,247,0.22),transparent_42%),linear-gradient(145deg,rgba(24,12,31,0.995),rgba(5,3,8,0.995))] p-6 shadow-[0_0_110px_rgba(126,34,206,0.32)] sm:p-8 md:p-10 animate-[modalPop_220ms_cubic-bezier(0.16,1,0.3,1)]"
+              onClick={(event) => event.stopPropagation()}
+              onSubmit={async (event) => {
+                event.preventDefault();
+
+                if (selectedOverlayItems.length === 0) {
+                  setOrderStatus(
+                    "Valitse vähintään yksi overlay-pakettiin kuuluva kohta."
+                  );
+                  return;
+                }
+
+                try {
+                  const form = event.currentTarget;
+                  const formData = new FormData(form);
+
+                  selectedOverlayItems.forEach((item) => {
+                    formData.append("overlayItems", item);
+                  });
+
+                  setPendingOrderData(formData);
+                  setPaymentStep(true);
+                  setOrderStatus(
+                    "Tiedot tarkistettu. Valitse alta PayPal-maksutapa jatkaaksesi."
+                  );
+                } catch (error) {
+                  setOrderStatus(
+                    error instanceof Error
+                      ? error.message
+                      : "Maksuvaiheen avaaminen epäonnistui."
+                  );
+                }
+              }}
+            >
+              <div className="pointer-events-none absolute -right-28 -top-28 h-72 w-72 rounded-full bg-fuchsia-600/15 blur-[90px]" />
+              <div className="pointer-events-none absolute -bottom-32 -left-28 h-72 w-72 rounded-full bg-purple-700/15 blur-[100px]" />
+
+              <img
+                src="/images/ks-logo.png.png"
+                alt=""
+                className="pointer-events-none absolute -right-14 bottom-[-25px] w-[280px] rotate-[-12deg] object-contain opacity-[0.035]"
+              />
+
+              <button
+                type="button"
+                onClick={() => {
+                  setOrderOpen(false);
+                  setPaymentStep(false);
+                  setPendingOrderData(null);
+                  setOrderStatus("");
+                  setPaymentSuccess(false);
+                  setPaymentSuccess(false);
+                }}
+                className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-xl border border-purple-400/30 bg-black/40 text-xl font-black text-purple-200 transition hover:rotate-90 hover:border-purple-300/60 hover:bg-purple-500/10 hover:text-white"
+                aria-label="Sulje tilaus"
+              >
+                ×
+              </button>
+
+              <div className="relative z-10">
+                {paymentSuccess ? (
+                  <div className="mx-auto flex min-h-[560px] max-w-2xl flex-col items-center justify-center py-10 text-center">
+                    <div className="flex h-24 w-24 items-center justify-center rounded-full border border-emerald-400/35 bg-emerald-400/[0.08] shadow-[0_0_55px_rgba(52,211,153,0.18)]">
+                      <span className="text-5xl font-black text-emerald-300">✓</span>
+                    </div>
+
+                    <p className="mt-8 text-[11px] font-black uppercase tracking-[0.34em] text-emerald-300">
+                      Maksu onnistui
+                    </p>
+
+                    <h2 className="mt-4 text-3xl font-black uppercase leading-[1.05] sm:text-4xl md:text-5xl">
+                      Tilaus vastaanotettu
+                    </h2>
+
+                    <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-gray-400">
+Kiitos tilauksestasi! Maksu on vahvistettu onnistuneesti ja tilauksesi
+on vastaanotettu.
+                    </p>
+
+<div className="mt-8 w-full rounded-2xl border border-purple-500/20 bg-purple-500/[0.035] p-5">
+  <p className="text-sm leading-6 text-gray-400">
+    Seuraavaksi käymme tilauksesi tiedot ja toiveet läpi. Olemme sinuun
+    yhteydessä antamiesi yhteystietojen kautta, kun työn toteutus aloitetaan.
+  </p>
+</div>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOrderOpen(false);
+                        setPaymentStep(false);
+                        setPendingOrderData(null);
+                        setOrderStatus("");
+                        setPaymentSuccess(false);
+                      }}
+                      className="mt-8 w-full rounded-xl border border-emerald-400/30 bg-gradient-to-r from-emerald-500/20 via-purple-600/35 to-fuchsia-600/30 px-7 py-4 text-sm font-black uppercase tracking-[0.10em] text-white shadow-[0_0_32px_rgba(52,211,153,0.10)] transition hover:-translate-y-0.5 hover:border-emerald-300/50 hover:shadow-[0_0_42px_rgba(168,85,247,0.20)]"
+                    >
+                      Palaa palveluihin
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                <div className="flex flex-wrap items-center gap-3 pr-14">
+                  <span className="rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-[10px] font-black uppercase tracking-[0.20em] text-emerald-300">
+                    ● Tilattavissa
+                  </span>
+                  <span className="rounded-full border border-fuchsia-400/20 bg-fuchsia-500/[0.06] px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-fuchsia-200">
+                    Avaustarjous -40 %
+                  </span>
+                </div>
+
+                <p className="mt-6 text-xs font-black uppercase tracking-[0.30em] text-purple-400">
+                  KOPOSQUAD CREATIVE
+                </p>
+
+                <h2 className="mt-3 text-3xl font-black uppercase leading-[1.05] sm:text-4xl md:text-5xl">
+                  Stream Overlay -tilaus
+                </h2>
+
+                <p className="mt-5 max-w-2xl text-base leading-7 text-gray-400">
+                  Kerro kanavastasi ja siitä, millaisen overlay-kokonaisuuden haluat.
+                  Näiden tietojen pohjalta tilaus voidaan käydä läpi ennen työn aloittamista.
+                </p>
+
+                <div className="mt-7 flex flex-wrap items-end gap-3 rounded-2xl border border-purple-500/20 bg-black/30 p-5">
+                  <div>
+                    <p className="text-[9px] font-black uppercase tracking-[0.24em] text-gray-500">
+                      Avaushinta
+                    </p>
+
+                    <div className="mt-2 flex items-center gap-3">
+                      <span className="text-base font-bold text-gray-500 line-through">
+                        99,99 €
+                      </span>
+
+                      <span className="rounded-lg border border-fuchsia-400/40 bg-fuchsia-500/10 px-2.5 py-1 text-xs font-black text-fuchsia-300">
+                        -40 %
+                      </span>
+                    </div>
+
+                    <p className="mt-1 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text text-4xl font-black text-transparent">
+                      59,99 €
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-7 grid gap-5 sm:grid-cols-2">
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Nimi *
+                    </span>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      placeholder="Nimesi"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Sähköposti *
+                    </span>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="sinun@email.fi"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block sm:col-span-2">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Kanavan nimi / linkki *
+                    </span>
+                    <input
+                      type="text"
+                      name="channel"
+                      required
+                      placeholder="Esim. Twitch-, YouTube- tai Kick-kanavasi"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Toteutustapa *
+                    </span>
+                    <select
+                      name="implementation"
+                      defaultValue=""
+                      required
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-[#09060c] px-4 py-3.5 text-white outline-none transition focus:border-purple-400/60"
+                    >
+                      <option value="" disabled>
+                        Valitse toteutustapa
+                      </option>
+                      <option>Kuvallinen overlay</option>
+                      <option>Animoitu overlay</option>
+                      <option>En ole vielä varma</option>
+                    </select>
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Väriteema *
+                    </span>
+                    <input
+                      type="text"
+                      name="colorTheme"
+                      required
+                      placeholder="Esim. violetti / musta"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Discord-käyttäjänimi *
+                    </span>
+                    <input
+                      type="text"
+                      name="discord"
+                      required
+                      placeholder="Esim. kopo123"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Pääasiallinen alusta *
+                    </span>
+                    <select
+                      name="platform"
+                      defaultValue=""
+                      required
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-[#09060c] px-4 py-3.5 text-white outline-none transition focus:border-purple-400/60"
+                    >
+                      <option value="" disabled>
+                        Valitse alusta
+                      </option>
+                      <option>Twitch</option>
+                      <option>YouTube</option>
+                      <option>Kick</option>
+                      <option>Muu</option>
+                    </select>
+                  </label>
+
+                  <label className="block sm:col-span-2">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Logo ja muu materiaali
+                      <span className="ml-2 text-gray-500">(vapaaehtoinen)</span>
+                    </span>
+
+                    <div className="mt-2 rounded-2xl border border-dashed border-purple-400/30 bg-purple-500/[0.035] p-5 transition hover:border-purple-300/50 hover:bg-purple-500/[0.05]">
+                      <input
+                        type="file"
+                        name="materials"
+                        multiple
+                        accept="image/*,.zip,.rar,.psd,.svg"
+                        className="block w-full text-sm text-gray-400 file:mr-4 file:rounded-xl file:border-0 file:bg-purple-500/15 file:px-4 file:py-2.5 file:font-black file:text-purple-200 hover:file:bg-purple-500/25"
+                      />
+
+                      <p className="mt-3 text-xs leading-6 text-gray-500">
+                        Voit lisätä esimerkiksi logon, hahmon, kuvia tai muuta materiaalia,
+                        jota haluat käyttää overlayn suunnittelussa.
+                      </p>
+                    </div>
+                  </label>
+
+                  <div className="sm:col-span-2">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Mitä haluat overlay-pakettiin? *
+                    </span>
+
+                    <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                      {[
+                        "Starting Soon -ruutu",
+                        "BRB-ruutu",
+                        "Ending-ruutu",
+                        "Gameplay-overlay",
+                        "Kamera-overlay",
+                        "Alerttien tyyli",
+                      ].map((item) => {
+                        const checked = selectedOverlayItems.includes(item);
+
+                        return (
+                          <label
+                            key={item}
+                            className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition ${
+                              checked
+                                ? "border-fuchsia-400/40 bg-fuchsia-500/[0.08] text-white"
+                                : "border-purple-500/15 bg-purple-500/[0.035] text-gray-300 hover:border-purple-400/35 hover:bg-purple-500/[0.06]"
+                            }`}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={checked}
+                              onChange={() =>
+                                setSelectedOverlayItems((current) =>
+                                  current.includes(item)
+                                    ? current.filter((value) => value !== item)
+                                    : [...current, item]
+                                )
+                              }
+                              className="h-4 w-4 accent-purple-500"
+                            />
+                            <span>{item}</span>
+                          </label>
+                        );
+                      })}
+                    </div>
+
+                    <p className="mt-2 text-xs text-gray-500">
+                      Valitse vähintään yksi kohta.
+                    </p>
+                  </div>
+
+                  <label className="block sm:col-span-2">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Millaisen overlayn haluat? *
+                    </span>
+
+                    <textarea
+                      name="description"
+                      rows={5}
+                      required
+                      minLength={15}
+                      placeholder="Kerro tyylistä, väreistä, teksteistä, tunnelmasta ja muista toiveista mahdollisimman tarkasti..."
+                      className="mt-2 w-full resize-y rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+                </div>
+
+                <div className="mt-7 rounded-2xl border border-purple-500/20 bg-purple-500/[0.035] p-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-purple-300">
+                    Ennen tilausta
+                  </p>
+
+                  <label className="mt-4 flex cursor-pointer items-start gap-3 text-sm leading-6 text-gray-300">
+                    <input
+                      type="checkbox"
+                      name="termsAccepted"
+                      value="yes"
+                      required
+                      className="mt-1 h-4 w-4 shrink-0 accent-purple-500"
+                    />
+                    <span>
+                      Olen tarkistanut antamani tiedot ja ymmärrän, että työ tehdään
+                      antamieni toiveiden pohjalta. Hyväksyn tilauksen sisällön ja sen,
+                      että työn tarkemmat yksityiskohdat voidaan varmistaa ennen työn aloittamista.
+                    </span>
+                  </label>
+                </div>
+
+                {orderStatus && (
+                  <div className="mt-6 rounded-xl border border-purple-400/25 bg-purple-500/[0.05] px-4 py-3 text-sm text-purple-100">
+                    {orderStatus}
+                  </div>
+                )}
+
+                {paymentStep && pendingOrderData && (
+                  <div className="mt-7 rounded-2xl border border-fuchsia-400/25 bg-black/35 p-5">
+                    <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-[0.24em] text-purple-300">
+                          Maksuvaihe
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-gray-400">
+                          Maksettava summa:
+                          <strong className="ml-2 text-white">59,99 €</strong>
+                        </p>
+                      </div>
+
+<span className="rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-emerald-300">
+  Turvallinen maksu
+</span>
+                    </div>
+
+                    <div
+                      ref={paypalContainerRef}
+                      className="min-h-[48px] overflow-hidden rounded-xl"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPaymentStep(false);
+                        setPendingOrderData(null);
+                        setOrderStatus("");
+                      }}
+                      className="mt-4 w-full rounded-xl border border-purple-500/25 bg-purple-500/[0.04] px-4 py-3 text-xs font-black uppercase tracking-[0.08em] text-purple-200 transition hover:border-purple-300/50 hover:bg-purple-500/[0.08]"
+                    >
+                      Takaisin muokkaamaan tilausta
+                    </button>
+                  </div>
+                )}
+
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOrderOpen(false);
+                      setPaymentStep(false);
+                      setPendingOrderData(null);
+                      setOrderStatus("");
+                    }}
+                    className="rounded-xl border border-purple-500/30 bg-black/30 px-5 py-3 text-sm font-black uppercase tracking-[0.08em] text-purple-200 transition hover:border-purple-300/50 hover:bg-purple-500/[0.08]"
+                  >
+                    Peruuta
+                  </button>
+
+                  {!paymentStep && (
+                    <button
+                      type="submit"
+                      disabled={orderSending}
+                      className="rounded-xl border border-fuchsia-400/45 bg-gradient-to-r from-purple-600 to-fuchsia-600 px-7 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(168,85,247,0.22)] transition hover:-translate-y-0.5 hover:shadow-[0_0_38px_rgba(217,70,239,0.30)] disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {orderSending ? "Käsitellään..." : "Jatka maksuun"}
+                    </button>
+                  )}
+                </div>
+                  </>
+                )}
+              </div>
+
+              <style jsx global>{`
+                @keyframes fadeIn {
+                  from {
+                    opacity: 0;
+                  }
+                  to {
+                    opacity: 1;
+                  }
+                }
+
+                @keyframes modalPop {
+                  from {
+                    opacity: 0;
+                    transform: translateY(24px) scale(0.96);
+                  }
+                  to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                  }
+                }
+              `}</style>
+            </form>
+          </div>
+        )}
 
         <footer className="border-t border-purple-500/20 bg-black/80 px-6 py-10">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 text-center md:flex-row md:text-left">
