@@ -1853,6 +1853,319 @@ className="group relative flex min-h-[290px] flex-col overflow-hidden rounded-[2
 </section>
 
 
+{/* KOPOSQUAD CREATIVE */}
+
+<section className="relative overflow-hidden border-y border-purple-500/15 bg-[linear-gradient(180deg,#020202_0%,#100018_45%,#050008_100%)] px-6 py-24">
+  {/* TAUSTAN VÄRIT */}
+  <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div className="absolute left-1/2 top-1/2 h-[760px] w-[1100px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700/25 blur-[240px]" />
+    <div className="absolute -left-48 top-[-40px] h-[620px] w-[620px] rounded-full bg-fuchsia-600/16 blur-[210px]" />
+    <div className="absolute -right-56 bottom-[-100px] h-[700px] w-[700px] rounded-full bg-violet-600/16 blur-[220px]" />
+
+    <div className="absolute left-[15%] top-[10%] h-[260px] w-[260px] rounded-full bg-purple-400/10 blur-[120px]" />
+    <div className="absolute right-[20%] top-[20%] h-[240px] w-[240px] rounded-full bg-fuchsia-400/10 blur-[120px]" />
+  </div>
+
+<div className="relative z-10 mx-auto mb-10 max-w-6xl text-center">
+  <p className="text-[11px] font-black uppercase tracking-[0.38em] text-purple-400">
+    KOPOSQUAD CREATIVE
+  </p>
+
+  <h2 className="mt-4 text-4xl font-black uppercase sm:text-5xl">
+    LUO JOTAIN{" "}
+    <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-purple-500 bg-clip-text text-transparent">
+      OMAN NÄKÖISTÄSI
+    </span>
+  </h2>
+
+  <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-gray-400">
+    Visuaalisia palveluita striimaajille ja sisällöntuottajille, 
+    suunniteltuna juuri sinun kanavasi ympärille.
+  </p>
+</div>
+
+  {/* TAUSTAN KS LOGOT */}
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    aria-hidden="true"
+    className="pointer-events-none absolute -left-24 top-1/2 hidden w-[360px] -translate-y-1/2 rotate-[13deg] object-contain opacity-[0.035] lg:block"
+  />
+
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    aria-hidden="true"
+    className="pointer-events-none absolute -right-24 top-1/2 hidden w-[430px] -translate-y-1/2 rotate-[-12deg] object-contain opacity-[0.055] lg:block"
+  />
+
+  <div className="relative z-10 mx-auto max-w-6xl">
+
+    {/* YLÄTAGI */}
+    <div className="mb-7 flex justify-center">
+      <div className="inline-flex items-center gap-3 rounded-full border border-purple-400/35 bg-purple-500/10 px-5 py-2 backdrop-blur-xl shadow-[0_0_25px_rgba(168,85,247,0.18)]">
+        <span className="h-2 w-2 rounded-full bg-fuchsia-400 shadow-[0_0_14px_rgba(232,121,249,0.95)]" />
+
+        <span className="text-[10px] font-black uppercase tracking-[0.34em] text-purple-200">
+          KOPOSQUAD CREATIVE
+        </span>
+      </div>
+    </div>
+
+    {/* PÄÄKORTTI */}
+    <div className="group relative overflow-hidden rounded-[34px] border border-purple-400/35 bg-[linear-gradient(135deg,rgba(88,28,135,0.48)_0%,rgba(24,10,35,0.97)_38%,rgba(5,5,7,0.98)_72%,rgba(64,8,90,0.55)_100%)] shadow-[0_0_90px_rgba(147,51,234,0.22),0_35px_100px_rgba(0,0,0,0.55)]">
+
+      {/* KORTIN SISÄHEHKUT */}
+      <div className="pointer-events-none absolute -left-24 top-[-80px] h-[420px] w-[420px] rounded-full bg-fuchsia-500/18 blur-[130px]" />
+      <div className="pointer-events-none absolute right-[15%] top-[-120px] h-[420px] w-[420px] rounded-full bg-purple-500/18 blur-[140px]" />
+
+      {/* YLÄREUNAN VALO */}
+      <div className="pointer-events-none absolute left-[8%] right-[8%] top-0 h-px bg-gradient-to-r from-transparent via-fuchsia-300/80 to-transparent" />
+
+      {/* KORTIN ISO KS */}
+      <img
+        src="/images/ks-logo.png.png"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-16 -top-12 w-[340px] rotate-[-12deg] object-contain opacity-[0.055] transition duration-700 group-hover:scale-105 group-hover:opacity-[0.075]"
+      />
+
+      <div className="relative grid gap-10 p-8 md:p-12 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center xl:grid-cols-[minmax(0,1fr)_440px]">
+
+        {/* VASEN PUOLI */}
+        <div className="relative min-w-0">
+
+          <div className="mb-5 inline-flex rounded-lg border border-fuchsia-400/30 bg-fuchsia-500/10 px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.24em] text-fuchsia-200">
+            Creative Services
+          </div>
+
+<h2 className="max-w-[680px] font-black uppercase leading-[0.92] tracking-[-0.035em]">
+            {language === "fi" ? (
+              <>
+                <span className="block text-4xl sm:text-5xl lg:text-[3.15rem] xl:text-[3.5rem]">
+                  Tee kanavastasi
+                </span>
+
+                <span className="mt-1 block bg-gradient-to-r from-purple-200 via-fuchsia-300 to-purple-500 bg-clip-text text-4xl text-transparent drop-shadow-[0_0_28px_rgba(217,70,239,0.32)] sm:text-5xl lg:text-[3.15rem] xl:text-[3.5rem]">
+                  oman näköisesi
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="block text-4xl sm:text-5xl lg:text-[3.15rem] xl:text-[3.5rem]">
+                  Make your channel
+                </span>
+
+                <span className="mt-1 block bg-gradient-to-r from-purple-200 via-fuchsia-300 to-purple-500 bg-clip-text text-4xl text-transparent drop-shadow-[0_0_28px_rgba(217,70,239,0.32)] sm:text-5xl lg:text-[3.15rem] xl:text-[3.5rem]">
+                  look like you
+                </span>
+              </>
+            )}
+          </h2>
+          <p className="mt-6 max-w-2xl text-base leading-7 text-gray-300 md:text-lg">
+            {language === "fi"
+              ? "KOPOSQUAD Creative rakentaa striimaajille ja sisällöntuottajille persoonallisia visuaalisia kokonaisuuksia. Ei valmista massapohjaa – ilme suunnitellaan oman kanavasi tyylin ja toiveiden ympärille."
+              : "KOPOSQUAD Creative builds personal visual identities for streamers and content creators. No generic mass-produced templates – the design is built around your channel, style and ideas."}
+          </p>
+
+          {/* OMINAISUUSKORTIT */}
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            <div className="relative overflow-hidden rounded-2xl border border-purple-400/25 bg-purple-500/[0.08] p-4 backdrop-blur-xl">
+              <img
+                src="/images/ks-logo.png.png"
+                alt=""
+                className="pointer-events-none absolute -right-6 -bottom-7 w-[90px] rotate-[-10deg] opacity-[0.07]"
+              />
+
+              <p className="relative text-[9px] font-black uppercase tracking-[0.18em] text-purple-300">
+                01
+              </p>
+
+              <p className="relative mt-2 text-sm font-black text-white">
+                Custom-design
+              </p>
+            </div>
+
+            <div className="relative overflow-hidden rounded-2xl border border-fuchsia-400/25 bg-fuchsia-500/[0.07] p-4 backdrop-blur-xl">
+              <img
+                src="/images/ks-logo.png.png"
+                alt=""
+                className="pointer-events-none absolute -right-6 -bottom-7 w-[90px] rotate-[10deg] opacity-[0.06]"
+              />
+
+              <p className="relative text-[9px] font-black uppercase tracking-[0.18em] text-fuchsia-300">
+                02
+              </p>
+
+              <p className="relative mt-2 text-sm font-black text-white">
+                {language === "fi"
+                  ? "Henkilökohtainen"
+                  : "Personal design"}
+              </p>
+            </div>
+
+            <div className="relative overflow-hidden rounded-2xl border border-emerald-400/25 bg-emerald-500/[0.06] p-4 backdrop-blur-xl">
+              <p className="text-[9px] font-black uppercase tracking-[0.18em] text-emerald-300">
+                03
+              </p>
+
+              <p className="mt-2 text-sm font-black text-white">
+                {language === "fi"
+                  ? "Turvallinen maksu"
+                  : "Secure payment"}
+              </p>
+            </div>
+          </div>
+
+          <a
+            href="/palvelut"
+            className="group/button relative mt-9 inline-flex items-center justify-center overflow-hidden rounded-xl border border-fuchsia-300/30 bg-gradient-to-r from-purple-600 via-fuchsia-600 to-purple-600 px-9 py-4 text-sm font-black uppercase tracking-[0.11em] text-white shadow-[0_0_38px_rgba(168,85,247,0.35)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_60px_rgba(217,70,239,0.52)]"
+          >
+            <span className="pointer-events-none absolute -left-20 top-0 h-full w-14 rotate-12 bg-white/20 blur-md transition-all duration-700 group-hover/button:left-[120%]" />
+
+            <span className="relative">
+              {language === "fi"
+                ? "Katso kaikki palvelut →"
+                : "View all services →"}
+            </span>
+          </a>
+        </div>
+
+        {/* OIKEA TUOTEKORTTI */}
+        <div className="relative min-w-0">
+
+          {/* HEHKU KORTIN TAKANA */}
+          <div className="pointer-events-none absolute inset-8 rounded-full bg-purple-600/30 blur-[90px]" />
+
+          <div className="group/product relative overflow-hidden rounded-[28px] border border-fuchsia-400/30 bg-[linear-gradient(160deg,rgba(62,20,82,0.88),rgba(8,5,12,0.98)_50%,rgba(17,8,24,0.98))] p-7 shadow-[0_0_55px_rgba(168,85,247,0.16),0_25px_80px_rgba(0,0,0,0.55)] backdrop-blur-xl">
+
+            {/* TUOTEKORTIN KS */}
+            <img
+              src="/images/ks-logo.png.png"
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-10 -bottom-12 w-[190px] rotate-[-12deg] object-contain opacity-[0.08] transition duration-500 group-hover/product:scale-110 group-hover/product:opacity-[0.12]"
+            />
+
+            <div className="pointer-events-none absolute left-0 top-0 h-full w-[3px] bg-gradient-to-b from-fuchsia-400 via-purple-500 to-transparent" />
+
+            <div className="relative z-10 flex items-center justify-between gap-4">
+              <p className="text-[10px] font-black uppercase tracking-[0.25em] text-fuchsia-300">
+                {language === "fi"
+                  ? "Nyt tilattavissa"
+                  : "Available now"}
+              </p>
+
+              <span className="rounded-full border border-emerald-400/35 bg-emerald-400/[0.09] px-3 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-emerald-300 shadow-[0_0_20px_rgba(52,211,153,0.08)]">
+                {language === "fi"
+                  ? "Tilattavissa"
+                  : "Available"}
+              </span>
+            </div>
+
+            <div className="relative z-10 mt-7">
+              <div className="flex items-start gap-4">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-purple-400/30 bg-purple-500/10 shadow-[0_0_25px_rgba(168,85,247,0.16)]">
+                  <img
+                    src="/images/ks-logo.png.png"
+                    alt=""
+                    className="w-9 object-contain"
+                  />
+                </div>
+
+                <div>
+                  <h3 className="text-3xl font-black uppercase leading-tight text-white">
+                    Stream Overlay
+                  </h3>
+
+                  <p className="mt-2 text-sm leading-6 text-gray-400">
+                    {language === "fi"
+                      ? "Täysi visuaalinen overlay-paketti oman striimisi ilmeen rakentamiseen."
+                      : "A complete visual overlay package for building the identity of your stream."}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* SISÄLTÖLISTA */}
+            <div className="relative z-10 mt-7 grid grid-cols-2 gap-2">
+              {[
+                "Starting Soon",
+                "BRB",
+                "Ending",
+                "Kamera-overlay",
+                "Alertit",
+                "Gameplay",
+              ].map((item) => (
+                <div
+                  key={item}
+                  className="rounded-xl border border-purple-400/15 bg-black/30 px-3 py-2 text-[11px] font-bold text-gray-300"
+                >
+                  <span className="mr-2 text-purple-400">✓</span>
+                  {item}
+                </div>
+              ))}
+            </div>
+
+            <div className="relative z-10 mt-7 flex items-end justify-between border-t border-purple-400/20 pt-6">
+              <div>
+                <p className="text-[9px] font-black uppercase tracking-[0.22em] text-purple-300">
+                  {language === "fi" ? "Hinta" : "Price"}
+                </p>
+
+<div className="mt-3">
+                  <div className="mb-2 flex flex-wrap items-center gap-2">
+                    <span className="text-sm font-bold text-gray-500 line-through decoration-fuchsia-400/70 decoration-2">
+                      99,99 €
+                    </span>
+
+                    <span className="rounded-full border border-fuchsia-400/35 bg-fuchsia-500/12 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-fuchsia-300 shadow-[0_0_18px_rgba(217,70,239,0.14)]">
+                      ALE -40 %
+                    </span>
+                  </div>
+
+                  <div className="relative inline-flex items-center">
+                    <div className="pointer-events-none absolute -inset-x-5 -inset-y-3 animate-pulse rounded-2xl bg-fuchsia-500/20 blur-2xl" />
+                    <div className="pointer-events-none absolute -inset-x-2 -inset-y-1 rounded-2xl bg-purple-400/10 blur-lg" />
+
+                    <p className="relative whitespace-nowrap text-5xl font-black tracking-[-0.045em] text-white drop-shadow-[0_0_20px_rgba(192,132,252,0.55)]">
+                      59,99 €
+                    </p>
+                  </div>
+
+                  <div className="mt-2 h-px w-[150px] bg-gradient-to-r from-fuchsia-400/85 via-purple-400/50 to-transparent shadow-[0_0_14px_rgba(217,70,239,0.5)]" />
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-purple-400/20 bg-purple-500/[0.06] px-3 py-2 text-right">
+                <p className="text-[8px] font-black uppercase tracking-[0.15em] text-gray-500">
+                  KOPOSQUAD
+                </p>
+                <p className="mt-1 text-xs font-black text-purple-300">
+                  CREATIVE
+                </p>
+              </div>
+            </div>
+
+            <a
+              href="/palvelut"
+              className="relative z-10 mt-7 flex w-full items-center justify-center rounded-xl border border-fuchsia-400/35 bg-gradient-to-r from-purple-500/20 to-fuchsia-500/20 px-5 py-3.5 text-xs font-black uppercase tracking-[0.12em] text-purple-100 transition duration-300 hover:-translate-y-0.5 hover:border-fuchsia-300 hover:bg-fuchsia-500/20 hover:text-white hover:shadow-[0_0_30px_rgba(217,70,239,0.20)]"
+            >
+              {language === "fi"
+                ? "Tutustu Stream Overlayhin →"
+                : "Explore Stream Overlay →"}
+            </a>
+
+          </div>
+        </div>
+
+      </div>
+
+      {/* ALAREUNAN VALOJUOVA */}
+      <div className="pointer-events-none h-px w-full bg-gradient-to-r from-transparent via-purple-400/50 to-transparent" />
+    </div>
+  </div>
+</section>
 
 
 {/* ROADMAP */}
