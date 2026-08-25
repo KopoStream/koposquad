@@ -46,12 +46,19 @@ export default function TietoaPage() {
               Uutiset
             </a>
 
-            <a href="/#liity" className="text-gray-300 transition hover:text-white">
-              Liity
-            </a>
+<a href="/#liity" className="text-gray-300 transition hover:text-white">
+  Liity
+</a>
 
-            <a
-              href="https://discord.gg/ZXgSS9v6ye"
+<a
+  href="/palvelut"
+  className="text-gray-300 transition hover:text-purple-300"
+>
+  Palvelut
+</a>
+
+<a
+  href="https://discord.gg/ZXgSS9v6ye"
               target="_blank"
               rel="noopener noreferrer"
               className="font-black text-purple-400 transition hover:text-purple-300"

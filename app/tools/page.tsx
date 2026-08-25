@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Header from "../../components/Header";
 
 type Tool = {
   name: string;
@@ -374,58 +375,9 @@ export default function ToolsPage() {
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.35)_58%,rgba(0,0,0,0.82)_100%)]" />
 </div>
 
-      <div className="relative z-10">
-        <nav className="sticky top-0 z-50 border-b border-purple-500/20 bg-black/85 backdrop-blur-xl">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-            <a href="/" className="text-3xl font-black tracking-tight">
-              <span className="text-purple-500">KOPO</span>
-              <span className="text-white">SQUAD</span>
-            </a>
+<div className="relative z-10">
+  <Header activePage="tyokalut" />
 
-            <div className="hidden items-center gap-7 text-sm font-semibold md:flex">
-              <a href="/" className="text-gray-300 transition hover:text-white">
-                Etusivu
-              </a>
-              <a href="/#live" className="text-gray-300 transition hover:text-white">
-                Live
-              </a>
-<a href="/#tiimi" className="text-gray-300 transition hover:text-white">
-  Tiimi
-</a>
-
-<a href="/#clips" className="text-gray-300 transition hover:text-white">
-  Clips
-</a>
-              <a
-                href="/tools"
-                className="font-black text-purple-400 transition hover:text-purple-300"
-              >
-                Työkalut
-              </a>
-              <a href="/#uutiset" className="text-gray-300 transition hover:text-white">
-                Uutiset
-              </a>
-              <a href="/#liity" className="text-gray-300 transition hover:text-white">
-                Liity
-              </a>
-              <a
-                href="https://discord.gg/ZXgSS9v6ye"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-black text-purple-400 transition hover:text-purple-300"
-              >
-                Discord
-              </a>
-            </div>
-
-            <a
-              href="/"
-              className="rounded-xl border border-purple-500/40 px-4 py-2 text-sm font-black text-purple-300 transition hover:bg-purple-500/10 hover:text-white"
-            >
-              Takaisin
-            </a>
-          </div>
-        </nav>
 
         <section className="relative border-b border-purple-500/20">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_45%,rgba(126,34,206,0.34),transparent_38%)]" />

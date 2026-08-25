@@ -304,15 +304,22 @@ useEffect(() => {
         {language === "fi" ? "Uutiset" : "News"}
       </a>
 
-      <a
-        href="#liity"
-        className="text-gray-300 transition hover:text-white"
-      >
-        {language === "fi" ? "Liity" : "Join"}
-      </a>
+<a
+  href="#liity"
+  className="text-gray-300 transition hover:text-white"
+>
+  {language === "fi" ? "Liity" : "Join"}
+</a>
 
-      <a
-        href="https://discord.gg/ZXgSS9v6ye"
+<a
+  href="/palvelut"
+  className="text-gray-300 transition hover:text-purple-300"
+>
+  {language === "fi" ? "Palvelut" : "Services"}
+</a>
+
+<a
+  href="https://discord.gg/ZXgSS9v6ye"
         target="_blank"
         rel="noopener noreferrer"
         className="font-black text-purple-400 transition hover:text-purple-300"
