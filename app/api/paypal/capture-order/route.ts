@@ -10,12 +10,20 @@ const PRODUCTS = {
     amount: "59.99",
   },
 
+  "stream-overlay-static": {
+    amount: "59.99",
+  },
+
+  "stream-overlay-animated": {
+    amount: "69.99",
+  },
+
   "emote-5": {
     amount: "39.99",
   },
 
   "emote-10": {
-    amount: "69.99",
+    amount: "59.99",
   },
 
   "graphics-package": {
@@ -62,8 +70,7 @@ export async function POST(request: Request) {
 
     const orderID = String(body?.orderID || "").trim();
 
-    // Stream Overlay käyttää oletuksena tätä,
-    // jos productCodea ei lähetetä.
+    // Vanha Overlay-koodi toimii edelleen oletuksella.
     const requestedProductCode = String(
       body?.productCode || "stream-overlay"
     ).trim();

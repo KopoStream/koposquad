@@ -12,6 +12,18 @@ const PRODUCTS = {
     amount: "59.99",
   },
 
+  "stream-overlay-static": {
+    referenceId: "stream-overlay-static",
+    description: "KOPOSQUAD Creative - Stream Overlay - Kuvallinen",
+    amount: "59.99",
+  },
+
+  "stream-overlay-animated": {
+    referenceId: "stream-overlay-animated",
+    description: "KOPOSQUAD Creative - Stream Overlay - Animoitu",
+    amount: "69.99",
+  },
+
   "emote-5": {
     referenceId: "emote-5",
     description: "KOPOSQUAD Creative - Emote-paketti 5 emotea",
@@ -21,7 +33,7 @@ const PRODUCTS = {
   "emote-10": {
     referenceId: "emote-10",
     description: "KOPOSQUAD Creative - Emote-paketti 10 emotea",
-    amount: "69.99",
+    amount: "59.99",
   },
 
   "graphics-package": {
@@ -66,8 +78,7 @@ async function getPayPalAccessToken() {
 
 export async function POST(request: Request) {
   try {
-    // Oletuksena Stream Overlay, jotta vanha Overlay-maksu
-    // toimii edelleen ilman productCodea.
+    // Vanha Overlay-koodi toimii edelleen oletuksella.
     let productCode: ProductCode = "stream-overlay";
 
     const rawBody = await request.text();
