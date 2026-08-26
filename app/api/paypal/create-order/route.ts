@@ -5,9 +5,37 @@ export const runtime = "nodejs";
 const PAYPAL_BASE_URL =
   process.env.PAYPAL_LIVE_BASE_URL || "https://api-m.paypal.com";
 
+const PRODUCTS = {
+  "stream-overlay": {
+    referenceId: "stream-overlay",
+    description: "KOPOSQUAD Creative - Stream Overlay",
+    amount: "59.99",
+  },
+
+  "emote-5": {
+    referenceId: "emote-5",
+    description: "KOPOSQUAD Creative - Emote-paketti 5 emotea",
+    amount: "39.99",
+  },
+
+  "emote-10": {
+    referenceId: "emote-10",
+    description: "KOPOSQUAD Creative - Emote-paketti 10 emotea",
+    amount: "69.99",
+  },
+
+  "graphics-package": {
+    referenceId: "graphics-package",
+    description: "KOPOSQUAD Creative - Grafiikkapaketti",
+    amount: "79.99",
+  },
+} as const;
+
+type ProductCode = keyof typeof PRODUCTS;
+
 async function getPayPalAccessToken() {
-const clientId = process.env.PAYPAL_LIVE_CLIENT_ID;
-const clientSecret = process.env.PAYPAL_LIVE_CLIENT_SECRET;
+  const clientId = process.env.PAYPAL_LIVE_CLIENT_ID;
+  const clientSecret = process.env.PAYPAL_LIVE_CLIENT_SECRET;
 
   if (!clientId || !clientSecret) {
     throw new Error("PayPal Client ID tai Secret puuttuu.");
@@ -36,8 +64,39 @@ const clientSecret = process.env.PAYPAL_LIVE_CLIENT_SECRET;
   return data.access_token as string;
 }
 
-export async function POST() {
+export async function POST(request: Request) {
   try {
+    // Oletuksena Stream Overlay, jotta vanha Overlay-maksu
+    // toimii edelleen ilman productCodea.
+    let productCode: ProductCode = "stream-overlay";
+
+    const rawBody = await request.text();
+
+    if (rawBody.trim()) {
+      const body = JSON.parse(rawBody);
+
+      const requestedProductCode = String(
+        body?.productCode || ""
+      ).trim();
+
+      if (requestedProductCode) {
+        if (!(requestedProductCode in PRODUCTS)) {
+          return NextResponse.json(
+            {
+              error: "Tuntematon PayPal-tuote.",
+            },
+            {
+              status: 400,
+            }
+          );
+        }
+
+        productCode = requestedProductCode as ProductCode;
+      }
+    }
+
+    const product = PRODUCTS[productCode];
+
     const accessToken = await getPayPalAccessToken();
 
     const response = await fetch(
@@ -51,23 +110,19 @@ export async function POST() {
           Prefer: "return=representation",
           "PayPal-Request-Id": crypto.randomUUID(),
         },
-
         body: JSON.stringify({
           intent: "CAPTURE",
-
           purchase_units: [
             {
-              reference_id: "stream-overlay",
-              description: "KOPOSQUAD Creative - Stream Overlay",
-
+              reference_id: product.referenceId,
+              description: product.description,
               amount: {
                 currency_code: "EUR",
-                value: "59.99",
+                value: product.amount,
               },
             },
           ],
         }),
-
         cache: "no-store",
       }
     );
@@ -75,7 +130,10 @@ export async function POST() {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("PayPal create order error:", data);
+      console.error(
+        "PayPal create order error:",
+        JSON.stringify(data, null, 2)
+      );
 
       return NextResponse.json(
         {
@@ -84,13 +142,18 @@ export async function POST() {
             data?.message ||
             "PayPal-tilauksen luominen epäonnistui.",
         },
-        { status: response.status }
+        {
+          status: response.status,
+        }
       );
     }
 
     return NextResponse.json({
       id: data.id,
       status: data.status,
+      productCode,
+      amount: product.amount,
+      currency: "EUR",
     });
   } catch (error) {
     console.error("PayPal create order error:", error);
@@ -102,7 +165,9 @@ export async function POST() {
             ? error.message
             : "PayPal-tilauksen luominen epäonnistui.",
       },
-      { status: 500 }
+      {
+        status: 500,
+      }
     );
   }
 }

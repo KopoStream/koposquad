@@ -5,9 +5,30 @@ export const runtime = "nodejs";
 const PAYPAL_BASE_URL =
   process.env.PAYPAL_LIVE_BASE_URL || "https://api-m.paypal.com";
 
+const PRODUCTS = {
+  "stream-overlay": {
+    amount: "59.99",
+  },
+
+  "emote-5": {
+    amount: "39.99",
+  },
+
+  "emote-10": {
+    amount: "69.99",
+  },
+
+  "graphics-package": {
+    amount: "79.99",
+  },
+} as const;
+
+type ProductCode = keyof typeof PRODUCTS;
+
 async function getPayPalAccessToken() {
-const clientId = process.env.PAYPAL_LIVE_CLIENT_ID;
-const clientSecret = process.env.PAYPAL_LIVE_CLIENT_SECRET;
+  const clientId = process.env.PAYPAL_LIVE_CLIENT_ID;
+  const clientSecret = process.env.PAYPAL_LIVE_CLIENT_SECRET;
+
   if (!clientId || !clientSecret) {
     throw new Error("PayPal Client ID tai Secret puuttuu.");
   }
@@ -19,6 +40,7 @@ const clientSecret = process.env.PAYPAL_LIVE_CLIENT_SECRET;
     headers: {
       Authorization: `Basic ${auth}`,
       "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
     },
     body: "grant_type=client_credentials",
     cache: "no-store",
@@ -37,24 +59,52 @@ const clientSecret = process.env.PAYPAL_LIVE_CLIENT_SECRET;
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+
     const orderID = String(body?.orderID || "").trim();
+
+    // Stream Overlay käyttää oletuksena tätä,
+    // jos productCodea ei lähetetä.
+    const requestedProductCode = String(
+      body?.productCode || "stream-overlay"
+    ).trim();
 
     if (!orderID) {
       return NextResponse.json(
-        { error: "PayPal Order ID puuttuu." },
-        { status: 400 }
+        {
+          error: "PayPal Order ID puuttuu.",
+        },
+        {
+          status: 400,
+        }
       );
     }
+
+    if (!(requestedProductCode in PRODUCTS)) {
+      return NextResponse.json(
+        {
+          error: "Tuntematon PayPal-tuote.",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const productCode = requestedProductCode as ProductCode;
+    const expectedAmount = PRODUCTS[productCode].amount;
 
     const accessToken = await getPayPalAccessToken();
 
     const response = await fetch(
-      `${PAYPAL_BASE_URL}/v2/checkout/orders/${encodeURIComponent(orderID)}/capture`,
+      `${PAYPAL_BASE_URL}/v2/checkout/orders/${encodeURIComponent(
+        orderID
+      )}/capture`,
       {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
+          Accept: "application/json",
           Prefer: "return=representation",
           "PayPal-Request-Id": crypto.randomUUID(),
         },
@@ -66,7 +116,10 @@ export async function POST(request: Request) {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("PayPal capture error:", JSON.stringify(data, null, 2));
+      console.error(
+        "PayPal capture error:",
+        JSON.stringify(data, null, 2)
+      );
 
       return NextResponse.json(
         {
@@ -76,7 +129,9 @@ export async function POST(request: Request) {
             "PayPal-maksun vahvistaminen epäonnistui.",
           details: data,
         },
-        { status: response.status }
+        {
+          status: response.status,
+        }
       );
     }
 
@@ -90,13 +145,15 @@ export async function POST(request: Request) {
     if (
       data?.status !== "COMPLETED" ||
       captureStatus !== "COMPLETED" ||
-      amount !== "59.99" ||
+      amount !== expectedAmount ||
       currency !== "EUR"
     ) {
       console.error(
         "PayPal capture validation failed:",
         JSON.stringify(
           {
+            productCode,
+            expectedAmount,
             orderStatus: data?.status,
             captureStatus,
             amount,
@@ -112,7 +169,9 @@ export async function POST(request: Request) {
         {
           error: "PayPal-maksun tietojen vahvistaminen epäonnistui.",
         },
-        { status: 400 }
+        {
+          status: 400,
+        }
       );
     }
 
@@ -120,6 +179,7 @@ export async function POST(request: Request) {
       id: data.id,
       status: data.status,
       captureId: capture.id,
+      productCode,
       amount,
       currency,
     });
@@ -128,9 +188,14 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        error: "PayPal-maksun vahvistaminen epäonnistui.",
+        error:
+          error instanceof Error
+            ? error.message
+            : "PayPal-maksun vahvistaminen epäonnistui.",
       },
-      { status: 500 }
+      {
+        status: 500,
+      }
     );
   }
 }

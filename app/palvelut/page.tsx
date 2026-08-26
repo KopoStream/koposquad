@@ -49,40 +49,56 @@ const services = [
     category: "TWITCH & DISCORD",
     title: "Emote-paketti",
     description:
-      "Oman ideasi, hahmosi tai kanavasi tyylin pohjalta suunniteltuja emoteja Twitchiin ja Discordiin.",
-    price: "Hinta tulossa",
-    status: "TULOSSA",
+      "Oman ideasi, hahmosi tai kanavasi tyylin pohjalta suunniteltuja custom-emoteja Twitchiin ja Discordiin.",
+
+    price: "39,99 €",
+    oldPrice: "59,99 €",
+    discount: "-33 %",
+    offer: true,
+
+    emotePackages: [
+      { label: "5 EMOTEA", price: "39,99 €", oldPrice: "59,99 €", discount: "-33 %" },
+      { label: "10 EMOTEA", price: "69,99 €", oldPrice: "99,99 €", discount: "-30 %" },
+    ],
+
+    status: "",
     accent:
       "from-fuchsia-500/20 via-purple-500/10 to-transparent",
     glow: "bg-fuchsia-600/20",
     features: [
-      "Custom-emotet",
+      "5 tai 10 yksilöllistä custom-emotea",
       "Twitch-yhteensopivat koot",
       "Discord-käyttö",
-      "Läpinäkyvä PNG",
+      "Läpinäkyvät PNG-tiedostot",
       "Oma tyyli ja värit",
+      "2 korjauskierrosta",
     ],
     detailsTitle: "Mitä Emote-paketti tarkoittaa?",
     detailsIntro:
-      "Emote-paketissa suunnitellaan kanavallesi omia emoteja ideasi, hahmosi, ilmeesi tai brändisi pohjalta.",
+      "Emote-paketissa suunnitellaan kanavallesi yhtenäinen 5 tai 10 emotea sisältävä kokonaisuus ideasi, hahmosi, ilmeesi tai brändisi pohjalta.",
     details: [
+      "Valittavana 5 tai 10 custom-emotea",
       "Oma idea tai hahmo lähtökohdaksi",
       "Twitchiin sopivat emote-koot",
       "Discord-käyttö huomioituna",
       "Läpinäkyvät PNG-tiedostot",
       "Värimaailma kanavasi mukaan",
-      "Mahdollisuus rakentaa yhtenäinen emote-sarja",
+      "Yhtenäinen emote-sarja",
+      "2 korjauskierrosta",
     ],
     detailsNote:
-      "Emotet suunnitellaan tilaajan toiveiden mukaan. Tarkempi määrä, tyyli ja hinta vahvistetaan ennen työn aloittamista.",
+      "Valitset tilauksen yhteydessä 5 tai 10 emoten paketin. Paketin hinta määräytyy valitsemasi koon mukaan.",
   },
   {
     category: "KANAVAN ILME",
     title: "Grafiikkapaketti",
     description:
       "Kanavasi visuaalinen ilme kuntoon yhdellä paketilla. Sopii Twitchiin, YouTubeen ja muihin somekanaviin.",
-    price: "Hinta tulossa",
-    status: "TULOSSA",
+    price: "79,99 €",
+    oldPrice: "129,99 €",
+    discount: "-38 %",
+    offer: true,
+    status: "",
     accent:
       "from-violet-500/20 via-blue-500/10 to-transparent",
     glow: "bg-violet-600/20",
@@ -92,6 +108,7 @@ const services = [
       "Twitch-paneelit",
       "Somegrafiikat",
       "Yhtenäinen visuaalinen tyyli",
+      "2 korjauskierrosta",
     ],
     detailsTitle: "Mitä Grafiikkapaketti tarkoittaa?",
     detailsIntro:
@@ -262,6 +279,20 @@ export default function PalvelutPage() {
   const [selectedService, setSelectedService] =
     useState<(typeof services)[number] | null>(null);
   const [orderOpen, setOrderOpen] = useState(false);
+  const [emoteOrderOpen, setEmoteOrderOpen] = useState(false);
+  const [graphicsOrderOpen, setGraphicsOrderOpen] = useState(false);
+const [graphicsOrderStatus, setGraphicsOrderStatus] = useState("");
+const [graphicsPaymentStep, setGraphicsPaymentStep] = useState(false);
+const [pendingGraphicsOrderData, setPendingGraphicsOrderData] =
+  useState<FormData | null>(null);
+const [graphicsPaymentSuccess, setGraphicsPaymentSuccess] = useState(false);
+const graphicsPaypalContainerRef = useRef<HTMLDivElement | null>(null);
+  const [selectedEmotePackage, setSelectedEmotePackage] = useState<"5" | "10">("5");
+  const [emoteOrderStatus, setEmoteOrderStatus] = useState("");
+  const [emotePaymentStep, setEmotePaymentStep] = useState(false);
+  const [pendingEmoteOrderData, setPendingEmoteOrderData] = useState<FormData | null>(null);
+  const [emotePaymentSuccess, setEmotePaymentSuccess] = useState(false);
+  const emotePaypalContainerRef = useRef<HTMLDivElement | null>(null);
   const [selectedOverlayItems, setSelectedOverlayItems] = useState<string[]>([]);
   const [orderSending, setOrderSending] = useState(false);
   const [orderStatus, setOrderStatus] = useState("");
@@ -466,6 +497,507 @@ const clientId = process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID;
     };
   }, [paymentStep, pendingOrderData]);
 
+
+  useEffect(() => {
+    if (!emotePaymentStep || !pendingEmoteOrderData) return;
+
+    const clientId = process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID;
+
+    if (!clientId) {
+      setEmoteOrderStatus("PayPal Client ID puuttuu .env.local-tiedostosta.");
+      return;
+    }
+
+    let cancelled = false;
+
+    const renderEmotePayPalButtons = async () => {
+      try {
+        let paypal = (window as any).paypal;
+
+        if (!paypal) {
+          const existingScript = document.querySelector<HTMLScriptElement>(
+            'script[data-koposquad-paypal="true"]'
+          );
+
+          if (existingScript) {
+            await new Promise<void>((resolve, reject) => {
+              if ((window as any).paypal) {
+                resolve();
+                return;
+              }
+
+              existingScript.addEventListener("load", () => resolve(), {
+                once: true,
+              });
+              existingScript.addEventListener(
+                "error",
+                () => reject(new Error("PayPal SDK:n lataus epäonnistui.")),
+                { once: true }
+              );
+            });
+          } else {
+            await new Promise<void>((resolve, reject) => {
+              const script = document.createElement("script");
+              script.src =
+                `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(
+                  clientId
+                )}&currency=EUR&intent=capture`;
+              script.async = true;
+              script.dataset.koposquadPaypal = "true";
+              script.onload = () => resolve();
+              script.onerror = () =>
+                reject(new Error("PayPal SDK:n lataus epäonnistui."));
+              document.body.appendChild(script);
+            });
+          }
+
+          paypal = (window as any).paypal;
+        }
+
+        if (
+          cancelled ||
+          !emotePaypalContainerRef.current ||
+          !paypal
+        ) {
+          return;
+        }
+
+        emotePaypalContainerRef.current.innerHTML = "";
+
+        const productCode =
+          selectedEmotePackage === "5" ? "emote-5" : "emote-10";
+
+        await paypal
+          .Buttons({
+            style: {
+              layout: "vertical",
+              shape: "rect",
+              label: "paypal",
+            },
+
+            createOrder: async () => {
+              setEmoteOrderStatus("Luodaan PayPal-maksua...");
+
+              const response = await fetch("/api/paypal/create-order", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  productCode,
+                }),
+              });
+
+              const data = await response.json();
+
+              if (!response.ok || !data?.id) {
+                throw new Error(
+                  data?.error || "PayPal-maksun luominen epäonnistui."
+                );
+              }
+
+              return data.id;
+            },
+
+            onApprove: async (data: { orderID: string }) => {
+              try {
+                setOrderSending(true);
+                setEmoteOrderStatus("Vahvistetaan PayPal-maksua...");
+
+                const captureResponse = await fetch(
+                  "/api/paypal/capture-order",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      orderID: data.orderID,
+                      productCode,
+                    }),
+                  }
+                );
+
+                const captureData = await captureResponse.json();
+
+                if (
+                  !captureResponse.ok ||
+                  captureData?.status !== "COMPLETED"
+                ) {
+                  throw new Error(
+                    captureData?.error ||
+                      "PayPal-maksun vahvistaminen epäonnistui."
+                  );
+                }
+
+                setEmoteOrderStatus(
+                  "Maksu onnistui. Lähetetään tilausta sähköpostiin..."
+                );
+
+                const orderData = new FormData();
+
+                pendingEmoteOrderData.forEach((value, key) => {
+                  orderData.append(key, value);
+                });
+
+                orderData.set(
+                  "service",
+                  selectedEmotePackage === "5"
+                    ? "Emote-paketti – 5 emotea"
+                    : "Emote-paketti – 10 emotea"
+                );
+                orderData.set(
+                  "price",
+                  selectedEmotePackage === "5" ? "39,99 €" : "69,99 €"
+                );
+                orderData.set(
+                  "emotePackage",
+                  selectedEmotePackage === "5" ? "5 emotea" : "10 emotea"
+                );
+
+                orderData.append("paypalOrderId", data.orderID);
+                orderData.append(
+                  "paypalCaptureId",
+                  String(captureData?.captureId || "")
+                );
+
+                const orderResponse = await fetch("/api/order", {
+                  method: "POST",
+                  body: orderData,
+                });
+
+                const orderResult = await orderResponse.json();
+
+                if (!orderResponse.ok) {
+                  throw new Error(
+                    orderResult?.error ||
+                      "Maksu onnistui, mutta tilauksen sähköpostin lähetys epäonnistui."
+                  );
+                }
+
+                setEmoteOrderStatus("");
+                setEmotePaymentSuccess(true);
+                setPendingEmoteOrderData(null);
+                setEmotePaymentStep(false);
+              } catch (error) {
+                setEmoteOrderStatus(
+                  error instanceof Error
+                    ? error.message
+                    : "Maksun käsittelyssä tapahtui virhe."
+                );
+              } finally {
+                setOrderSending(false);
+              }
+            },
+
+            onCancel: () => {
+              setEmoteOrderStatus(
+                "PayPal-maksu peruutettiin. Voit yrittää uudelleen."
+              );
+            },
+
+            onError: (error: unknown) => {
+              console.error("PayPal Emote payment error:", error);
+              setEmoteOrderStatus(
+                "PayPal-maksussa tapahtui virhe. Yritä uudelleen."
+              );
+            },
+          })
+          .render(emotePaypalContainerRef.current);
+      } catch (error) {
+        setEmoteOrderStatus(
+          error instanceof Error
+            ? error.message
+            : "PayPal-maksuvaiheen lataaminen epäonnistui."
+        );
+      }
+    };
+
+    renderEmotePayPalButtons();
+
+    return () => {
+      cancelled = true;
+      if (emotePaypalContainerRef.current) {
+        emotePaypalContainerRef.current.innerHTML = "";
+      }
+    };
+  }, [
+    emotePaymentStep,
+    pendingEmoteOrderData,
+    selectedEmotePackage,
+  ]);
+  useEffect(() => {
+    if (!graphicsPaymentStep || !pendingGraphicsOrderData) return;
+
+    const clientId = process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID;
+
+    if (!clientId) {
+      setGraphicsOrderStatus(
+        "PayPal Client ID puuttuu .env.local-tiedostosta."
+      );
+      return;
+    }
+
+    let cancelled = false;
+
+    const renderGraphicsPayPalButtons = async () => {
+      try {
+        let paypal = (window as any).paypal;
+
+        if (!paypal) {
+          const existingScript =
+            document.querySelector<HTMLScriptElement>(
+              'script[data-koposquad-paypal="true"]'
+            );
+
+          if (existingScript) {
+            await new Promise<void>((resolve, reject) => {
+              if ((window as any).paypal) {
+                resolve();
+                return;
+              }
+
+              existingScript.addEventListener(
+                "load",
+                () => resolve(),
+                { once: true }
+              );
+
+              existingScript.addEventListener(
+                "error",
+                () =>
+                  reject(
+                    new Error(
+                      "PayPal SDK:n lataus epäonnistui."
+                    )
+                  ),
+                { once: true }
+              );
+            });
+          } else {
+            await new Promise<void>((resolve, reject) => {
+              const script = document.createElement("script");
+
+              script.src =
+                `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(
+                  clientId
+                )}&currency=EUR&intent=capture`;
+
+              script.async = true;
+              script.dataset.koposquadPaypal = "true";
+
+              script.onload = () => resolve();
+
+              script.onerror = () =>
+                reject(
+                  new Error(
+                    "PayPal SDK:n lataus epäonnistui."
+                  )
+                );
+
+              document.body.appendChild(script);
+            });
+          }
+
+          paypal = (window as any).paypal;
+        }
+
+        if (
+          cancelled ||
+          !graphicsPaypalContainerRef.current ||
+          !paypal
+        ) {
+          return;
+        }
+
+        graphicsPaypalContainerRef.current.innerHTML = "";
+
+        const productCode = "graphics-package";
+
+        await paypal
+          .Buttons({
+            style: {
+              layout: "vertical",
+              shape: "rect",
+              label: "paypal",
+            },
+
+            createOrder: async () => {
+              setGraphicsOrderStatus(
+                "Luodaan PayPal-maksua..."
+              );
+
+              const response = await fetch(
+                "/api/paypal/create-order",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    productCode,
+                  }),
+                }
+              );
+
+              const data = await response.json();
+
+              if (!response.ok || !data?.id) {
+                throw new Error(
+                  data?.error ||
+                    "PayPal-maksun luominen epäonnistui."
+                );
+              }
+
+              return data.id;
+            },
+
+            onApprove: async (data: {
+              orderID: string;
+            }) => {
+              try {
+                setOrderSending(true);
+
+                setGraphicsOrderStatus(
+                  "Vahvistetaan PayPal-maksua..."
+                );
+
+                const captureResponse = await fetch(
+                  "/api/paypal/capture-order",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      orderID: data.orderID,
+                      productCode,
+                    }),
+                  }
+                );
+
+                const captureData =
+                  await captureResponse.json();
+
+                if (
+                  !captureResponse.ok ||
+                  captureData?.status !== "COMPLETED"
+                ) {
+                  throw new Error(
+                    captureData?.error ||
+                      "PayPal-maksun vahvistaminen epäonnistui."
+                  );
+                }
+
+                setGraphicsOrderStatus(
+                  "Maksu onnistui. Lähetetään tilausta sähköpostiin..."
+                );
+
+                const orderData = new FormData();
+
+                pendingGraphicsOrderData.forEach(
+                  (value, key) => {
+                    orderData.append(key, value);
+                  }
+                );
+
+                orderData.set(
+                  "service",
+                  "Grafiikkapaketti"
+                );
+
+                orderData.set(
+                  "price",
+                  "79,99 €"
+                );
+
+                orderData.append(
+                  "paypalOrderId",
+                  data.orderID
+                );
+
+                orderData.append(
+                  "paypalCaptureId",
+                  String(
+                    captureData?.captureId || ""
+                  )
+                );
+
+                const orderResponse = await fetch(
+                  "/api/order",
+                  {
+                    method: "POST",
+                    body: orderData,
+                  }
+                );
+
+                const orderResult =
+                  await orderResponse.json();
+
+                if (!orderResponse.ok) {
+                  throw new Error(
+                    orderResult?.error ||
+                      "Maksu onnistui, mutta tilauksen sähköpostin lähetys epäonnistui."
+                  );
+                }
+
+                setGraphicsOrderStatus("");
+                setGraphicsPaymentSuccess(true);
+                setPendingGraphicsOrderData(null);
+                setGraphicsPaymentStep(false);
+              } catch (error) {
+                setGraphicsOrderStatus(
+                  error instanceof Error
+                    ? error.message
+                    : "Maksun käsittelyssä tapahtui virhe."
+                );
+              } finally {
+                setOrderSending(false);
+              }
+            },
+
+            onCancel: () => {
+              setGraphicsOrderStatus(
+                "PayPal-maksu peruutettiin. Voit yrittää uudelleen."
+              );
+            },
+
+            onError: (error: unknown) => {
+              console.error(
+                "PayPal Graphics payment error:",
+                error
+              );
+
+              setGraphicsOrderStatus(
+                "PayPal-maksussa tapahtui virhe. Yritä uudelleen."
+              );
+            },
+          })
+          .render(
+            graphicsPaypalContainerRef.current
+          );
+      } catch (error) {
+        setGraphicsOrderStatus(
+          error instanceof Error
+            ? error.message
+            : "PayPal-maksuvaiheen lataaminen epäonnistui."
+        );
+      }
+    };
+
+    renderGraphicsPayPalButtons();
+
+    return () => {
+      cancelled = true;
+
+      if (graphicsPaypalContainerRef.current) {
+        graphicsPaypalContainerRef.current.innerHTML = "";
+      }
+    };
+  }, [
+    graphicsPaymentStep,
+    pendingGraphicsOrderData,
+  ]);
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#030104] text-white">
       {/* KIINTEÄ TAUSTA */}
@@ -643,7 +1175,9 @@ const clientId = process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID;
             )}
           </div>
 
-          {service.title === "Stream Overlay" && (
+          {(service.title === "Stream Overlay" ||
+            service.title === "Emote-paketti" ||
+            service.title === "Grafiikkapaketti") && (
             <div className="relative mt-5 flex w-fit items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
               <span className="text-[9px] font-black uppercase tracking-[0.18em] text-emerald-300">
@@ -747,7 +1281,42 @@ const clientId = process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID;
                     Hinta
                   </p>
 
-{service.offer ? (
+{service.title === "Emote-paketti" ? (
+  <div className="mt-3 space-y-3">
+    {service.emotePackages?.map((pkg) => (
+      <div
+        key={pkg.label}
+        className="rounded-xl border border-fuchsia-400/20 bg-fuchsia-500/[0.045] px-4 py-3"
+      >
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="text-[9px] font-black uppercase tracking-[0.20em] text-fuchsia-300">
+              {pkg.label}
+            </p>
+
+            <div className="mt-1 flex flex-wrap items-center gap-2">
+              <span className="text-sm font-bold text-gray-500 line-through">
+                {pkg.oldPrice}
+              </span>
+
+              <span className="rounded-md border border-fuchsia-400/35 bg-fuchsia-500/10 px-2 py-0.5 text-[10px] font-black text-fuchsia-300">
+                {pkg.discount}
+              </span>
+            </div>
+          </div>
+
+          <p className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text text-2xl font-black text-transparent">
+            {pkg.price}
+          </p>
+        </div>
+      </div>
+    ))}
+
+    <p className="pt-1 text-[10px] font-bold leading-5 text-gray-500">
+      Valitse 5 tai 10 emoten paketti tilauksen yhteydessä.
+    </p>
+  </div>
+) : service.offer ? (
   <div className="mt-2">
     <div className="flex flex-wrap items-center gap-3">
       <span className="text-lg font-bold text-gray-500 line-through">
@@ -774,8 +1343,7 @@ const clientId = process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID;
             Voimassa rajoitetun ajan
           </p>
         </div>
-
-
+  
       </div>
     </div>
   </div>
@@ -810,6 +1378,30 @@ const clientId = process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID;
                   className="mt-6 w-full rounded-xl border border-fuchsia-400/45 bg-gradient-to-r from-purple-600/80 to-fuchsia-600/70 px-5 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(168,85,247,0.20)] transition hover:-translate-y-0.5 hover:border-fuchsia-300/70 hover:shadow-[0_0_38px_rgba(217,70,239,0.28)]"
                 >
                   Tilaa Stream Overlay
+                </button>
+              ) : service.title === "Emote-paketti" ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedEmotePackage("5");
+                    setEmoteOrderStatus("");
+                    setEmoteOrderOpen(true);
+                  }}
+                  className="mt-6 w-full rounded-xl border border-fuchsia-400/45 bg-gradient-to-r from-fuchsia-600/80 to-purple-600/75 px-5 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(217,70,239,0.18)] transition hover:-translate-y-0.5 hover:border-fuchsia-300/70 hover:shadow-[0_0_38px_rgba(217,70,239,0.28)]"
+                >
+                  Tilaa Emote-paketti
+                </button>
+              ) : service.title === "Grafiikkapaketti" ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setGraphicsPaymentSuccess(false);
+                    setGraphicsOrderStatus("");
+                    setGraphicsOrderOpen(true);
+                  }}
+                  className="mt-6 w-full rounded-xl border border-violet-400/45 bg-gradient-to-r from-violet-600/80 to-purple-600/75 px-5 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(139,92,246,0.18)] transition hover:-translate-y-0.5 hover:border-violet-300/70 hover:shadow-[0_0_38px_rgba(139,92,246,0.28)]"
+                >
+                  Tilaa Grafiikkapaketti
                 </button>
               ) : (
                 <button
@@ -1160,6 +1752,19 @@ const clientId = process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID;
                     >
                       Tilaa Stream Overlay
                     </button>
+                  ) : selectedService.title === "Emote-paketti" ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedService(null);
+                        setSelectedEmotePackage("5");
+                        setEmoteOrderStatus("");
+                        setEmoteOrderOpen(true);
+                      }}
+                      className="rounded-xl border border-fuchsia-400/45 bg-gradient-to-r from-fuchsia-600 to-purple-600 px-6 py-3 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(217,70,239,0.20)] transition hover:-translate-y-0.5 hover:shadow-[0_0_38px_rgba(217,70,239,0.30)]"
+                    >
+                      Tilaa Emote-paketti
+                    </button>
                   ) : (
                     <span className="rounded-xl border border-purple-500/20 bg-purple-500/[0.05] px-5 py-3 text-center text-xs font-black uppercase tracking-[0.10em] text-purple-300">
                       Tilaus avautuu myöhemmin
@@ -1168,6 +1773,830 @@ const clientId = process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID;
                 </div>
               </div>
             </div>
+          </div>
+        )}
+
+                {/* GRAFIIKKAPAKETTI - TILAUSMODAALI */}
+        {graphicsOrderOpen && (
+          <div
+            className="fixed inset-0 z-[110] flex items-center justify-center overflow-y-auto bg-black/85 px-4 py-8 backdrop-blur-md animate-[fadeIn_180ms_ease-out]"
+            onClick={() => {
+              setGraphicsOrderOpen(false);
+              setGraphicsOrderStatus("");
+              setGraphicsPaymentStep(false);
+              setPendingGraphicsOrderData(null);
+              setGraphicsPaymentSuccess(false);
+            }}
+          >
+            <form
+              className="relative my-auto w-full max-w-4xl overflow-hidden rounded-[32px] border border-violet-400/35 bg-[radial-gradient(circle_at_20%_0%,rgba(139,92,246,0.20),transparent_42%),linear-gradient(145deg,rgba(24,12,31,0.995),rgba(5,3,8,0.995))] p-6 shadow-[0_0_110px_rgba(139,92,246,0.28)] sm:p-8 md:p-10 animate-[modalPop_220ms_cubic-bezier(0.16,1,0.3,1)]"
+              onClick={(event) => event.stopPropagation()}
+              onSubmit={(event) => {
+                event.preventDefault();
+
+                try {
+                  const form = event.currentTarget;
+                  const formData = new FormData(form);
+
+                  formData.set("service", "Grafiikkapaketti");
+                  formData.set("price", "79,99 €");
+
+                  setPendingGraphicsOrderData(formData);
+                  setGraphicsOrderStatus("");
+                  setGraphicsPaymentSuccess(false);
+                  setGraphicsPaymentStep(true);
+                } catch (error) {
+                  setGraphicsOrderStatus(
+                    error instanceof Error
+                      ? error.message
+                      : "Tilauksen käsittelyssä tapahtui virhe."
+                  );
+                }
+              }}
+            >
+              {/* TAUSTAHEHKUT */}
+              <div className="pointer-events-none absolute -right-28 -top-28 h-72 w-72 rounded-full bg-violet-600/15 blur-[90px]" />
+              <div className="pointer-events-none absolute -bottom-32 -left-28 h-72 w-72 rounded-full bg-purple-700/15 blur-[100px]" />
+
+              <img
+                src="/images/ks-logo.png.png"
+                alt=""
+                className="pointer-events-none absolute -right-14 bottom-[-25px] w-[280px] rotate-[-12deg] object-contain opacity-[0.035]"
+              />
+
+              {/* SULJE */}
+              <button
+                type="button"
+                onClick={() => {
+                  setGraphicsOrderOpen(false);
+                  setGraphicsOrderStatus("");
+                  setGraphicsPaymentStep(false);
+                  setPendingGraphicsOrderData(null);
+                  setGraphicsPaymentSuccess(false);
+                }}
+                className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-xl border border-purple-400/30 bg-black/40 text-xl font-black text-purple-200 transition hover:rotate-90 hover:border-purple-300/60 hover:bg-purple-500/10 hover:text-white"
+                aria-label="Sulje Grafiikkapaketin tilaus"
+              >
+                ×
+              </button>
+
+              <div className="relative z-10">
+                <div className="flex flex-wrap items-center gap-3 pr-14">
+                  <span className="rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-[10px] font-black uppercase tracking-[0.20em] text-emerald-300">
+                    ● Tilattavissa
+                  </span>
+
+                  <span className="rounded-full border border-violet-400/20 bg-violet-500/[0.06] px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-violet-200">
+                    Avaustarjous
+                  </span>
+                </div>
+
+                <p className="mt-6 text-xs font-black uppercase tracking-[0.30em] text-purple-400">
+                  KOPOSQUAD CREATIVE
+                </p>
+
+                <h2 className="mt-3 text-3xl font-black uppercase leading-[1.05] sm:text-4xl md:text-5xl">
+                  Grafiikkapaketin tilaus
+                </h2>
+
+                <p className="mt-5 max-w-2xl text-base leading-7 text-gray-400">
+                  Kerro mahdollisimman tarkasti millaisen visuaalisen ilmeen
+                  haluat kanavallesi. Grafiikkapaketti rakennetaan kanavasi,
+                  tyylisi ja toiveidesi pohjalta.
+                </p>
+
+                {/* HINTA */}
+                <div className="mt-8 rounded-2xl border border-violet-400/25 bg-violet-500/[0.05] p-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-purple-300">
+                    Grafiikkapaketti
+                  </p>
+
+                  <div className="mt-3 flex flex-wrap items-center gap-3">
+                    <span className="text-sm font-bold text-gray-500 line-through">
+                      129,99 €
+                    </span>
+
+                    <span className="rounded-md border border-fuchsia-400/35 bg-fuchsia-500/10 px-2 py-0.5 text-[10px] font-black text-fuchsia-300">
+                      -38 %
+                    </span>
+                  </div>
+
+                  <p className="mt-1 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text text-3xl font-black text-transparent">
+                    79,99 €
+                  </p>
+                </div>
+
+                <input
+                  type="hidden"
+                  name="service"
+                  value="Grafiikkapaketti"
+                />
+
+                <input
+                  type="hidden"
+                  name="price"
+                  value="79.99"
+                />
+
+                {/* YHTEYSTIEDOT */}
+                <div className="mt-8 grid gap-5 sm:grid-cols-2">
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Nimi *
+                    </span>
+
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      placeholder="Nimesi"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Sähköposti *
+                    </span>
+
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="sinun@email.fi"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Discord-käyttäjänimi *
+                    </span>
+
+                    <input
+                      type="text"
+                      name="discord"
+                      required
+                      placeholder="Esim. kopo123"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Kanavan nimi / linkki *
+                    </span>
+
+                    <input
+                      type="text"
+                      name="channel"
+                      required
+                      placeholder="Twitch-, YouTube- tai muu kanavasi"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Väriteema *
+                    </span>
+
+                    <input
+                      type="text"
+                      name="colorTheme"
+                      required
+                      placeholder="Esim. violetti / musta"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Pääasiallinen alusta *
+                    </span>
+
+                    <select
+                      name="platform"
+                      defaultValue=""
+                      required
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-[#09060c] px-4 py-3.5 text-white outline-none transition focus:border-purple-400/60"
+                    >
+                      <option value="" disabled>
+                        Valitse alusta
+                      </option>
+                      <option>Twitch</option>
+                      <option>YouTube</option>
+                      <option>Kick</option>
+                      <option>Useita alustoja</option>
+                      <option>Muu</option>
+                    </select>
+                  </label>
+
+                  {/* MATERIAALIT */}
+                  <label className="block sm:col-span-2">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Logot, kuvat ja referenssit
+                      <span className="ml-2 text-gray-500">
+                        (vapaaehtoinen)
+                      </span>
+                    </span>
+
+                    <div className="mt-2 rounded-2xl border border-dashed border-purple-400/30 bg-purple-500/[0.035] p-5 transition hover:border-purple-300/50 hover:bg-purple-500/[0.05]">
+                      <input
+                        type="file"
+                        name="materials"
+                        multiple
+                        accept="image/*,.zip,.rar,.psd,.svg"
+                        className="block w-full text-sm text-gray-400 file:mr-4 file:rounded-xl file:border-0 file:bg-purple-500/15 file:px-4 file:py-2.5 file:font-black file:text-purple-200 hover:file:bg-purple-500/25"
+                      />
+
+                      <p className="mt-3 text-xs leading-6 text-gray-500">
+                        Voit lisätä esimerkiksi nykyisen logosi, vanhoja
+                        grafiikoita, kuvia tai referenssejä haluamastasi
+                        visuaalisesta tyylistä.
+                      </p>
+                    </div>
+                  </label>
+
+                  {/* TOIVEET */}
+                  <label className="block sm:col-span-2">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Millaisen ilmeen haluat? *
+                    </span>
+
+                    <textarea
+                      name="description"
+                      rows={6}
+                      required
+                      minLength={15}
+                      placeholder="Kerro mahdollisimman tarkasti millaisen bannerin, profiilikuvan, Twitch-paneelit ja muun visuaalisen tyylin haluat..."
+                      className="mt-2 w-full resize-y rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+                </div>
+
+                {/* ENNEN TILAUSTA */}
+                <div className="mt-7 rounded-2xl border border-purple-500/20 bg-purple-500/[0.035] p-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-purple-300">
+                    Ennen tilausta
+                  </p>
+
+                  <label className="mt-4 flex cursor-pointer items-start gap-3 text-sm leading-6 text-gray-300">
+                    <input
+                      type="checkbox"
+                      name="termsAccepted"
+                      value="yes"
+                      required
+                      className="mt-1 h-4 w-4 shrink-0 accent-purple-500"
+                    />
+
+                    <span>
+                      Olen tarkistanut antamani tiedot ja ymmärrän, että
+                      Grafiikkapaketti suunnitellaan antamieni toiveiden
+                      pohjalta. Pakettiin sisältyy 2 sovittua
+                      korjauskierrosta.
+                    </span>
+                  </label>
+                </div>
+
+                {/* STATUS */}
+                {graphicsOrderStatus && (
+                  <div className="mt-6 rounded-xl border border-violet-400/25 bg-violet-500/[0.05] px-4 py-3 text-sm text-violet-100">
+                    {graphicsOrderStatus}
+                  </div>
+                )}
+                {graphicsPaymentStep && pendingGraphicsOrderData && (
+  <div className="mt-5 rounded-2xl border border-purple-500/30 bg-black/35 p-5">
+    <div className="flex items-center justify-between gap-4">
+      <div>
+        <p className="text-[10px] font-black uppercase tracking-[0.22em] text-purple-300">
+          Maksuvaihe
+        </p>
+
+        <p className="mt-3 text-sm text-gray-400">
+          Valittu palvelu:{" "}
+          <span className="font-bold text-white">
+            Grafiikkapaketti
+          </span>
+        </p>
+
+        <p className="mt-2 text-sm text-gray-400">
+          Maksettava summa:{" "}
+          <span className="font-bold text-white">
+            79,99 €
+          </span>
+        </p>
+      </div>
+
+      <span className="rounded-full border border-emerald-400/30 bg-emerald-400/[0.06] px-4 py-2 text-[9px] font-black uppercase tracking-[0.14em] text-emerald-300">
+        Turvallinen maksu
+      </span>
+    </div>
+
+<div
+  ref={graphicsPaypalContainerRef}
+  className="mt-6 min-h-[48px] overflow-hidden rounded-xl"
+/>
+
+    <button
+      type="button"
+      onClick={() => {
+        setGraphicsPaymentStep(false);
+        setGraphicsPaymentSuccess(false);
+        setGraphicsOrderStatus("");
+      }}
+      className="mt-5 w-full rounded-xl border border-purple-500/30 bg-purple-500/[0.05] px-5 py-3 text-xs font-black uppercase tracking-[0.10em] text-purple-200 transition hover:bg-purple-500/10"
+    >
+      Takaisin muokkaamaan tilausta
+    </button>
+  </div>
+)}
+
+                {/* NAPIT */}
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setGraphicsOrderOpen(false);
+                      setGraphicsOrderStatus("");
+                      setGraphicsPaymentStep(false);
+                      setPendingGraphicsOrderData(null);
+                      setGraphicsPaymentSuccess(false);
+                    }}
+                    className="rounded-xl border border-purple-500/30 bg-black/30 px-5 py-3 text-sm font-black uppercase tracking-[0.08em] text-purple-200 transition hover:border-purple-300/50 hover:bg-purple-500/[0.08]"
+                  >
+                    Peruuta
+                  </button>
+
+                  <button
+                    type="submit"
+                    disabled={orderSending}
+                    className="rounded-xl border border-violet-400/45 bg-gradient-to-r from-violet-600 to-purple-600 px-7 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(139,92,246,0.20)] transition hover:-translate-y-0.5 hover:shadow-[0_0_38px_rgba(139,92,246,0.30)] disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {orderSending ? "Käsitellään..." : "Jatka tilaukseen"}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        )}
+        {emoteOrderOpen && (
+          <div
+            className="fixed inset-0 z-[110] flex items-center justify-center overflow-y-auto bg-black/85 px-4 py-8 backdrop-blur-md animate-[fadeIn_180ms_ease-out]"
+            onClick={() => {
+              setEmoteOrderOpen(false);
+              setEmoteOrderStatus("");
+              setEmotePaymentStep(false);
+              setPendingEmoteOrderData(null);
+              setEmotePaymentSuccess(false);
+            }}
+          >
+            <form
+              className="relative my-auto w-full max-w-4xl overflow-hidden rounded-[32px] border border-fuchsia-400/35 bg-[radial-gradient(circle_at_20%_0%,rgba(217,70,239,0.20),transparent_42%),linear-gradient(145deg,rgba(24,12,31,0.995),rgba(5,3,8,0.995))] p-6 shadow-[0_0_110px_rgba(192,38,211,0.28)] sm:p-8 md:p-10 animate-[modalPop_220ms_cubic-bezier(0.16,1,0.3,1)]"
+              onClick={(event) => event.stopPropagation()}
+              onSubmit={(event) => {
+                event.preventDefault();
+
+                try {
+                  const form = event.currentTarget;
+                  const formData = new FormData(form);
+
+                  formData.set(
+                    "service",
+                    selectedEmotePackage === "5"
+                      ? "Emote-paketti – 5 emotea"
+                      : "Emote-paketti – 10 emotea"
+                  );
+                  formData.set(
+                    "emotePackage",
+                    selectedEmotePackage === "5" ? "5 emotea" : "10 emotea"
+                  );
+                  formData.set(
+                    "price",
+                    selectedEmotePackage === "5" ? "39,99 €" : "69,99 €"
+                  );
+
+                  setPendingEmoteOrderData(formData);
+                  setEmotePaymentStep(true);
+                  setEmoteOrderStatus(
+                    "Tiedot tarkistettu. Valitse alta PayPal-maksutapa jatkaaksesi."
+                  );
+                } catch (error) {
+                  setEmoteOrderStatus(
+                    error instanceof Error
+                      ? error.message
+                      : "Maksuvaiheen avaaminen epäonnistui."
+                  );
+                }
+              }}
+            >
+              <div className="pointer-events-none absolute -right-28 -top-28 h-72 w-72 rounded-full bg-fuchsia-600/15 blur-[90px]" />
+              <div className="pointer-events-none absolute -bottom-32 -left-28 h-72 w-72 rounded-full bg-purple-700/15 blur-[100px]" />
+
+              <img
+                src="/images/ks-logo.png.png"
+                alt=""
+                className="pointer-events-none absolute -right-14 bottom-[-25px] w-[280px] rotate-[-12deg] object-contain opacity-[0.035]"
+              />
+
+              <button
+                type="button"
+                onClick={() => {
+                  setEmoteOrderOpen(false);
+                  setEmoteOrderStatus("");
+                  setEmotePaymentStep(false);
+                  setPendingEmoteOrderData(null);
+                  setEmotePaymentSuccess(false);
+                }}
+                className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-xl border border-purple-400/30 bg-black/40 text-xl font-black text-purple-200 transition hover:rotate-90 hover:border-purple-300/60 hover:bg-purple-500/10 hover:text-white"
+                aria-label="Sulje Emote-paketin tilaus"
+              >
+                ×
+              </button>
+
+              <div className="relative z-10">
+                {emotePaymentSuccess ? (
+                  <div className="mx-auto flex min-h-[560px] max-w-2xl flex-col items-center justify-center py-10 text-center">
+                    <div className="flex h-24 w-24 items-center justify-center rounded-full border border-emerald-400/35 bg-emerald-400/[0.08] shadow-[0_0_55px_rgba(52,211,153,0.18)]">
+                      <span className="text-5xl font-black text-emerald-300">✓</span>
+                    </div>
+
+                    <p className="mt-8 text-[11px] font-black uppercase tracking-[0.34em] text-emerald-300">
+                      Maksu onnistui
+                    </p>
+
+                    <h2 className="mt-4 text-3xl font-black uppercase leading-[1.05] sm:text-4xl md:text-5xl">
+                      Emote-tilaus vastaanotettu
+                    </h2>
+
+                    <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-gray-400">
+                      Kiitos tilauksestasi! Maksu on vahvistettu ja
+                      {selectedEmotePackage === "5"
+                        ? " 5 emoten pakettisi"
+                        : " 10 emoten pakettisi"}{" "}
+                      on vastaanotettu.
+                    </p>
+
+                    <div className="mt-8 w-full rounded-2xl border border-purple-500/20 bg-purple-500/[0.035] p-5">
+                      <p className="text-sm leading-6 text-gray-400">
+                        Käymme antamasi toiveet ja referenssit läpi. Olemme sinuun
+                        yhteydessä antamiesi yhteystietojen kautta ennen työn aloittamista.
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEmoteOrderOpen(false);
+                        setEmotePaymentStep(false);
+                        setPendingEmoteOrderData(null);
+                        setEmoteOrderStatus("");
+                        setEmotePaymentSuccess(false);
+                      }}
+                      className="mt-8 w-full rounded-xl border border-emerald-400/30 bg-gradient-to-r from-emerald-500/20 via-purple-600/35 to-fuchsia-600/30 px-7 py-4 text-sm font-black uppercase tracking-[0.10em] text-white shadow-[0_0_32px_rgba(52,211,153,0.10)] transition hover:-translate-y-0.5 hover:border-emerald-300/50 hover:shadow-[0_0_42px_rgba(168,85,247,0.20)]"
+                    >
+                      Palaa palveluihin
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                <div className="flex flex-wrap items-center gap-3 pr-14">
+                  <span className="rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-[10px] font-black uppercase tracking-[0.20em] text-emerald-300">
+                    ● Tilattavissa
+                  </span>
+                  <span className="rounded-full border border-fuchsia-400/20 bg-fuchsia-500/[0.06] px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-fuchsia-200">
+                    Avaustarjous
+                  </span>
+                </div>
+
+                <p className="mt-6 text-xs font-black uppercase tracking-[0.30em] text-purple-400">
+                  KOPOSQUAD CREATIVE
+                </p>
+
+                <h2 className="mt-3 text-3xl font-black uppercase leading-[1.05] sm:text-4xl md:text-5xl">
+                  Emote-paketin tilaus
+                </h2>
+
+                <p className="mt-5 max-w-2xl text-base leading-7 text-gray-400">
+                  Valitse ensin 5 tai 10 emoten paketti. Sen jälkeen kerro mahdollisimman
+                  tarkasti millaisia emoteja haluat ja millaiseen tyyliin ne tehdään.
+                </p>
+
+                {/* PAKETIN VALINTA */}
+                <div className="mt-8">
+                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-purple-300">
+                    Valitse Emote-paketti *
+                  </p>
+
+                  <div className="mt-3 grid gap-4 sm:grid-cols-2">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedEmotePackage("5")}
+                      className={`rounded-2xl border p-5 text-left transition ${
+                        selectedEmotePackage === "5"
+                          ? "border-fuchsia-400/55 bg-fuchsia-500/[0.10] shadow-[0_0_30px_rgba(217,70,239,0.16)]"
+                          : "border-purple-500/20 bg-black/30 hover:border-purple-400/40"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-sm font-black uppercase tracking-[0.12em] text-white">
+                          5 emotea
+                        </span>
+                        {selectedEmotePackage === "5" && (
+                          <span className="text-sm font-black text-emerald-300">✓</span>
+                        )}
+                      </div>
+
+                      <div className="mt-4 flex items-center gap-2">
+                        <span className="text-sm font-bold text-gray-500 line-through">
+                          59,99 €
+                        </span>
+                        <span className="rounded-md border border-fuchsia-400/35 bg-fuchsia-500/10 px-2 py-0.5 text-[10px] font-black text-fuchsia-300">
+                          -33 %
+                        </span>
+                      </div>
+
+                      <p className="mt-1 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text text-3xl font-black text-transparent">
+                        39,99 €
+                      </p>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setSelectedEmotePackage("10")}
+                      className={`rounded-2xl border p-5 text-left transition ${
+                        selectedEmotePackage === "10"
+                          ? "border-fuchsia-400/55 bg-fuchsia-500/[0.10] shadow-[0_0_30px_rgba(217,70,239,0.16)]"
+                          : "border-purple-500/20 bg-black/30 hover:border-purple-400/40"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-sm font-black uppercase tracking-[0.12em] text-white">
+                          10 emotea
+                        </span>
+                        {selectedEmotePackage === "10" && (
+                          <span className="text-sm font-black text-emerald-300">✓</span>
+                        )}
+                      </div>
+
+                      <div className="mt-4 flex items-center gap-2">
+                        <span className="text-sm font-bold text-gray-500 line-through">
+                          99,99 €
+                        </span>
+                        <span className="rounded-md border border-fuchsia-400/35 bg-fuchsia-500/10 px-2 py-0.5 text-[10px] font-black text-fuchsia-300">
+                          -30 %
+                        </span>
+                      </div>
+
+                      <p className="mt-1 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text text-3xl font-black text-transparent">
+                        69,99 €
+                      </p>
+                    </button>
+                  </div>
+                </div>
+
+                <input
+                  type="hidden"
+                  name="service"
+                  value="Emote-paketti"
+                />
+                <input
+                  type="hidden"
+                  name="emotePackage"
+                  value={selectedEmotePackage === "5" ? "5 emotea" : "10 emotea"}
+                />
+                <input
+                  type="hidden"
+                  name="price"
+                  value={selectedEmotePackage === "5" ? "39.99" : "69.99"}
+                />
+
+                <div className="mt-8 grid gap-5 sm:grid-cols-2">
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Nimi *
+                    </span>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      placeholder="Nimesi"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Sähköposti *
+                    </span>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="sinun@email.fi"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Discord-käyttäjänimi *
+                    </span>
+                    <input
+                      type="text"
+                      name="discord"
+                      required
+                      placeholder="Esim. kopo123"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Kanavan nimi / linkki *
+                    </span>
+                    <input
+                      type="text"
+                      name="channel"
+                      required
+                      placeholder="Twitch-, YouTube- tai muu kanavasi"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Väriteema *
+                    </span>
+                    <input
+                      type="text"
+                      name="colorTheme"
+                      required
+                      placeholder="Esim. violetti / musta"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Käyttö *
+                    </span>
+                    <select
+                      name="platform"
+                      defaultValue=""
+                      required
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-[#09060c] px-4 py-3.5 text-white outline-none transition focus:border-purple-400/60"
+                    >
+                      <option value="" disabled>
+                        Valitse käyttökohde
+                      </option>
+                      <option>Twitch</option>
+                      <option>Discord</option>
+                      <option>Twitch & Discord</option>
+                      <option>Muu</option>
+                    </select>
+                  </label>
+
+                  <label className="block sm:col-span-2">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Referenssit ja muu materiaali
+                      <span className="ml-2 text-gray-500">(vapaaehtoinen)</span>
+                    </span>
+
+                    <div className="mt-2 rounded-2xl border border-dashed border-purple-400/30 bg-purple-500/[0.035] p-5 transition hover:border-purple-300/50 hover:bg-purple-500/[0.05]">
+                      <input
+                        type="file"
+                        name="materials"
+                        multiple
+                        accept="image/*,.zip,.rar,.psd,.svg"
+                        className="block w-full text-sm text-gray-400 file:mr-4 file:rounded-xl file:border-0 file:bg-purple-500/15 file:px-4 file:py-2.5 file:font-black file:text-purple-200 hover:file:bg-purple-500/25"
+                      />
+                      <p className="mt-3 text-xs leading-6 text-gray-500">
+                        Voit lisätä esimerkiksi kuvan hahmosta, logon, vanhoja emoteja
+                        tai muita referenssejä haluamastasi tyylistä.
+                      </p>
+                    </div>
+                  </label>
+
+                  <label className="block sm:col-span-2">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Millaisia emoteja haluat? *
+                    </span>
+                    <textarea
+                      name="description"
+                      rows={6}
+                      required
+                      minLength={15}
+                      placeholder="Kerro mahdollisimman tarkasti emotejen ilmeistä, tunteista, teksteistä, hahmosta, väreistä ja tyylistä..."
+                      className="mt-2 w-full resize-y rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none transition placeholder:text-gray-600 focus:border-purple-400/60 focus:bg-purple-500/[0.04]"
+                    />
+                  </label>
+                </div>
+
+                <div className="mt-7 rounded-2xl border border-purple-500/20 bg-purple-500/[0.035] p-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.24em] text-purple-300">
+                    Ennen tilausta
+                  </p>
+                  <label className="mt-4 flex cursor-pointer items-start gap-3 text-sm leading-6 text-gray-300">
+                    <input
+                      type="checkbox"
+                      name="termsAccepted"
+                      value="yes"
+                      required
+                      className="mt-1 h-4 w-4 shrink-0 accent-purple-500"
+                    />
+                    <span>
+                      Olen tarkistanut antamani tiedot ja ymmärrän, että emote-paketti
+                      suunnitellaan antamieni toiveiden pohjalta. Pakettiin sisältyy
+                      2 sovittua korjauskierrosta.
+                    </span>
+                  </label>
+                </div>
+
+                {emoteOrderStatus && (
+                  <div className="mt-6 rounded-xl border border-fuchsia-400/25 bg-fuchsia-500/[0.05] px-4 py-3 text-sm text-fuchsia-100">
+                    {emoteOrderStatus}
+                  </div>
+                )}
+
+                {emotePaymentStep && pendingEmoteOrderData && (
+                  <div className="mt-7 rounded-2xl border border-fuchsia-400/25 bg-black/35 p-5">
+                    <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-[0.24em] text-purple-300">
+                          Maksuvaihe
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-gray-400">
+                          Valittu paketti:
+                          <strong className="ml-2 text-white">
+                            {selectedEmotePackage === "5"
+                              ? "5 emotea"
+                              : "10 emotea"}
+                          </strong>
+                        </p>
+                        <p className="mt-1 text-sm leading-6 text-gray-400">
+                          Maksettava summa:
+                          <strong className="ml-2 text-white">
+                            {selectedEmotePackage === "5"
+                              ? "39,99 €"
+                              : "69,99 €"}
+                          </strong>
+                        </p>
+                      </div>
+
+                      <span className="rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-emerald-300">
+                        Turvallinen maksu
+                      </span>
+                    </div>
+
+                    <div
+                      ref={emotePaypalContainerRef}
+                      className="min-h-[48px] overflow-hidden rounded-xl"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEmotePaymentStep(false);
+                        setPendingEmoteOrderData(null);
+                        setEmoteOrderStatus("");
+                      }}
+                      className="mt-4 w-full rounded-xl border border-purple-500/25 bg-purple-500/[0.04] px-4 py-3 text-xs font-black uppercase tracking-[0.08em] text-purple-200 transition hover:border-purple-300/50 hover:bg-purple-500/[0.08]"
+                    >
+                      Takaisin muokkaamaan tilausta
+                    </button>
+                  </div>
+                )}
+
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEmoteOrderOpen(false);
+                      setEmoteOrderStatus("");
+                      setEmotePaymentStep(false);
+                      setPendingEmoteOrderData(null);
+                      setEmotePaymentSuccess(false);
+                    }}
+                    className="rounded-xl border border-purple-500/30 bg-black/30 px-5 py-3 text-sm font-black uppercase tracking-[0.08em] text-purple-200 transition hover:border-purple-300/50 hover:bg-purple-500/[0.08]"
+                  >
+                    Peruuta
+                  </button>
+
+                  {!emotePaymentStep && (
+                    <button
+                      type="submit"
+                      disabled={orderSending}
+                      className="rounded-xl border border-fuchsia-400/45 bg-gradient-to-r from-fuchsia-600 to-purple-600 px-7 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(217,70,239,0.20)] transition hover:-translate-y-0.5 hover:shadow-[0_0_38px_rgba(217,70,239,0.30)] disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {orderSending ? "Käsitellään..." : "Jatka maksuun"}
+                    </button>
+                  )}
+                </div>
+                  </>
+                )}
+              </div>
+            </form>
           </div>
         )}
 
