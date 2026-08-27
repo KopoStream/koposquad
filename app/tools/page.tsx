@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Header from "../../components/Header";
+import ToolGuideModal from "../../components/ToolGuideModal";
+import { toolGuides } from "./guides";
+
 
 type Tool = {
   name: string;
@@ -12,6 +15,7 @@ type Tool = {
   logoImage?: string;
   buttonText: string;
   guideLink?: string;
+  guideKey?: string;
 };
 
 type ToolCategory = {
@@ -34,7 +38,7 @@ const categories: ToolCategory[] = [
   logo: "OBS",
   logoImage: "https://cdn.simpleicons.org/obsstudio/ffffff",
   buttonText: "Lataa OBS Studio",
-  guideLink: "/tools/obs-studio",
+  guideKey: "obs",
 },
       {
         name: "Streamlabs Desktop",
@@ -45,7 +49,7 @@ const categories: ToolCategory[] = [
         logo: "SL",
         logoImage: "https://cdn.simpleicons.org/streamlabs/ffffff",
         buttonText: "Lataa Streamlabs",
-        guideLink: "/tools/streamlabs-desktop",
+        guideKey: "streamlabs",
       },
       {
   name: "PRISM Live Studio",
@@ -57,7 +61,7 @@ const categories: ToolCategory[] = [
 logoImage:
   "https://www.google.com/s2/favicons?domain=prismlive.com&sz=128",
   buttonText: "Lataa PRISM",
-  guideLink: "/tools/prism-live-studio",
+  guideKey: "prism",
 },
 
     ],
@@ -76,6 +80,7 @@ logoImage:
       logo: "SL",
       logoImage: "https://cdn.simpleicons.org/streamlabs/ffffff",
       buttonText: "Avaa Google Play",
+      guideKey: "streamlabs-mobile",
     },
 
     {
@@ -88,6 +93,7 @@ logoImage:
 logoImage:
   "https://www.google.com/s2/favicons?domain=streamelements.com&sz=128",
       buttonText: "Avaa Google Play",
+      guideKey: "streamelements-mobile",
     },
 
     {
@@ -100,6 +106,7 @@ logoImage:
 logoImage:
   "https://www.google.com/s2/favicons?domain=prismlive.com&sz=128",
       buttonText: "Avaa Google Play",
+      guideKey: "prism-mobile",
     },
     {
   name: "Moblin",
@@ -111,6 +118,7 @@ logoImage:
 logoImage:
   "https://play-lh.googleusercontent.com/FsZQ2ch37S6k1pdbru_Mhb-nyd8b88xF1nqrx37pNMfZtCHL9_8ljbKaGPJI4SOGUiS0mz9UFI2fTGWznfFm3A=w240-h480-rw",
   buttonText: "Avaa sivusto",
+  guideKey: "moblin",
 },
 {
   name: "Larix Broadcaster",
@@ -121,6 +129,7 @@ logoImage:
   logo: "LB",
   logoImage: "https://www.google.com/s2/favicons?domain=softvelum.com&sz=128",
   buttonText: "Avaa sivusto",
+  guideKey: "larix",
 },
     {
       name: "IRL Pro",
@@ -132,6 +141,7 @@ logoImage:
 logoImage:
   "https://play-lh.googleusercontent.com/wVEmW1E_2txFRm2E1-Dt2FQYLqtInj9QiG13bxfKKqINiP9DWKe_GWvEp7lYxqa6CU7VUTlIlBjVf_ZFFXdgsg",
       buttonText: "Avaa Google Play",
+      guideKey: "irl-pro",
     },
   ],
 },
@@ -150,6 +160,7 @@ logoImage:
         logoImage:
           "https://www.google.com/s2/favicons?domain=streamelements.com&sz=128",
         buttonText: "Avaa sivusto",
+        guideKey: "streamelements",
       },
       {
         name: "Streamlabs Cloudbot",
@@ -160,6 +171,7 @@ logoImage:
         logo: "SC",
         logoImage: "https://cdn.simpleicons.org/streamlabs/ffffff",
         buttonText: "Avaa sivusto",
+        guideKey: "streamlabs-cloudbot",
       },
       {
         name: "Nightbot",
@@ -171,6 +183,7 @@ logoImage:
         logoImage:
           "https://www.google.com/s2/favicons?domain=nightbot.tv&sz=128",
         buttonText: "Avaa sivusto",
+        guideKey: "nightbot",
       },
       {
         name: "Streamer.bot",
@@ -182,6 +195,7 @@ logoImage:
         logoImage:
           "https://www.google.com/s2/favicons?domain=streamer.bot&sz=128",
         buttonText: "Avaa sivusto",
+        guideKey: "streamerbot",
       },
       {
         name: "Mix It Up",
@@ -193,6 +207,7 @@ logoImage:
         logoImage:
           "https://www.google.com/s2/favicons?domain=mixitupapp.com&sz=128",
         buttonText: "Avaa sivusto",
+        guideKey: "mixitup",
       },
 
       {
@@ -204,25 +219,27 @@ logoImage:
   logo: "SB",
   logoImage: "https://docs.sery.bot/img/seryLOVE.png",
   buttonText: "Avaa sivusto",
+  guideKey: "serybot",
 },
 
     ],
   },
-  {
-    title: "CHAT & WIDGETIT",
-    icon: "▱",
-    tools: [
-      {
-        name: "StreamElements",
-        description:
-          "Overlayt, hälytykset, widgetit, lahjoitukset ja paljon muuta.",
-        price: "FREEMIUM",
-        link: "https://streamelements.com/",
-        logo: "SE",
-        logoImage:
-          "https://www.google.com/s2/favicons?domain=streamelements.com&sz=128",
-        buttonText: "Avaa sivusto",
-      },
+{
+  title: "CHAT & WIDGETIT",
+  icon: "▱",
+  tools: [
+    {
+      name: "StreamElements",
+      description:
+        "Overlayt, hälytykset, widgetit, lahjoitukset ja paljon muuta.",
+      price: "FREEMIUM",
+      link: "https://streamelements.com/",
+      logo: "SE",
+      logoImage:
+        "https://www.google.com/s2/favicons?domain=streamelements.com&sz=128",
+      buttonText: "Avaa sivusto",
+      guideKey: "streamelements",
+    },
       {
         name: "Streamlabs Alerts",
         description:
@@ -232,6 +249,7 @@ logoImage:
         logo: "SA",
         logoImage: "https://cdn.simpleicons.org/streamlabs/ffffff",
         buttonText: "Avaa sivusto",
+        guideKey: "streamlabs-alerts",
       },
       {
         name: "BetterTTV",
@@ -243,6 +261,7 @@ logoImage:
         logoImage:
           "https://www.google.com/s2/favicons?domain=betterttv.com&sz=128",
         buttonText: "Avaa sivusto",
+        guideKey: "betterttv",
       },
       {
         name: "7TV",
@@ -254,6 +273,7 @@ logoImage:
         logoImage:
           "https://www.google.com/s2/favicons?domain=7tv.app&sz=128",
         buttonText: "Avaa sivusto",
+        guideKey: "7tv",
       },
     ],
   },
@@ -271,6 +291,7 @@ logoImage:
         logoImage:
           "https://www.google.com/s2/favicons?domain=blackmagicdesign.com&sz=128",
         buttonText: "Lataa DaVinci",
+        guideKey: "davinci",
       },
       {
         name: "CapCut",
@@ -282,6 +303,7 @@ logoImage:
         logoImage:
           "https://www.google.com/s2/favicons?domain=capcut.com&sz=128",
         buttonText: "Avaa sivusto",
+        guideKey: "capcut",
       },
       {
         name: "Adobe Premiere Pro",
@@ -293,6 +315,7 @@ logoImage:
         logoImage:
           "https://www.google.com/s2/favicons?domain=adobe.com&sz=128",
         buttonText: "Avaa sivusto",
+        guideKey: "premiere",
       },
       {
         name: "Photoshop",
@@ -304,6 +327,7 @@ logoImage:
         logoImage:
           "https://www.google.com/s2/favicons?domain=photoshop.adobe.com&sz=128",
         buttonText: "Avaa sivusto",
+        guideKey: "photoshop",
       },
       {
         name: "Canva",
@@ -315,6 +339,7 @@ logoImage:
         logoImage:
           "https://www.google.com/s2/favicons?domain=canva.com&sz=128",
         buttonText: "Avaa sivusto",
+        guideKey: "canva",
       },
     ],
   },
@@ -334,6 +359,7 @@ function priceClasses(price: Tool["price"]) {
 
 export default function ToolsPage() {
   const [openCategories, setOpenCategories] = useState<string[]>([]);
+  const [selectedGuide, setSelectedGuide] = useState<string | null>(null);
 
   function toggleCategory(categoryTitle: string) {
     setOpenCategories((current) =>
@@ -370,6 +396,26 @@ export default function ToolsPage() {
 
   {/* HIMMEÄ RUUDUKKO */}
   <div className="absolute inset-0 opacity-[0.025] [background-image:linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)] [background-size:56px_56px]" />
+
+  {/* HIMMEÄT KS-LOGOT TAUSTALLA */}
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    aria-hidden="true"
+    className="absolute -left-24 top-[28%] hidden w-[300px] -rotate-12 object-contain opacity-[0.022] lg:block"
+  />
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    aria-hidden="true"
+    className="absolute -right-28 top-[53%] hidden w-[340px] rotate-12 object-contain opacity-[0.024] lg:block"
+  />
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    aria-hidden="true"
+    className="absolute left-[8%] top-[79%] hidden w-[250px] rotate-[8deg] object-contain opacity-[0.018] xl:block"
+  />
 
   {/* TUMMENNUS, JOTTA KESKIOSA PYSYY SELKEÄNÄ */}
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.35)_58%,rgba(0,0,0,0.82)_100%)]" />
@@ -466,6 +512,18 @@ className="relative overflow-hidden rounded-3xl border border-purple-500/25 bg-g
 
 <div className="pointer-events-none absolute inset-x-12 bottom-0 h-px bg-gradient-to-r from-transparent via-purple-400/30 to-transparent" />
 
+
+                  <img
+                    src="/images/ks-logo.png.png"
+                    alt=""
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute hidden w-[210px] object-contain opacity-[0.018] lg:block ${
+                      categoryIndex % 2 === 0
+                        ? "-right-10 bottom-[-55px] rotate-[-12deg]"
+                        : "-left-10 bottom-[-55px] rotate-[12deg]"
+                    }`}
+                  />
+
                   <div className="relative mb-6 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
                       <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-purple-400/50 bg-gradient-to-br from-purple-500/20 to-fuchsia-500/10 text-xl font-black text-purple-300 shadow-[0_0_25px_rgba(168,85,247,0.2)]">
@@ -547,14 +605,15 @@ className="group relative flex min-h-[270px] flex-col overflow-hidden rounded-2x
                             <span className="text-purple-300">↗</span>
                           </a>
 
-                          {tool.guideLink ? (
-                            <a
-                              href={tool.guideLink}
+                          {tool.guideKey ? (
+                            <button
+                              type="button"
+                              onClick={() => setSelectedGuide(tool.guideKey ?? null)}
                               className="flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3 py-3 text-center text-xs font-black text-gray-200 transition hover:border-purple-400/60 hover:bg-purple-500/10 hover:text-white sm:text-sm"
                             >
                               Katso opas
                               <span className="text-purple-300">→</span>
-                            </a>
+                            </button>
                           ) : (
                             <span className="flex cursor-not-allowed items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3 text-center text-xs font-black text-gray-600 sm:text-sm">
                               Opas tulossa
@@ -603,6 +662,11 @@ className="group relative flex min-h-[270px] flex-col overflow-hidden rounded-2x
             </div>
           </section>
         </section>
+
+        <ToolGuideModal
+          guide={selectedGuide ? toolGuides[selectedGuide] ?? null : null}
+          onClose={() => setSelectedGuide(null)}
+        />
 
         <footer className="border-t border-purple-500/20 bg-zinc-950/80 px-6 py-10">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 text-center md:flex-row md:text-left">
