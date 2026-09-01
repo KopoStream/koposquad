@@ -154,8 +154,8 @@ emotePackages: [
     title: "Striimaajan starttipaketti",
     description:
       "Henkilökohtaista apua striimin rakentamiseen alusta asti. Käydään yhdessä läpi asetukset ja ensimmäiseen lähetykseen valmistautuminen.",
-    price: "Hinta tulossa",
-    status: "TULOSSA",
+price: "69,99 €",
+status: "",
     accent:
       "from-purple-500/20 via-indigo-500/10 to-transparent",
     glow: "bg-indigo-600/20",
@@ -181,62 +181,83 @@ emotePackages: [
     detailsNote:
       "Tarkoitus ei ole vain antaa ohjetta, vaan käydä asetukset yhdessä läpi niin että tiedät myös itse mitä on tehty.",
   },
-  {
-    category: "FYYSISET TUOTTEET",
-    title: "Tarrat",
-    description:
-      "KOPOSQUAD-henkisiä tarroja sekä myöhemmin mahdollisuus tilata omalla nimellä tai grafiikalla tehtyjä tarroja.",
-    price: "Hinta tulossa",
-    status: "TULOSSA MYÖHEMMIN",
-    accent:
-      "from-fuchsia-500/15 via-purple-500/10 to-transparent",
-    glow: "bg-fuchsia-600/15",
-    features: [
-      "KOPOSQUAD-designit",
-      "Custom-designit myöhemmin",
-      "Useita kokoja",
-      "Fyysinen toimitus",
-    ],
-    detailsTitle: "Mitä Tarrat-palvelu tarkoittaa?",
-    detailsIntro:
-      "Tarravalikoimaan on tarkoitus tuoda KOPOSQUAD-aiheisia designeja ja myöhemmin myös omalla nimellä tai grafiikalla tehtäviä vaihtoehtoja.",
-    details: [
-      "KOPOSQUAD-designit",
-      "Useita kokoja suunnitteilla",
-      "Custom-vaihtoehdot myöhemmässä vaiheessa",
-      "Fyysinen toimitus",
-    ],
-    detailsNote:
-      "Tämä palvelu on vielä rakenteilla. Materiaalit, koot, hinnat ja toimitustavat ilmoitetaan ennen avaamista.",
-  },
-  {
-    category: "KOPOSQUAD MERCH",
-    title: "Paidat & merch",
-    description:
-      "KOPOSQUAD-vaatteita ja muita tuotteita. Merch-valikoimaa rakennetaan myöhemmässä vaiheessa.",
-    price: "Hinta tulossa",
-    status: "TULOSSA MYÖHEMMIN",
-    accent:
-      "from-purple-500/20 via-zinc-500/5 to-transparent",
-    glow: "bg-purple-600/18",
-    features: [
-      "KOPOSQUAD-paidat",
-      "Hupparit myöhemmin",
-      "Muut tuotteet",
-      "Erikoiserät",
-    ],
-    detailsTitle: "Mitä Paidat & merch tarkoittaa?",
-    detailsIntro:
-      "KOPOSQUAD-merchiin on tarkoitus rakentaa oma pieni tuotevalikoima yhteisön visuaalisella tyylillä.",
-    details: [
-      "KOPOSQUAD-paidat",
-      "Hupparit myöhemmässä vaiheessa",
-      "Muita tuotteita suunnitteilla",
-      "Mahdollisia erikoiseriä",
-    ],
-    detailsNote:
-      "Merch on vielä suunnitteluvaiheessa. Tuotteet, hinnat, koot ja toimitustavat julkaistaan myöhemmin.",
-  },
+{
+  category: "SISÄLLÖNTUOTANTO",
+  title: "Videoeditointi",
+  description:
+    "Videoeditointia striimaajille ja sisällöntuottajille. TikTokit, Shorts-videot, YouTube-videot ja striimien parhaat palat valmiiksi julkaistavaan muotoon.",
+
+price: "349,99 €",
+status: "",
+
+  accent:
+    "from-fuchsia-500/15 via-purple-500/10 to-transparent",
+  glow: "bg-fuchsia-600/15",
+
+  features: [
+    "TikTok / Reels / Shorts",
+    "YouTube-videoiden editointi",
+    "Striimiklippien editointi",
+    "Tekstitykset",
+    "Musiikit ja äänitehosteet",
+    "Kevyet efektit ja grafiikat",
+  ],
+
+  detailsTitle: "Mitä Videoeditointi tarkoittaa?",
+  detailsIntro:
+    "Videoeditoinnissa raakamateriaalista tai striimin tallenteesta rakennetaan valmis julkaistava video haluttuun alustaan ja formaattiin.",
+
+  details: [
+    "TikTok-, Reels- ja Shorts-editointi",
+    "YouTube-videoiden editointi",
+    "Striimien parhaiden palojen editointi",
+    "Tekstitykset tarvittaessa",
+    "Musiikit ja äänitehosteet",
+    "Kevyet efektit ja grafiikat",
+    "Video alustalle sopivaan kuvasuhteeseen",
+  ],
+
+detailsNote:
+  "Lopullinen hinta määräytyy materiaalin määrän, videon pituuden, editoinnin vaativuuden ja mahdollisten lisätoiveiden mukaan.",
+},
+{
+  category: "KOPOSQUAD SHOP",
+  title: "KOPOSQUAD Merch",
+  description:
+    "KOPOSQUADin virallinen merch-valikoima on nyt saatavilla. Vaatteita, asusteita, tarroja ja muuta KS-merchiä suoraan verkkokaupasta.",
+
+  price: "7,91 € – 49,26 €",
+  status: "",
+
+  accent:
+    "from-purple-500/20 via-zinc-500/5 to-transparent",
+  glow: "bg-purple-600/18",
+
+  features: [
+    "KOPOSQUAD-vaatteet",
+    "Hupparit ja paidat",
+    "Asusteet",
+    "Tarrat",
+    "Desk mat ja muut tuotteet",
+    "Toimitus suoraan verkkokaupasta",
+  ],
+
+  detailsTitle: "KOPOSQUADin virallinen merch-kauppa",
+  detailsIntro:
+    "KOPOSQUADin virallinen merch-valikoima löytyy omasta verkkokaupasta. Tuotteet tilataan suoraan Fourthwallin kautta.",
+
+  details: [
+    "Vaatteita ja huppareita",
+    "Asusteita",
+    "Tarroja",
+    "Mukeja ja laseja",
+    "Gaming-tuotteita",
+    "Valikoimaa voidaan kasvattaa myöhemmin",
+  ],
+
+  detailsNote:
+    "Tuotteiden hinnat, saatavuus, koot ja toimitustiedot näkyvät aina suoraan KOPOSQUAD Shopissa.",
+},
 ];
 
 const processSteps = [
@@ -283,20 +304,20 @@ const benefits = [
 
 const faqs = [
   [
-    "Milloin palvelut avautuvat?",
-    "Stream Overlay avataan ensimmäisenä tilattavaksi. Muut palvelut viimeistellään ja avataan myöhemmin.",
+    "Mitä palveluita voin tilata?",
+    "KOPOSQUAD Creativesta voit tilata Stream Overlayn, Emote-paketin, Grafiikkapaketin, Striimaajan starttipaketin ja Videoeditoinnin. KOPOSQUAD Merch ohjaa erilliseen viralliseen verkkokauppaan.",
   ],
   [
-    "Voinko kertoa itse millaisen overlayn haluan?",
-    "Kyllä. Custom-palveluissa tilauksen yhteydessä kysytään tyyli, värit, kanavan nimi, mahdolliset logot ja muut toiveet.",
+    "Voinko kertoa itse millaisen lopputuloksen haluan?",
+    "Kyllä. Jokaisen custom-palvelun tilauksen yhteydessä voit kertoa mahdollisimman tarkasti tyylistä, väreistä, kanavasta, materiaalista ja muista toiveistasi.",
   ],
   [
-    "Näkyykö hinta jo nyt?",
-    "Stream Overlayn avaushinta näkyy jo sivulla. Muiden palveluiden hinnat julkaistaan myöhemmin.",
+    "Näkyykö palvelun hinta etukäteen?",
+    "Kyllä. Palveluiden hinnat näkyvät suoraan palvelukorteissa ennen tilaamista. Mahdollisesti tavallista laajemmat tai poikkeuksellisen vaativat projektit voidaan sopia erikseen.",
   ],
   [
-    "Miten digitaalinen tuote toimitetaan?",
-    "Valmiit tiedostot toimitetaan sovitulla tavalla digitaalisesti, kun työ on hyväksytty.",
+    "Miten digitaalinen työ toimitetaan?",
+    "Valmis työ toimitetaan sovitulla tavalla digitaalisesti, kun työ on valmis ja mahdolliset sovitut korjaukset on tehty.",
   ],
 ];
 
@@ -312,6 +333,20 @@ const [pendingGraphicsOrderData, setPendingGraphicsOrderData] =
   useState<FormData | null>(null);
 const [graphicsPaymentSuccess, setGraphicsPaymentSuccess] = useState(false);
 const graphicsPaypalContainerRef = useRef<HTMLDivElement | null>(null);
+const [simpleOrderOpen, setSimpleOrderOpen] = useState(false);
+const [simpleOrderType, setSimpleOrderType] =
+  useState<"start" | "video">("start");
+
+const [simpleOrderStatus, setSimpleOrderStatus] = useState("");
+const [simplePaymentStep, setSimplePaymentStep] = useState(false);
+
+const [pendingSimpleOrderData, setPendingSimpleOrderData] =
+  useState<FormData | null>(null);
+
+const [simplePaymentSuccess, setSimplePaymentSuccess] = useState(false);
+
+const simplePaypalContainerRef =
+  useRef<HTMLDivElement | null>(null);
   const [selectedEmotePackage, setSelectedEmotePackage] = useState<"5" | "10">("5");
   const [emoteOrderStatus, setEmoteOrderStatus] = useState("");
   const [emotePaymentStep, setEmotePaymentStep] = useState(false);
@@ -1071,6 +1106,284 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
     graphicsPaymentStep,
     pendingGraphicsOrderData,
   ]);
+  useEffect(() => {
+  if (!simplePaymentStep || !pendingSimpleOrderData) return;
+
+  const clientId = process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID;
+
+  if (!clientId) {
+    setSimpleOrderStatus(
+      "PayPal Client ID puuttuu .env.local-tiedostosta."
+    );
+    return;
+  }
+
+  let cancelled = false;
+
+  const renderSimplePayPalButtons = async () => {
+    try {
+      let paypal = (window as any).paypal;
+
+      if (!paypal) {
+        const existingScript =
+          document.querySelector<HTMLScriptElement>(
+            'script[data-koposquad-paypal="true"]'
+          );
+
+        if (existingScript) {
+          await new Promise<void>((resolve, reject) => {
+            if ((window as any).paypal) {
+              resolve();
+              return;
+            }
+
+            existingScript.addEventListener(
+              "load",
+              () => resolve(),
+              { once: true }
+            );
+
+            existingScript.addEventListener(
+              "error",
+              () =>
+                reject(
+                  new Error(
+                    "PayPal SDK:n lataus epäonnistui."
+                  )
+                ),
+              { once: true }
+            );
+          });
+        } else {
+          await new Promise<void>((resolve, reject) => {
+            const script = document.createElement("script");
+
+            script.src =
+              `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(
+                clientId
+              )}&currency=EUR&intent=capture`;
+
+            script.async = true;
+            script.dataset.koposquadPaypal = "true";
+
+            script.onload = () => resolve();
+
+            script.onerror = () =>
+              reject(
+                new Error(
+                  "PayPal SDK:n lataus epäonnistui."
+                )
+              );
+
+            document.body.appendChild(script);
+          });
+        }
+
+        paypal = (window as any).paypal;
+      }
+
+      if (
+        cancelled ||
+        !simplePaypalContainerRef.current ||
+        !paypal
+      ) {
+        return;
+      }
+
+      simplePaypalContainerRef.current.innerHTML = "";
+
+      const productCode =
+        simpleOrderType === "start"
+          ? "streamer-start-package"
+          : "video-editing";
+
+      await paypal
+        .Buttons({
+          style: {
+            layout: "vertical",
+            shape: "rect",
+            label: "paypal",
+          },
+
+          createOrder: async () => {
+            setSimpleOrderStatus(
+              "Luodaan PayPal-maksua..."
+            );
+
+            const response = await fetch(
+              "/api/paypal/create-order",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  productCode,
+                }),
+              }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok || !data?.id) {
+              throw new Error(
+                data?.error ||
+                  "PayPal-maksun luominen epäonnistui."
+              );
+            }
+
+            return data.id;
+          },
+
+          onApprove: async (data: {
+            orderID: string;
+          }) => {
+            try {
+              setOrderSending(true);
+
+              setSimpleOrderStatus(
+                "Vahvistetaan PayPal-maksua..."
+              );
+
+              const captureResponse = await fetch(
+                "/api/paypal/capture-order",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    orderID: data.orderID,
+                    productCode,
+                  }),
+                }
+              );
+
+              const captureData =
+                await captureResponse.json();
+
+              if (
+                !captureResponse.ok ||
+                captureData?.status !== "COMPLETED"
+              ) {
+                throw new Error(
+                  captureData?.error ||
+                    "PayPal-maksun vahvistaminen epäonnistui."
+                );
+              }
+
+              setSimpleOrderStatus(
+                "Maksu onnistui. Lähetetään tilausta..."
+              );
+
+              const orderData = new FormData();
+
+              pendingSimpleOrderData.forEach(
+                (value, key) => {
+                  orderData.append(key, value);
+                }
+              );
+
+              orderData.set(
+                "service",
+                simpleOrderType === "start"
+                  ? "Striimaajan starttipaketti"
+                  : "Videoeditointi"
+              );
+
+              orderData.set(
+                "price",
+                simpleOrderType === "start"
+                  ? "69,99 €"
+                  : "349,99 €"
+              );
+
+              orderData.append(
+                "paypalOrderId",
+                data.orderID
+              );
+
+              orderData.append(
+                "paypalCaptureId",
+                String(
+                  captureData?.captureId || ""
+                )
+              );
+
+              const orderResponse = await fetch(
+                "/api/order",
+                {
+                  method: "POST",
+                  body: orderData,
+                }
+              );
+
+              const orderResult =
+                await orderResponse.json();
+
+              if (!orderResponse.ok) {
+                throw new Error(
+                  orderResult?.error ||
+                    "Maksu onnistui, mutta tilauksen lähetys epäonnistui."
+                );
+              }
+
+              setSimpleOrderStatus("");
+              setSimplePaymentSuccess(true);
+              setPendingSimpleOrderData(null);
+              setSimplePaymentStep(false);
+            } catch (error) {
+              setSimpleOrderStatus(
+                error instanceof Error
+                  ? error.message
+                  : "Maksun käsittelyssä tapahtui virhe."
+              );
+            } finally {
+              setOrderSending(false);
+            }
+          },
+
+          onCancel: () => {
+            setSimpleOrderStatus(
+              "PayPal-maksu peruutettiin. Voit yrittää uudelleen."
+            );
+          },
+
+          onError: (error: unknown) => {
+            console.error(
+              "PayPal service payment error:",
+              error
+            );
+
+            setSimpleOrderStatus(
+              "PayPal-maksussa tapahtui virhe. Yritä uudelleen."
+            );
+          },
+        })
+        .render(simplePaypalContainerRef.current);
+    } catch (error) {
+      setSimpleOrderStatus(
+        error instanceof Error
+          ? error.message
+          : "PayPal-maksuvaiheen lataaminen epäonnistui."
+      );
+    }
+  };
+
+  renderSimplePayPalButtons();
+
+  return () => {
+    cancelled = true;
+
+    if (simplePaypalContainerRef.current) {
+      simplePaypalContainerRef.current.innerHTML = "";
+    }
+  };
+}, [
+  simplePaymentStep,
+  pendingSimpleOrderData,
+  simpleOrderType,
+]);
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#030104] text-white">
       {/* KIINTEÄ TAUSTA */}
@@ -1135,7 +1448,7 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
 
               <div className="flex items-center gap-3 rounded-2xl border border-purple-400/30 bg-black/35 px-6 py-4 font-bold text-purple-200 backdrop-blur-xl">
                 <span className="h-2 w-2 rounded-full bg-purple-400 shadow-[0_0_12px_rgba(192,132,252,0.8)]" />
-                Stream Overlay tilattavissa
+                Palvelut nyt tilattavissa
               </div>
             </div>
           </div>
@@ -1178,11 +1491,11 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
         Valitse mitä tarvitset
       </h2>
 
-      <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-gray-400">
-        Jokainen palvelu rakennetaan asiakkaan omien tarpeiden ja toiveiden
-        mukaan. Stream Overlay on ensimmäisenä tilattavissa avaustarjouksella.
-      </p>
-
+<p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-gray-400">
+  Jokainen palvelu rakennetaan asiakkaan omien tarpeiden ja toiveiden
+  mukaan. Valitse sopiva palvelu, tutustu sisältöön ja tee tilaus suoraan
+  sivulta.
+</p>
       <div className="mx-auto mt-8 h-px max-w-3xl bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
     </div>
 
@@ -1248,9 +1561,12 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
             )}
           </div>
 
-          {(service.title === "Stream Overlay" ||
-            service.title === "Emote-paketti" ||
-            service.title === "Grafiikkapaketti") && (
+{(service.title === "Stream Overlay" ||
+  service.title === "Emote-paketti" ||
+  service.title === "Grafiikkapaketti" ||
+  service.title === "Striimaajan starttipaketti" ||
+  service.title === "Videoeditointi" ||
+  service.title === "KOPOSQUAD Merch") && (
             <div className="relative mt-5 flex w-fit items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
               <span className="text-[9px] font-black uppercase tracking-[0.18em] text-emerald-300">
@@ -1331,7 +1647,7 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
           {/* PALVELUN TYYPPI */}
           <div className="relative mt-6 flex flex-wrap gap-2">
             <span className="rounded-full border border-purple-400/20 bg-purple-500/[0.07] px-3 py-1 text-[9px] font-black uppercase tracking-[0.18em] text-purple-300">
-              {index === 4 || index === 5
+              {index === 5
                 ? "Fyysinen tuote"
                 : index === 3
                 ? "Henkilökohtainen"
@@ -1498,27 +1814,70 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
                 >
                   Tilaa Emote-paketti
                 </button>
-              ) : service.title === "Grafiikkapaketti" ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setGraphicsPaymentSuccess(false);
-                    setGraphicsOrderStatus("");
-                    setGraphicsOrderOpen(true);
-                  }}
-                  className="mt-6 w-full rounded-xl border border-violet-400/45 bg-gradient-to-r from-violet-600/80 to-purple-600/75 px-5 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(139,92,246,0.18)] transition hover:-translate-y-0.5 hover:border-violet-300/70 hover:shadow-[0_0_38px_rgba(139,92,246,0.28)]"
-                >
-                  Tilaa Grafiikkapaketti
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  disabled
-                  className="mt-6 w-full cursor-not-allowed rounded-xl border border-purple-500/30 bg-[linear-gradient(90deg,rgba(126,34,206,0.14),rgba(192,38,211,0.08))] px-5 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-purple-300 opacity-80 shadow-[inset_0_0_20px_rgba(168,85,247,0.04)]"
-                >
-                  Tilaus avautuu pian
-                </button>
-              )}
+) : service.title === "Grafiikkapaketti" ? (
+  <button
+    type="button"
+    onClick={() => {
+      setGraphicsPaymentSuccess(false);
+      setGraphicsOrderStatus("");
+      setGraphicsOrderOpen(true);
+    }}
+    className="mt-6 w-full rounded-xl border border-violet-400/45 bg-gradient-to-r from-violet-600/80 to-purple-600/75 px-5 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(139,92,246,0.18)] transition hover:-translate-y-0.5 hover:border-violet-300/70 hover:shadow-[0_0_38px_rgba(139,92,246,0.28)]"
+  >
+    Tilaa Grafiikkapaketti
+  </button>
+
+) : service.title === "Striimaajan starttipaketti" ? (
+  <button
+    type="button"
+    onClick={() => {
+      setSimpleOrderType("start");
+      setSimpleOrderStatus("");
+      setSimplePaymentStep(false);
+      setPendingSimpleOrderData(null);
+      setSimplePaymentSuccess(false);
+      setSimpleOrderOpen(true);
+    }}
+    className="mt-6 w-full rounded-xl border border-purple-400/45 bg-gradient-to-r from-purple-600/80 to-fuchsia-600/70 px-5 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(168,85,247,0.20)] transition hover:-translate-y-0.5 hover:border-purple-300/70 hover:shadow-[0_0_38px_rgba(168,85,247,0.30)]"
+  >
+    Tilaa starttipaketti
+  </button>
+
+) : service.title === "Videoeditointi" ? (
+  <button
+    type="button"
+    onClick={() => {
+      setSimpleOrderType("video");
+      setSimpleOrderStatus("");
+      setSimplePaymentStep(false);
+      setPendingSimpleOrderData(null);
+      setSimplePaymentSuccess(false);
+      setSimpleOrderOpen(true);
+    }}
+    className="mt-6 w-full rounded-xl border border-fuchsia-400/45 bg-gradient-to-r from-fuchsia-600/80 to-purple-600/75 px-5 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(217,70,239,0.18)] transition hover:-translate-y-0.5 hover:border-fuchsia-300/70 hover:shadow-[0_0_38px_rgba(217,70,239,0.28)]"
+  >
+    Tilaa videoeditointi
+  </button>
+
+) : service.title === "KOPOSQUAD Merch" ? (
+  <a
+    href="https://koposquad-shop.fourthwall.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="mt-6 block w-full rounded-xl border border-fuchsia-400/45 bg-gradient-to-r from-purple-600/80 to-fuchsia-600/70 px-5 py-3.5 text-center text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(168,85,247,0.20)] transition hover:-translate-y-0.5 hover:border-fuchsia-300/70 hover:shadow-[0_0_38px_rgba(217,70,239,0.28)]"
+  >
+    Siirry merch-kauppaan
+  </a>
+
+) : (
+  <button
+    type="button"
+    disabled
+    className="mt-6 w-full cursor-not-allowed rounded-xl border border-purple-500/30 bg-[linear-gradient(90deg,rgba(126,34,206,0.14),rgba(192,38,211,0.08))] px-5 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-purple-300 opacity-80 shadow-[inset_0_0_20px_rgba(168,85,247,0.04)]"
+  >
+    Tilaus avautuu pian
+  </button>
+)}
             </div>
           </div>
 
@@ -1541,38 +1900,42 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
 </section>
 
 /* PALVELUT RAKENTEILLA */}
-        <section className="relative overflow-hidden border-y border-purple-500/15 bg-[linear-gradient(110deg,rgba(88,28,135,0.20),rgba(3,1,5,0.98),rgba(112,26,117,0.16))] px-6 py-16">
-          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[300px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700/10 blur-[150px]" />
+{/* CREATIVE PALVELUT */}
+<section className="relative overflow-hidden border-y border-purple-500/15 bg-[linear-gradient(110deg,rgba(88,28,135,0.20),rgba(3,1,5,0.98),rgba(112,26,117,0.16))] px-6 py-16">
+  <div className="pointer-events-none absolute left-1/2 top-1/2 h-[300px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-700/10 blur-[150px]" />
 
-          <img
-            src="/images/ks-logo.png.png"
-            alt=""
-            className="pointer-events-none absolute -right-16 top-1/2 hidden w-[300px] -translate-y-1/2 rotate-[-10deg] object-contain opacity-[0.025] lg:block"
-          />
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="pointer-events-none absolute -right-16 top-1/2 hidden w-[300px] -translate-y-1/2 rotate-[-10deg] object-contain opacity-[0.025] lg:block"
+  />
 
-          <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 rounded-[28px] border border-purple-500/20 bg-black/30 px-8 py-9 backdrop-blur-xl md:flex-row md:px-10">
-            <div className="max-w-3xl">
-              <p className="text-xs font-black uppercase tracking-[0.34em] text-purple-400">
-                KOPOSQUAD CREATIVE
-              </p>
-              <h2 className="mt-3 text-2xl font-black uppercase md:text-3xl">
-                Muut palvelut ovat vielä
-                <span className="ml-2 bg-gradient-to-r from-purple-300 to-fuchsia-400 bg-clip-text text-transparent">
-                  rakenteilla.
-                </span>
-              </h2>
-              <p className="mt-3 max-w-2xl leading-7 text-gray-400">
-                Stream Overlay on ensimmäinen avattu palvelu. Muita palvelupaketteja, hintoja ja tilausjärjestelmää viimeistellään parhaillaan.
-                Loput palvelut avataan vaiheittain, kun kokonaisuus on valmis.
-              </p>
-            </div>
+  <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 rounded-[28px] border border-purple-500/20 bg-black/30 px-8 py-9 backdrop-blur-xl md:flex-row md:px-10">
+    <div className="max-w-3xl">
+      <p className="text-xs font-black uppercase tracking-[0.34em] text-purple-400">
+        KOPOSQUAD CREATIVE
+      </p>
 
-            <div className="flex shrink-0 items-center gap-3 rounded-full border border-purple-400/30 bg-purple-500/[0.07] px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-purple-300">
-              <span className="h-2 w-2 rounded-full bg-purple-400 shadow-[0_0_14px_rgba(192,132,252,0.9)]" />
-              Tulossa pian
-            </div>
-          </div>
-        </section>
+      <h2 className="mt-3 text-2xl font-black uppercase md:text-3xl">
+        Palvelut ovat nyt
+        <span className="ml-2 bg-gradient-to-r from-purple-300 to-fuchsia-400 bg-clip-text text-transparent">
+          tilattavissa.
+        </span>
+      </h2>
+
+      <p className="mt-3 max-w-2xl leading-7 text-gray-400">
+        KOPOSQUAD Creative tarjoaa visuaalisia palveluita, striimausapua,
+        videoeditointia ja muita ratkaisuja sisällöntuottajille. Valitse
+        tarvitsemasi palvelu ja tee tilaus suoraan sivulta.
+      </p>
+    </div>
+
+    <div className="flex shrink-0 items-center gap-3 rounded-full border border-emerald-400/30 bg-emerald-400/[0.07] px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-emerald-300">
+      <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_14px_rgba(52,211,153,0.9)]" />
+      Tilattavissa nyt
+    </div>
+  </div>
+</section>
 
         {/* MITEN TILAAMINEN TOIMII */}
         <section className="relative overflow-hidden border-b border-purple-500/15 bg-purple-950/10 px-6 py-24">
@@ -1733,19 +2096,19 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
               KOPOSQUAD CREATIVE
             </p>
 
-            <h2 className="relative mt-5 text-3xl font-black uppercase md:text-5xl">
-              Stream Overlay nyt tilattavissa
-            </h2>
+<h2 className="relative mt-5 text-3xl font-black uppercase md:text-5xl">
+  KOPOSQUAD Creative nyt avoinna
+</h2>
 
-            <p className="relative mx-auto mt-5 max-w-2xl text-lg leading-8 text-gray-400">
-              Ensimmäinen KOPOSQUAD Creative -palvelu on avattu.
-              Muut palvelupaketit ja tilausjärjestelmän seuraavat vaiheet valmistuvat vähitellen.
-            </p>
+<p className="relative mx-auto mt-5 max-w-2xl text-lg leading-8 text-gray-400">
+  Valitse tarvitsemasi palvelu ja kerro meille millaisen lopputuloksen
+  haluat. Tilaaminen ja maksaminen onnistuvat suoraan sivulta.
+</p>
 
-            <div className="relative mx-auto mt-8 inline-flex items-center gap-3 rounded-full border border-purple-400/30 bg-black/35 px-5 py-2 text-sm font-black uppercase tracking-[0.15em] text-purple-300">
-              <span className="h-2 w-2 rounded-full bg-purple-400 shadow-[0_0_12px_rgba(192,132,252,0.8)]" />
-              Tilattavissa
-            </div>
+<div className="relative mx-auto mt-8 inline-flex items-center gap-3 rounded-full border border-emerald-400/30 bg-emerald-400/[0.06] px-5 py-2 text-sm font-black uppercase tracking-[0.15em] text-emerald-300">
+  <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]" />
+  Palvelut tilattavissa
+</div>
           </div>
         </section>
 
@@ -1882,6 +2245,404 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
             </div>
           </div>
         )}
+
+        {/* STARTTIPAKETTI / VIDEOEDITOINTI - TILAUSMODAALI */}
+{simpleOrderOpen && (
+  <div
+    className="fixed inset-0 z-[110] flex items-center justify-center overflow-y-auto bg-black/85 px-4 py-8 backdrop-blur-md animate-[fadeIn_180ms_ease-out]"
+    onClick={() => {
+      setSimpleOrderOpen(false);
+      setSimpleOrderStatus("");
+      setSimplePaymentStep(false);
+      setPendingSimpleOrderData(null);
+      setSimplePaymentSuccess(false);
+    }}
+  >
+    <form
+      className="relative my-auto w-full max-w-4xl overflow-hidden rounded-[32px] border border-purple-400/35 bg-[radial-gradient(circle_at_20%_0%,rgba(168,85,247,0.20),transparent_42%),linear-gradient(145deg,rgba(24,12,31,0.995),rgba(5,3,8,0.995))] p-6 shadow-[0_0_110px_rgba(126,34,206,0.28)] sm:p-8 md:p-10"
+      onClick={(event) => event.stopPropagation()}
+      onSubmit={(event) => {
+        event.preventDefault();
+
+        try {
+          const form = event.currentTarget;
+          const formData = new FormData(form);
+
+          formData.set(
+            "service",
+            simpleOrderType === "start"
+              ? "Striimaajan starttipaketti"
+              : "Videoeditointi"
+          );
+
+          formData.set(
+            "price",
+            simpleOrderType === "start"
+              ? "69,99 €"
+              : "349,99 €"
+          );
+
+          setPendingSimpleOrderData(formData);
+          setSimplePaymentSuccess(false);
+          setSimplePaymentStep(true);
+
+          setSimpleOrderStatus(
+            "Tiedot tarkistettu. Valitse alta PayPal-maksutapa jatkaaksesi."
+          );
+        } catch (error) {
+          setSimpleOrderStatus(
+            error instanceof Error
+              ? error.message
+              : "Tilauksen käsittelyssä tapahtui virhe."
+          );
+        }
+      }}
+    >
+      {/* TAUSTA */}
+      <div className="pointer-events-none absolute -right-28 -top-28 h-72 w-72 rounded-full bg-fuchsia-600/15 blur-[90px]" />
+      <div className="pointer-events-none absolute -bottom-32 -left-28 h-72 w-72 rounded-full bg-purple-700/15 blur-[100px]" />
+
+      <img
+        src="/images/ks-logo.png.png"
+        alt=""
+        className="pointer-events-none absolute -right-14 bottom-[-25px] w-[280px] rotate-[-12deg] object-contain opacity-[0.035]"
+      />
+
+      {/* SULJE */}
+      <button
+        type="button"
+        onClick={() => {
+          setSimpleOrderOpen(false);
+          setSimpleOrderStatus("");
+          setSimplePaymentStep(false);
+          setPendingSimpleOrderData(null);
+          setSimplePaymentSuccess(false);
+        }}
+        className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-xl border border-purple-400/30 bg-black/40 text-xl font-black text-purple-200 transition hover:rotate-90 hover:border-purple-300/60 hover:bg-purple-500/10 hover:text-white"
+        aria-label="Sulje tilaus"
+      >
+        ×
+      </button>
+
+      <div className="relative z-10">
+        {simplePaymentSuccess ? (
+          <div className="mx-auto flex min-h-[520px] max-w-2xl flex-col items-center justify-center py-10 text-center">
+            <div className="flex h-24 w-24 items-center justify-center rounded-full border border-emerald-400/35 bg-emerald-400/[0.08] shadow-[0_0_55px_rgba(52,211,153,0.18)]">
+              <span className="text-5xl font-black text-emerald-300">
+                ✓
+              </span>
+            </div>
+
+            <p className="mt-8 text-[11px] font-black uppercase tracking-[0.34em] text-emerald-300">
+              Maksu onnistui
+            </p>
+
+            <h2 className="mt-4 text-3xl font-black uppercase sm:text-4xl md:text-5xl">
+              Tilaus vastaanotettu
+            </h2>
+
+            <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-gray-400">
+              Kiitos tilauksestasi! Maksu on vahvistettu ja tilauksesi
+              on vastaanotettu. Olemme sinuun yhteydessä antamiesi
+              yhteystietojen kautta.
+            </p>
+
+            <button
+              type="button"
+              onClick={() => {
+                setSimpleOrderOpen(false);
+                setSimplePaymentStep(false);
+                setPendingSimpleOrderData(null);
+                setSimpleOrderStatus("");
+                setSimplePaymentSuccess(false);
+              }}
+              className="mt-8 w-full rounded-xl border border-emerald-400/30 bg-gradient-to-r from-emerald-500/20 via-purple-600/35 to-fuchsia-600/30 px-7 py-4 text-sm font-black uppercase tracking-[0.10em] text-white"
+            >
+              Palaa palveluihin
+            </button>
+          </div>
+        ) : (
+          <>
+            {/* YLÄOSA */}
+            <div className="flex flex-wrap items-center gap-3 pr-14">
+              <span className="rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-[10px] font-black uppercase tracking-[0.20em] text-emerald-300">
+                ● Tilattavissa
+              </span>
+
+              <span className="rounded-full border border-purple-400/20 bg-purple-500/[0.06] px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-purple-200">
+                {simpleOrderType === "start"
+                  ? "Henkilökohtainen palvelu"
+                  : "Sisällöntuotanto"}
+              </span>
+            </div>
+
+            <p className="mt-6 text-xs font-black uppercase tracking-[0.30em] text-purple-400">
+              KOPOSQUAD CREATIVE
+            </p>
+
+            <h2 className="mt-3 text-3xl font-black uppercase leading-[1.05] sm:text-4xl md:text-5xl">
+              {simpleOrderType === "start"
+                ? "Striimaajan starttipaketti - tilaus"
+                : "Videoeditointi - tilaus"}
+            </h2>
+
+            <p className="mt-5 max-w-2xl text-base leading-7 text-gray-400">
+              {simpleOrderType === "start"
+                ? "Kerro nykyisestä striimistäsi ja siitä, missä asioissa tarvitset apua. Käymme asetukset ja kokonaisuuden kanssasi läpi."
+                : "Kerro materiaalista, videon pituudesta, alustasta ja haluamastasi editointityylistä mahdollisimman tarkasti."}
+            </p>
+
+            {/* HINTA */}
+            <div className="mt-8 rounded-2xl border border-purple-400/25 bg-purple-500/[0.05] p-5">
+              <p className="text-[10px] font-black uppercase tracking-[0.24em] text-purple-300">
+                Palvelun hinta
+              </p>
+
+              <p className="mt-2 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-purple-300 bg-clip-text text-3xl font-black text-transparent">
+                {simpleOrderType === "start"
+                  ? "69,99 €"
+                  : "349,99 €"}
+              </p>
+
+              {simpleOrderType === "video" && (
+                <p className="mt-2 text-xs leading-5 text-gray-500">
+                  Lopullinen työn sisältö sovitaan antamiesi tietojen
+                  perusteella ennen työn aloittamista.
+                </p>
+              )}
+            </div>
+
+            {/* YHTEYSTIEDOT */}
+            <div className="mt-8 grid gap-5 sm:grid-cols-2">
+              <label className="block">
+                <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                  Nimi *
+                </span>
+
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  placeholder="Nimesi"
+                  className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                />
+              </label>
+
+              <label className="block">
+                <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                  Sähköposti *
+                </span>
+
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="sinun@email.fi"
+                  className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                />
+              </label>
+
+              <label className="block">
+                <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                  Discord-käyttäjänimi *
+                </span>
+
+                <input
+                  type="text"
+                  name="discord"
+                  required
+                  placeholder="Esim. kopo123"
+                  className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                />
+              </label>
+
+              <label className="block">
+                <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                  Kanavan nimi / linkki *
+                </span>
+
+                <input
+                  type="text"
+                  name="channel"
+                  required
+                  placeholder="Twitch-, YouTube- tai muu kanavasi"
+                  className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                />
+              </label>
+
+              {simpleOrderType === "video" && (
+                <>
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Julkaisualusta *
+                    </span>
+
+                    <select
+                      name="platform"
+                      required
+                      defaultValue=""
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-[#09060c] px-4 py-3.5 text-white outline-none focus:border-purple-400/60"
+                    >
+                      <option value="" disabled>
+                        Valitse alusta
+                      </option>
+                      <option>YouTube</option>
+                      <option>TikTok</option>
+                      <option>Shorts / Reels</option>
+                      <option>Useita alustoja</option>
+                      <option>Muu</option>
+                    </select>
+                  </label>
+
+                  <label className="block">
+                    <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                      Raakamateriaalin määrä *
+                    </span>
+
+                    <input
+                      type="text"
+                      name="materialLength"
+                      required
+                      placeholder="Esim. noin 2 tuntia"
+                      className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                    />
+                  </label>
+                </>
+              )}
+
+              <label className="block sm:col-span-2">
+                <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                  {simpleOrderType === "start"
+                    ? "Kerro missä tarvitset apua *"
+                    : "Kerro editointitoiveistasi *"}
+                </span>
+
+                <textarea
+                  name="description"
+                  rows={7}
+                  required
+                  minLength={15}
+                  placeholder={
+                    simpleOrderType === "start"
+                      ? "Kerro nykyisestä striimistäsi, laitteistosta, ohjelmista ja ongelmista joissa tarvitset apua..."
+                      : "Kerro millainen video on kyseessä, haluttu tyyli, tavoitepituus, efektit, tekstitykset ja muut toiveet..."
+                  }
+                  className="mt-2 w-full resize-y rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                />
+              </label>
+            </div>
+
+            {/* EHDOT */}
+            <div className="mt-7 rounded-2xl border border-purple-500/20 bg-purple-500/[0.035] p-5">
+              <label className="flex cursor-pointer items-start gap-3 text-sm leading-6 text-gray-300">
+                <input
+                  type="checkbox"
+                  name="termsAccepted"
+                  value="yes"
+                  required
+                  className="mt-1 h-4 w-4 shrink-0 accent-purple-500"
+                />
+
+                <span>
+                  Olen tarkistanut antamani tiedot ja ymmärrän,
+                  että palvelu toteutetaan antamieni tietojen ja
+                  toiveiden perusteella.
+                </span>
+              </label>
+            </div>
+
+            {/* STATUS */}
+            {simpleOrderStatus && (
+              <div className="mt-6 rounded-xl border border-purple-400/25 bg-purple-500/[0.05] px-4 py-3 text-sm text-purple-100">
+                {simpleOrderStatus}
+              </div>
+            )}
+
+            {/* PAYPAL */}
+            {simplePaymentStep && pendingSimpleOrderData && (
+              <div className="mt-5 rounded-2xl border border-purple-500/30 bg-black/35 p-5">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-[0.22em] text-purple-300">
+                      Maksuvaihe
+                    </p>
+
+                    <p className="mt-3 text-sm text-gray-400">
+                      Palvelu:{" "}
+                      <span className="font-bold text-white">
+                        {simpleOrderType === "start"
+                          ? "Striimaajan starttipaketti"
+                          : "Videoeditointi"}
+                      </span>
+                    </p>
+
+                    <p className="mt-2 text-sm text-gray-400">
+                      Maksettava summa:{" "}
+                      <span className="font-bold text-white">
+                        {simpleOrderType === "start"
+                          ? "69,99 €"
+                          : "349,99 €"}
+                      </span>
+                    </p>
+                  </div>
+
+                  <span className="rounded-full border border-emerald-400/30 bg-emerald-400/[0.06] px-4 py-2 text-[9px] font-black uppercase tracking-[0.14em] text-emerald-300">
+                    Turvallinen maksu
+                  </span>
+                </div>
+
+                <div
+                  ref={simplePaypalContainerRef}
+                  className="mt-6 min-h-[48px] overflow-hidden rounded-xl"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSimplePaymentStep(false);
+                    setSimpleOrderStatus("");
+                  }}
+                  className="mt-5 w-full rounded-xl border border-purple-500/30 bg-purple-500/[0.05] px-5 py-3 text-xs font-black uppercase tracking-[0.10em] text-purple-200 transition hover:bg-purple-500/10"
+                >
+                  Takaisin muokkaamaan tilausta
+                </button>
+              </div>
+            )}
+
+            {/* ALANAPIT */}
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <button
+                type="button"
+                onClick={() => {
+                  setSimpleOrderOpen(false);
+                  setSimpleOrderStatus("");
+                  setSimplePaymentStep(false);
+                  setPendingSimpleOrderData(null);
+                  setSimplePaymentSuccess(false);
+                }}
+                className="rounded-xl border border-purple-500/30 bg-black/30 px-5 py-3 text-sm font-black uppercase tracking-[0.08em] text-purple-200 transition hover:border-purple-300/50 hover:bg-purple-500/[0.08]"
+              >
+                Peruuta
+              </button>
+
+              {!simplePaymentStep && (
+                <button
+                  type="submit"
+                  disabled={orderSending}
+                  className="rounded-xl border border-fuchsia-400/45 bg-gradient-to-r from-purple-600 to-fuchsia-600 px-7 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(168,85,247,0.20)] transition hover:-translate-y-0.5 hover:shadow-[0_0_38px_rgba(217,70,239,0.28)] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {orderSending
+                    ? "Käsitellään..."
+                    : "Jatka maksuun"}
+                </button>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+    </form>
+  </div>
+)}
 
                 {/* GRAFIIKKAPAKETTI - TILAUSMODAALI */}
         {graphicsOrderOpen && (

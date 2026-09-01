@@ -476,6 +476,14 @@ className="hero-slow-zoom pointer-events-none absolute inset-0 h-full w-full sel
   >
     Discord
   </a>
+  <a
+  href="https://koposquad-shop.fourthwall.com/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="rounded-xl border border-fuchsia-400/60 bg-gradient-to-r from-purple-600/30 to-fuchsia-600/30 px-6 py-3 font-black text-purple-100 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-fuchsia-300 hover:from-purple-600/55 hover:to-fuchsia-600/55 hover:text-white hover:shadow-[0_0_28px_rgba(217,70,239,0.45)]"
+>
+ {language === "fi" ? "Kauppa" : "Shop"}
+</a>
 </div>
   </div>
 
@@ -2254,6 +2262,15 @@ className="group relative flex min-h-[290px] flex-col overflow-hidden rounded-[2
           status: "completed",
         },
         {
+  fiTitle: "KOPOSQUAD Merch julkaistu",
+  enTitle: "KOPOSQUAD Merch launched",
+  fiDescription:
+    "KOPOSQUADin virallinen merch-kauppa on avattu ja ensimmäinen tuotevalikoima julkaistu.",
+  enDescription:
+    "The official KOPOSQUAD merch store has launched with its first product collection.",
+  status: "completed",
+},
+        {
           fiTitle: "Ensimmäinen yhteistyökumppani",
           enTitle: "First collaboration partner",
           fiDescription:
@@ -2290,15 +2307,6 @@ className="group relative flex min-h-[290px] flex-col overflow-hidden rounded-[2
           status: "coming",
         },
         {
-          fiTitle: "KOPOSQUAD Merch",
-          enTitle: "KOPOSQUAD Merch",
-          fiDescription:
-            "Tulevaisuudessa tavoitteena on julkaista yhteisön omia paitoja ja muita tuotteita.",
-          enDescription:
-            "The goal is to release community shirts and other products in the future.",
-          status: "coming",
-        },
-        {
           fiTitle: "Ensimmäinen KOPOSQUAD-miitti",
           enTitle: "First KOPOSQUAD meetup",
           fiDescription:
@@ -2316,15 +2324,15 @@ status: "future",
             "Active members will receive personal shirts featuring their creator names.",
           status: "future",
         },
-        {
-          fiTitle: "Yhteinen lanitapahtuma",
-          enTitle: "Community LAN event",
-          fiDescription:
-            "Jäsenet kokoontuvat pelaamaan, striimaamaan ja tekemään sisältöä yhdessä.",
-          enDescription:
-            "Members will gather to play, stream and create content together.",
-          status: "future",
-        },
+{
+  fiTitle: "KOPOSQUAD Giveaway",
+  enTitle: "KOPOSQUAD Giveaway",
+  fiDescription:
+    "Tulevaisuudessa järjestetään yhteisölle isompi arvonta, jossa katsojilla ja jäsenillä on mahdollisuus voittaa palkintoja.",
+  enDescription:
+    "A larger community giveaway is planned for the future, giving viewers and members a chance to win prizes.",
+  status: "future",
+},
         {
           fiTitle: "Assembly tai Vectorama",
           enTitle: "Assembly or Vectorama",

@@ -41,6 +41,18 @@ const PRODUCTS = {
     description: "KOPOSQUAD Creative - Grafiikkapaketti",
     amount: "79.99",
   },
+
+  "streamer-start-package": {
+    referenceId: "streamer-start-package",
+    description: "KOPOSQUAD Creative - Striimaajan starttipaketti",
+    amount: "69.99",
+  },
+
+  "video-editing": {
+    referenceId: "video-editing",
+    description: "KOPOSQUAD Creative - Videoeditointi",
+    amount: "349.99",
+  },
 } as const;
 
 type ProductCode = keyof typeof PRODUCTS;
@@ -78,7 +90,6 @@ async function getPayPalAccessToken() {
 
 export async function POST(request: Request) {
   try {
-    // Vanha Overlay-koodi toimii edelleen oletuksella.
     let productCode: ProductCode = "stream-overlay";
 
     const rawBody = await request.text();

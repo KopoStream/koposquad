@@ -29,6 +29,14 @@ const PRODUCTS = {
   "graphics-package": {
     amount: "79.99",
   },
+
+  "streamer-start-package": {
+    amount: "69.99",
+  },
+
+  "video-editing": {
+    amount: "349.99",
+  },
 } as const;
 
 type ProductCode = keyof typeof PRODUCTS;
@@ -70,7 +78,6 @@ export async function POST(request: Request) {
 
     const orderID = String(body?.orderID || "").trim();
 
-    // Vanha Overlay-koodi toimii edelleen oletuksella.
     const requestedProductCode = String(
       body?.productCode || "stream-overlay"
     ).trim();
