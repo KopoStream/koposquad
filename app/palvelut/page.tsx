@@ -278,6 +278,7 @@ detailsNote:
     "Yhtenäinen KOPOSQUAD-tiimityyli",
     "Personoidaan jokaiselle jäsenelle",
     "Saatavilla vain KOPOSQUAD-jäsenille",
+    "Sisältö tarkentuu myöhemmin",
   ],
 
   detailsTitle: "KOPOSQUAD Member Jersey",
@@ -356,6 +357,7 @@ detailsNote:
     "Tapahtumakohtainen ilmoittautuminen",
     "Yhteistä tekemistä jäsenten kanssa",
     "Paikkoja voidaan avata rajattu määrä",
+     "Sisältö tarkentuu myöhemmin",
   ],
 
   detailsTitle: "KOPOSQUAD LAN",
