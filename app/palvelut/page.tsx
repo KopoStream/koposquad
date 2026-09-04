@@ -296,6 +296,84 @@ detailsNote:
   detailsNote:
     "Member Jersey on vielä valmistelussa. Lopullinen design, hinta, koot ja tilausmahdollisuus julkaistaan myöhemmin.",
 },
+
+{
+  category: "KOPOSQUAD JÄSENTUOTE",
+  title: "KOPOSQUAD Member Kit",
+  description:
+    "KOPOSQUAD-jäsenille suunniteltu fyysinen jäsenpaketti, joka kokoaa yhteen KS:n omia jäsentuotteita ja pieniä yllätyksiä.",
+
+  price: "Tulossa pian",
+  status: "TULOSSA PIAN",
+
+  accent:
+    "from-purple-500/20 via-violet-500/10 to-transparent",
+  glow: "bg-purple-600/20",
+
+  features: [
+    "Vain KOPOSQUAD-jäsenille",
+    "Virallinen KS-jäsenpaketti",
+    "KS-jäsenkortti",
+    "Tarrapaketti",
+    "Kangasmerkki / patch",
+    "Sisältö tarkentuu myöhemmin",
+  ],
+
+  detailsTitle: "KOPOSQUAD Member Kit",
+  detailsIntro:
+    "KOPOSQUAD Member Kit on vain jäsenille tarkoitettu fyysinen jäsenpaketti. Paketin tarkoituksena on tuoda jäsenyyteen myös jotain konkreettista KS-kamaa, jota ei ole saatavilla tavallisesta merch-kaupasta.",
+
+  details: [
+    "Virallinen KOPOSQUAD-jäsenkortti",
+    "KS-tarroja",
+    "Kangasmerkki / patch",
+    "Muita KOPOSQUAD-jäsentuotteita",
+    "Paketin sisältö tarkentuu myöhemmin",
+    "Saatavilla vain KOPOSQUAD-jäsenille",
+  ],
+
+  detailsNote:
+    "Member Kit on vielä suunnittelussa. Lopullinen sisältö, hinta ja tilausmahdollisuus julkaistaan myöhemmin.",
+},
+
+{
+  category: "KOPOSQUAD JÄSENTAPAHTUMA",
+  title: "KOPOSQUAD LAN",
+  description:
+    "Lähde KOPOSQUADin mukana tuleviin LAN- ja pelitapahtumiin. Jäsenille avataan tapahtumakohtaisesti mahdollisuus varata oma paikka KS-porukan mukana.",
+
+  price: "Tulossa pian",
+  status: "TULOSSA PIAN",
+
+  accent:
+    "from-violet-500/20 via-purple-500/10 to-transparent",
+  glow: "bg-violet-600/20",
+
+  features: [
+    "Vain KOPOSQUAD-jäsenille",
+    "LAN- ja pelitapahtumat",
+    "Oma paikka KS-porukan mukana",
+    "Tapahtumakohtainen ilmoittautuminen",
+    "Yhteistä tekemistä jäsenten kanssa",
+    "Paikkoja voidaan avata rajattu määrä",
+  ],
+
+  detailsTitle: "KOPOSQUAD LAN",
+  detailsIntro:
+    "KOPOSQUAD LAN on jäsenille tarkoitettu mahdollisuus lähteä yhdessä LAN- ja pelitapahtumiin osana KS-porukkaa. Jokainen tapahtuma avataan sivulle erikseen.",
+
+  details: [
+    "KOPOSQUADin yhteiset LAN-reissut",
+    "Jäsenen oma paikka tapahtumaan",
+    "Tapahtumakohtainen ilmoittautuminen",
+    "Mahdollinen osallistumismaksu ilmoitetaan erikseen",
+    "Matkat ja majoitus eivät lähtökohtaisesti sisälly jäsenpaikkaan",
+    "Saatavilla vain KOPOSQUAD-jäsenille",
+  ],
+
+  detailsNote:
+    "Ensimmäinen LAN-tapahtuma julkaistaan myöhemmin. Tapahtumakohtaiset hinnat, paikkamäärät ja tarkemmat ehdot ilmoitetaan ennen ilmoittautumisen avaamista.",
+},
 ];
 
 const processSteps = [
