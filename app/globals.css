@@ -475,3 +475,135 @@ html {
 .title-aura {
   animation: titleAura 8s ease-in-out infinite;
 }
+/* HERO - HIMMEÄT ELÄVÄT KS-LOGOT */
+
+@keyframes ksFloatOne {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-12deg);
+  }
+
+  50% {
+    transform: translate3d(20px, -18px, 0) rotate(-8deg);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-12deg);
+  }
+}
+
+@keyframes ksFloatTwo {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(10deg);
+  }
+
+  50% {
+    transform: translate3d(-16px, 22px, 0) rotate(14deg);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(10deg);
+  }
+}
+
+@keyframes ksFloatThree {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(7deg);
+  }
+
+  50% {
+    transform: translate3d(14px, -12px, 0) rotate(4deg);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(7deg);
+  }
+}
+
+.ks-float-one {
+  animation: ksFloatOne 18s ease-in-out infinite;
+}
+
+.ks-float-two {
+  animation: ksFloatTwo 23s ease-in-out infinite;
+}
+
+.ks-float-three {
+  animation: ksFloatThree 27s ease-in-out infinite;
+}
+@keyframes ksDriftOne {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-18deg);
+  }
+  50% {
+    transform: translate3d(28px, -18px, 0) rotate(-12deg);
+  }
+}
+
+@keyframes ksDriftTwo {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(11deg);
+  }
+  50% {
+    transform: translate3d(-22px, 16px, 0) rotate(17deg);
+  }
+}
+
+@keyframes ksDriftThree {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-8deg);
+  }
+  50% {
+    transform: translate3d(14px, 20px, 0) rotate(-3deg);
+  }
+}
+
+@keyframes ksDriftFour {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(16deg);
+  }
+  50% {
+    transform: translate3d(-18px, -14px, 0) rotate(10deg);
+  }
+}
+
+@keyframes ksDriftFive {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-14deg);
+  }
+  50% {
+    transform: translate3d(24px, 18px, 0) rotate(-9deg);
+  }
+}
+
+@keyframes ksDriftSix {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(7deg);
+  }
+  50% {
+    transform: translate3d(-16px, -12px, 0) rotate(12deg);
+  }
+}
+
+.ks-drift-one {
+  animation: ksDriftOne 17s ease-in-out infinite;
+}
+
+.ks-drift-two {
+  animation: ksDriftTwo 21s ease-in-out infinite;
+}
+
+.ks-drift-three {
+  animation: ksDriftThree 25s ease-in-out infinite;
+}
+
+.ks-drift-four {
+  animation: ksDriftFour 19s ease-in-out infinite;
+}
+
+.ks-drift-five {
+  animation: ksDriftFive 23s ease-in-out infinite;
+}
+
+.ks-drift-six {
+  animation: ksDriftSix 28s ease-in-out infinite;
+}

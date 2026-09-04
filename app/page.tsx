@@ -32,6 +32,10 @@ export default function Home() {
   const [koposquadTvLoading, setKoposquadTvLoading] = useState(true);
 
   const [language, setLanguage] = useState<"fi" | "en">("fi");
+  const [menuOpen, setMenuOpen] = useState(false);
+const [activeMenu, setActiveMenu] = useState<
+  "tiimi" | "tyokalut" | "palvelut" | "yhteiso" | "tietoa" | null
+>(null);
 
   const [memberSearch, setMemberSearch] = useState("");
   const [showAllMembers, setShowAllMembers] = useState(false);
@@ -227,6 +231,29 @@ useEffect(() => {
   fetchClips();
 }, []);
 
+useEffect(() => {
+  if (!menuOpen) {
+    document.body.style.overflow = "";
+    return;
+  }
+
+  document.body.style.overflow = "hidden";
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      setMenuOpen(false);
+      setActiveMenu(null);
+    }
+  };
+
+  window.addEventListener("keydown", handleKeyDown);
+
+  return () => {
+    document.body.style.overflow = "";
+    window.removeEventListener("keydown", handleKeyDown);
+  };
+}, [menuOpen]);
+
   return (
 <main className="page-fade-in relative min-h-screen overflow-hidden bg-black text-white">
   <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
@@ -245,84 +272,39 @@ useEffect(() => {
 
   </div>
 
-{/* NAV */}
+{/* UUSI KOPOSQUAD NAV */}
+<nav className="fixed left-0 right-0 top-0 z-[70] border-b border-purple-500/20 bg-black/85 backdrop-blur-xl">
+  <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 
-<nav className="fixed left-0 right-0 top-0 z-50 border-b border-purple-500/20 bg-black/85 backdrop-blur-xl">
-  <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-    <a href="#" className="text-3xl font-black tracking-tight">
-      <span className="text-purple-500">KOPO</span>
-      <span className="text-white">SQUAD</span>
-    </a>
-
-    <div className="hidden items-center gap-7 text-sm font-semibold md:flex">
-      <a
-        href="#"
-        className="text-gray-300 transition hover:text-white"
+    {/* VASEN PUOLI */}
+    <div className="flex items-center gap-5">
+      <button
+        type="button"
+        onClick={() => {
+          setMenuOpen(true);
+          setActiveMenu(null);
+        }}
+        aria-label="Avaa valikko"
+        className="group flex h-11 w-11 flex-col items-center justify-center gap-[5px] rounded-xl border border-purple-500/25 bg-purple-500/[0.06] transition-all duration-300 hover:border-purple-400/60 hover:bg-purple-500/15"
       >
-        {language === "fi" ? "Etusivu" : "Home"}
+        <span className="h-[2px] w-5 rounded-full bg-white transition-all duration-300 group-hover:w-6 group-hover:bg-purple-300" />
+        <span className="h-[2px] w-5 rounded-full bg-white transition-all duration-300 group-hover:bg-purple-300" />
+        <span className="h-[2px] w-5 rounded-full bg-white transition-all duration-300 group-hover:w-6 group-hover:bg-purple-300" />
+      </button>
+
+      <a href="#" className="text-3xl font-black tracking-tight">
+        <span className="text-purple-500">KOPO</span>
+        <span className="text-white">SQUAD</span>
       </a>
+    </div>
 
+    {/* OIKEA PUOLI */}
+    <div className="flex items-center gap-3">
       <a
-        href="#live"
-        className="text-gray-300 transition hover:text-white"
-      >
-        Live
-      </a>
-
-      <a
-        href="#tiimi"
-        className="text-gray-300 transition hover:text-white"
-      >
-        {language === "fi" ? "Tiimi" : "Team"}
-      </a>
-
-      <a
-        href="#clips"
-        className="text-gray-300 transition hover:text-white"
-      >
-        Clips
-      </a>
-
-      <a
-        href="/tools"
-        className="text-gray-300 transition hover:text-purple-300"
-      >
-        {language === "fi" ? "Työkalut" : "Tools"}
-      </a>
-
-      <a
-  href="/tietoa"
-  className="text-gray-300 transition hover:text-purple-300"
->
-  {language === "fi" ? "Tietoa" : "About"}
-</a>
-
-      <a
-        href="#uutiset"
-        className="text-gray-300 transition hover:text-white"
-      >
-        {language === "fi" ? "Uutiset" : "News"}
-      </a>
-
-<a
-  href="#liity"
-  className="text-gray-300 transition hover:text-white"
->
-  {language === "fi" ? "Liity" : "Join"}
-</a>
-
-<a
-  href="/palvelut"
-  className="text-gray-300 transition hover:text-purple-300"
->
-  {language === "fi" ? "Palvelut" : "Services"}
-</a>
-
-<a
-  href="https://discord.gg/ZXgSS9v6ye"
+        href="https://discord.gg/ZXgSS9v6ye"
         target="_blank"
         rel="noopener noreferrer"
-        className="font-black text-purple-400 transition hover:text-purple-300"
+        className="hidden rounded-xl border border-purple-500/30 bg-purple-500/[0.07] px-5 py-2.5 text-sm font-black text-purple-300 transition hover:border-purple-400 hover:bg-purple-500/15 hover:text-white sm:block"
       >
         Discord
       </a>
@@ -334,18 +316,347 @@ useEffect(() => {
             currentLanguage === "fi" ? "en" : "fi"
           )
         }
-        className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-4 py-2 font-black text-purple-300 transition hover:border-purple-400 hover:bg-purple-500/20 hover:text-white"
-        aria-label={
-          language === "fi"
-            ? "Vaihda sivusto englanniksi"
-            : "Switch website to Finnish"
-        }
+        className="rounded-xl border border-purple-500/40 bg-purple-500/10 px-4 py-2.5 text-sm font-black text-purple-300 transition hover:border-purple-400 hover:bg-purple-500/20 hover:text-white"
       >
         {language === "fi" ? "EN" : "FI"}
       </button>
     </div>
   </div>
 </nav>
+
+{/* MENUN TAUSTA / BLUR */}
+<div
+  onClick={() => {
+    setMenuOpen(false);
+    setActiveMenu(null);
+  }}
+  className={`fixed inset-0 z-[80] bg-black/55 backdrop-blur-md transition-all duration-500 ${
+    menuOpen
+      ? "pointer-events-auto opacity-100"
+      : "pointer-events-none opacity-0"
+  }`}
+/>
+
+{/* PÄÄVALIKKO */}
+<aside
+  className={`fixed left-0 top-0 z-[90] h-screen w-[88vw] max-w-[410px] border-r border-purple-500/25 bg-[linear-gradient(145deg,rgba(8,5,12,0.995),rgba(18,7,26,0.995))] shadow-[30px_0_100px_rgba(0,0,0,0.65)] transition-transform duration-500 ease-out ${
+    menuOpen ? "translate-x-0" : "-translate-x-full"
+  }`}
+>
+  {/* TAUSTA KS */}
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="pointer-events-none absolute -bottom-16 -right-20 w-[300px] rotate-[-12deg] opacity-[0.035]"
+  />
+
+  <div className="relative z-10 flex h-full flex-col">
+
+    {/* MENUN YLÄOSA */}
+    <div className="flex items-center justify-between border-b border-white/10 px-7 py-6">
+      <div>
+        <p className="text-[10px] font-black uppercase tracking-[0.35em] text-purple-400">
+          KOPOSQUAD
+        </p>
+
+        <p className="mt-1 text-lg font-black text-white">
+          {language === "fi" ? "Päävalikko" : "Main menu"}
+        </p>
+      </div>
+
+      <button
+        type="button"
+        onClick={() => {
+          setMenuOpen(false);
+          setActiveMenu(null);
+        }}
+        className="flex h-11 w-11 items-center justify-center rounded-xl border border-purple-500/30 bg-purple-500/[0.06] text-2xl text-gray-300 transition duration-300 hover:rotate-90 hover:border-purple-400 hover:bg-purple-500/15 hover:text-white"
+        aria-label="Sulje valikko"
+      >
+        ×
+      </button>
+    </div>
+
+    {/* LINKIT */}
+    <div className="flex-1 overflow-y-auto px-7 py-8">
+
+      <div className="mb-7">
+        <p className="mb-4 text-[10px] font-black uppercase tracking-[0.3em] text-gray-600">
+          {language === "fi" ? "Pääsivut" : "Main"}
+        </p>
+
+        <div className="space-y-1">
+
+          <a
+            href="#"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center justify-between rounded-xl px-4 py-3.5 text-lg font-black text-white transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            {language === "fi" ? "Etusivu" : "Home"}
+          </a>
+
+          <a
+            href="#live"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center justify-between rounded-xl px-4 py-3.5 text-lg font-black text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            Live
+          </a>
+
+          <button
+            type="button"
+            onClick={() => setActiveMenu("tiimi")}
+            className="flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-left text-lg font-black text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            <span>{language === "fi" ? "Tiimi" : "Team"}</span>
+            <span className="text-purple-400">›</span>
+          </button>
+
+          <a
+            href="#clips"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center justify-between rounded-xl px-4 py-3.5 text-lg font-black text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            Clips
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p className="mb-4 text-[10px] font-black uppercase tracking-[0.3em] text-gray-600">
+          KOPOSQUAD
+        </p>
+
+        <div className="space-y-1">
+
+          <button
+            type="button"
+            onClick={() => setActiveMenu("tyokalut")}
+            className="flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-left text-lg font-black text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            <span>{language === "fi" ? "Työkalut" : "Tools"}</span>
+            <span className="text-purple-400">›</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveMenu("palvelut")}
+            className="flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-left text-lg font-black text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            <span>{language === "fi" ? "Palvelut" : "Services"}</span>
+            <span className="text-purple-400">›</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveMenu("yhteiso")}
+            className="flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-left text-lg font-black text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            <span>{language === "fi" ? "Yhteisö" : "Community"}</span>
+            <span className="text-purple-400">›</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveMenu("tietoa")}
+            className="flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-left text-lg font-black text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            <span>{language === "fi" ? "Tietoa" : "About"}</span>
+            <span className="text-purple-400">›</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {/* ALAREUNA */}
+    <div className="border-t border-white/10 px-7 py-6">
+      <p className="text-xs leading-6 text-gray-600">
+        Suomen kasvava striimaaja- ja sisällöntuottajayhteisö.
+      </p>
+    </div>
+  </div>
+</aside>
+
+{/* TOINEN / TARKEMPI VALIKKO */}
+<aside
+  className={`fixed top-0 z-[89] h-screen w-[88vw] max-w-[430px] border-r border-purple-500/20 bg-[linear-gradient(145deg,rgba(14,8,20,0.995),rgba(5,3,8,0.995))] shadow-[30px_0_100px_rgba(0,0,0,0.55)] transition-all duration-500 ease-out
+  ${
+    menuOpen && activeMenu
+      ? "left-[min(410px,88vw)] translate-x-0 opacity-100"
+      : "left-[min(410px,88vw)] -translate-x-10 pointer-events-none opacity-0"
+  }`}
+>
+  <div className="flex h-full flex-col">
+
+    <div className="flex items-center gap-4 border-b border-white/10 px-7 py-6">
+      <button
+        type="button"
+        onClick={() => setActiveMenu(null)}
+        className="flex h-10 w-10 items-center justify-center rounded-xl border border-purple-500/30 bg-purple-500/[0.06] text-xl text-purple-300 transition hover:bg-purple-500/15 hover:text-white"
+      >
+        ‹
+      </button>
+
+      <div>
+        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-purple-400">
+          KOPOSQUAD
+        </p>
+
+        <h2 className="mt-1 text-xl font-black uppercase">
+          {activeMenu === "tiimi" && (language === "fi" ? "Tiimi" : "Team")}
+          {activeMenu === "tyokalut" && (language === "fi" ? "Työkalut" : "Tools")}
+          {activeMenu === "palvelut" && (language === "fi" ? "Palvelut" : "Services")}
+          {activeMenu === "yhteiso" && (language === "fi" ? "Yhteisö" : "Community")}
+          {activeMenu === "tietoa" && (language === "fi" ? "Tietoa" : "About")}
+        </h2>
+      </div>
+    </div>
+
+    <div className="flex-1 overflow-y-auto px-7 py-8">
+
+      {/* TIIMI */}
+      {activeMenu === "tiimi" && (
+        <div className="space-y-2">
+          <a
+            href="#tiimi"
+            onClick={() => setMenuOpen(false)}
+            className="block rounded-xl px-4 py-3 text-lg font-bold text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            {language === "fi" ? "Kaikki jäsenet" : "All members"}
+          </a>
+
+          <a
+            href="#koposquadtv"
+            onClick={() => setMenuOpen(false)}
+            className="block rounded-xl px-4 py-3 text-lg font-bold text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            KOPOSQUADTV
+          </a>
+
+          <a
+            href="#rekry"
+            onClick={() => setMenuOpen(false)}
+            className="block rounded-xl px-4 py-3 text-lg font-bold text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            {language === "fi" ? "Hae mukaan" : "Apply"}
+          </a>
+        </div>
+      )}
+
+      {/* TYÖKALUT */}
+      {activeMenu === "tyokalut" && (
+        <div className="space-y-2">
+          <a
+            href="/tools"
+            className="block rounded-xl px-4 py-3 text-lg font-bold text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            {language === "fi" ? "Kaikki työkalut" : "All tools"}
+          </a>
+
+          <a
+            href="/tools"
+            className="block rounded-xl px-4 py-3 text-lg font-bold text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            Streaming
+          </a>
+
+          <a
+            href="/tools"
+            className="block rounded-xl px-4 py-3 text-lg font-bold text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            Editointi & grafiikka
+          </a>
+        </div>
+      )}
+
+      {/* PALVELUT */}
+      {activeMenu === "palvelut" && (
+        <div className="space-y-2">
+          {[
+            "Stream Overlay",
+            "Emote-paketti",
+            "Grafiikkapaketti",
+            "Striimaajan starttipaketti",
+            "Videoeditointi",
+            "KOPOSQUAD Merch",
+            "Member Jersey",
+            "Member Kit",
+            "KOPOSQUAD LAN",
+          ].map((item) => (
+            <a
+              key={item}
+              href="/palvelut"
+              className="flex items-center justify-between rounded-xl px-4 py-3 text-base font-bold text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+            >
+              <span>{item}</span>
+              <span className="text-purple-500/70">→</span>
+            </a>
+          ))}
+        </div>
+      )}
+
+      {/* YHTEISÖ */}
+      {activeMenu === "yhteiso" && (
+        <div className="space-y-2">
+          <a
+            href="https://discord.gg/ZXgSS9v6ye"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block rounded-xl px-4 py-3 text-lg font-bold text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            Discord
+          </a>
+
+          <a
+            href="https://www.twitch.tv/koposquadtv"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block rounded-xl px-4 py-3 text-lg font-bold text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            KOPOSQUADTV
+          </a>
+
+          <a
+            href="https://koposquad-shop.fourthwall.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block rounded-xl px-4 py-3 text-lg font-bold text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            KOPOSQUAD Merch
+          </a>
+        </div>
+      )}
+
+      {/* TIETOA */}
+      {activeMenu === "tietoa" && (
+        <div className="space-y-2">
+          <a
+            href="/tietoa"
+            className="block rounded-xl px-4 py-3 text-lg font-bold text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            {language === "fi" ? "Mikä on KOPOSQUAD?" : "What is KOPOSQUAD?"}
+          </a>
+
+          <a
+            href="#uutiset"
+            onClick={() => setMenuOpen(false)}
+            className="block rounded-xl px-4 py-3 text-lg font-bold text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            {language === "fi" ? "Uutiset" : "News"}
+          </a>
+
+          <a
+            href="#rekry"
+            onClick={() => setMenuOpen(false)}
+            className="block rounded-xl px-4 py-3 text-lg font-bold text-gray-300 transition hover:bg-purple-500/10 hover:text-purple-300"
+          >
+            {language === "fi" ? "Liity mukaan" : "Join"}
+          </a>
+        </div>
+      )}
+    </div>
+  </div>
+</aside>
 
 {/* HERO */}
 
@@ -372,6 +683,46 @@ className="hero-slow-zoom pointer-events-none absolute inset-0 h-full w-full sel
   <div className="pointer-events-none absolute -right-52 top-[18%] h-[540px] w-[540px] rounded-full bg-fuchsia-700/12 blur-[190px]" />
 
   {/* HERO-SISÄLTÖ */}
+  {/* ELÄVÄT KS-LOGOT TAUSTALLA */}
+<div className="pointer-events-none absolute inset-0 overflow-hidden">
+
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="ks-drift-one absolute left-[6%] top-[18%] hidden w-[135px] rotate-[-18deg] object-contain opacity-[0.09] lg:block"
+  />
+
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="ks-drift-two absolute left-[18%] top-[62%] hidden w-[95px] rotate-[11deg] object-contain opacity-[0.07] lg:block"
+  />
+
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="ks-drift-three absolute left-[37%] top-[20%] hidden w-[75px] rotate-[-8deg] object-contain opacity-[0.055] xl:block"
+  />
+
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="ks-drift-four absolute right-[25%] top-[18%] hidden w-[90px] rotate-[16deg] object-contain opacity-[0.06] lg:block"
+  />
+
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="ks-drift-five absolute right-[9%] top-[50%] hidden w-[145px] rotate-[-14deg] object-contain opacity-[0.085] lg:block"
+  />
+
+  <img
+    src="/images/ks-logo.png.png"
+    alt=""
+    className="ks-drift-six absolute right-[32%] bottom-[12%] hidden w-[70px] rotate-[7deg] object-contain opacity-[0.05] xl:block"
+  />
+
+</div>
   {/* HIMMEÄT PARTIKKELIT */}
 <div className="pointer-events-none absolute inset-0 overflow-hidden">
   {[
@@ -2271,6 +2622,15 @@ className="group relative flex min-h-[290px] flex-col overflow-hidden rounded-[2
   status: "completed",
 },
         {
+          fiTitle: "Twitch Affiliate KOPOSQUADTV:lle",
+          enTitle: "Twitch Affiliate for KOPOSQUADTV",
+          fiDescription:
+            "Kanavan ensimmäinen suuri kasvutavoite mahdollistaa yhteisön toiminnan kehittämisen.",
+          enDescription:
+            "The channel's first major growth milestone will help develop community activities.",
+          status: "completed",
+        },
+        {
           fiTitle: "Ensimmäinen yhteistyökumppani",
           enTitle: "First collaboration partner",
           fiDescription:
@@ -2297,15 +2657,7 @@ className="group relative flex min-h-[290px] flex-col overflow-hidden rounded-[2
             "The KOPOSQUADTV audience is being grown through shared community broadcasts.",
           status: "progress",
         },
-        {
-          fiTitle: "Twitch Affiliate KOPOSQUADTV:lle",
-          enTitle: "Twitch Affiliate for KOPOSQUADTV",
-          fiDescription:
-            "Kanavan ensimmäinen suuri kasvutavoite mahdollistaa yhteisön toiminnan kehittämisen.",
-          enDescription:
-            "The channel's first major growth milestone will help develop community activities.",
-          status: "coming",
-        },
+
         {
           fiTitle: "Ensimmäinen KOPOSQUAD-miitti",
           enTitle: "First KOPOSQUAD meetup",
