@@ -258,6 +258,44 @@ detailsNote:
   detailsNote:
     "Tuotteiden hinnat, saatavuus, koot ja toimitustiedot näkyvät aina suoraan KOPOSQUAD Shopissa.",
 },
+{
+  category: "KOPOSQUAD JÄSENTUOTE",
+  title: "KOPOSQUAD Member Jersey",
+  description:
+    "Virallinen henkilökohtainen KOPOSQUAD-jäsenpaita. KS:n omalla esports-ilmeellä toteutettu jersey personoidaan jokaiselle jäsenelle omalla käyttäjänimellä.",
+
+  price: "Tulossa pian",
+  status: "TULOSSA PIAN",
+
+  accent:
+    "from-purple-500/20 via-violet-500/10 to-transparent",
+  glow: "bg-purple-600/20",
+
+  features: [
+    "Virallinen KOPOSQUAD-jäsenpaita",
+    "KS:n oma esports-design",
+    "Jäsenen käyttäjänimi selkään",
+    "Yhtenäinen KOPOSQUAD-tiimityyli",
+    "Personoidaan jokaiselle jäsenelle",
+    "Saatavilla vain KOPOSQUAD-jäsenille",
+  ],
+
+  detailsTitle: "KOPOSQUAD Member Jersey",
+  detailsIntro:
+    "KOPOSQUAD Member Jersey on vain yhteisön jäsenille tarkoitettu virallinen tiimipaita. Jokainen jersey toteutetaan KS:n yhtenäisellä ilmeellä ja personoidaan jäsenen omalla käyttäjänimellä.",
+
+  details: [
+    "KOPOSQUADin virallinen KS-design",
+    "Musta, violetti ja hopea KS-värimaailma",
+    "Jäsenen oma käyttäjänimi selkään",
+    "Yhtenäinen ulkoasu muiden KS-jäsenten kanssa",
+    "Henkilökohtaisesti personoitu jäsenelle",
+    "Tarkoitettu vain KOPOSQUAD-jäsenille",
+  ],
+
+  detailsNote:
+    "Member Jersey on vielä valmistelussa. Lopullinen design, hinta, koot ja tilausmahdollisuus julkaistaan myöhemmin.",
+},
 ];
 
 const processSteps = [
@@ -1647,11 +1685,13 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
           {/* PALVELUN TYYPPI */}
           <div className="relative mt-6 flex flex-wrap gap-2">
             <span className="rounded-full border border-purple-400/20 bg-purple-500/[0.07] px-3 py-1 text-[9px] font-black uppercase tracking-[0.18em] text-purple-300">
-              {index === 5
-                ? "Fyysinen tuote"
-                : index === 3
-                ? "Henkilökohtainen"
-                : "Digitaalinen"}
+{index === 5
+  ? "Fyysinen tuote"
+  : index === 6
+  ? "Jäsentuote"
+  : index === 3
+  ? "Henkilökohtainen"
+  : "Digitaalinen"}
             </span>
 
             {index < 4 && (
