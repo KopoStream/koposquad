@@ -3313,6 +3313,43 @@ className="group relative overflow-hidden rounded-3xl border border-purple-500/2
     </a>
   </div>
 
+  {/* FOOTER-LINKIT */}
+  <div className="relative z-10 mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 border-t border-white/10 pt-8 text-sm font-semibold text-gray-500">
+    <a
+      href="/yhteystiedot"
+      className="transition duration-300 hover:text-purple-300"
+    >
+      {language === "fi" ? "Yhteystiedot" : "Contact"}
+    </a>
+
+    <span className="hidden text-purple-500/40 sm:inline">•</span>
+
+    <a
+      href="/kayttoehdot"
+      className="transition duration-300 hover:text-purple-300"
+    >
+      {language === "fi" ? "Käyttöehdot" : "Terms of Service"}
+    </a>
+
+    <span className="hidden text-purple-500/40 sm:inline">•</span>
+
+    <a
+      href="/tietosuoja"
+      className="transition duration-300 hover:text-purple-300"
+    >
+      {language === "fi" ? "Tietosuojaseloste" : "Privacy Policy"}
+    </a>
+
+    <span className="hidden text-purple-500/40 sm:inline">•</span>
+
+    <a
+      href="/ukk"
+      className="transition duration-300 hover:text-purple-300"
+    >
+      {language === "fi" ? "UKK" : "FAQ"}
+    </a>
+  </div>
+
   <p className="relative z-10 mt-10 text-gray-500">
     © 2026 KOPOSQUAD
   </p>

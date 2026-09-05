@@ -1,73 +1,10 @@
 import Link from "next/link";
+import Header from "../../components/Header";
 
 export default function TietoaPage() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-black text-white">
-              {/* NAV */}
-      <nav className="fixed left-0 right-0 top-0 z-50 border-b border-purple-500/20 bg-black/85 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <a href="/" className="text-3xl font-black tracking-tight">
-            <span className="text-purple-500">KOPO</span>
-            <span className="text-white">SQUAD</span>
-          </a>
-
-          <div className="hidden items-center gap-7 text-sm font-semibold md:flex">
-            <a href="/" className="text-gray-300 transition hover:text-white">
-              Etusivu
-            </a>
-
-            <a href="/#live" className="text-gray-300 transition hover:text-white">
-              Live
-            </a>
-
-            <a href="/#tiimi" className="text-gray-300 transition hover:text-white">
-              Tiimi
-            </a>
-
-            <a href="/#clips" className="text-gray-300 transition hover:text-white">
-              Clips
-            </a>
-
-            <a
-              href="/tools"
-              className="text-gray-300 transition hover:text-purple-300"
-            >
-              Työkalut
-            </a>
-
-            <a
-              href="/tietoa"
-              className="font-black text-purple-400"
-            >
-              Tietoa
-            </a>
-
-            <a href="/#uutiset" className="text-gray-300 transition hover:text-white">
-              Uutiset
-            </a>
-
-<a href="/#liity" className="text-gray-300 transition hover:text-white">
-  Liity
-</a>
-
-<a
-  href="/palvelut"
-  className="text-gray-300 transition hover:text-purple-300"
->
-  Palvelut
-</a>
-
-<a
-  href="https://discord.gg/ZXgSS9v6ye"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-black text-purple-400 transition hover:text-purple-300"
-            >
-              Discord
-            </a>
-          </div>
-        </div>
-      </nav>
+<Header />
       {/* TAUSTAN HEHKUT */}
       <div className="pointer-events-none absolute left-[-280px] top-[80px] h-[800px] w-[800px] rounded-full bg-purple-700/30 blur-[190px]" />
 
