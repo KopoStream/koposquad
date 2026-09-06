@@ -2,6 +2,8 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { members } from "./data/members";
+import MobileHeader from "../components/mobile/MobileHeader";
+import MobileHero from "../components/mobile/MobileHero";
 
 type Stream = {
   user_name: string;
@@ -271,6 +273,10 @@ useEffect(() => {
   <div className="relative z-10">
 
   </div>
+
+  <MobileHeader />
+
+<div className="hidden md:block">
 
 {/* UUSI KOPOSQUAD NAV */}
 <nav className="fixed left-0 right-0 top-0 z-[70] border-b border-purple-500/20 bg-black/85 backdrop-blur-xl">
@@ -658,7 +664,13 @@ useEffect(() => {
   </div>
 </aside>
 
+</div>
+
 {/* HERO */}
+
+<MobileHero language={language} />
+
+<div className="hidden md:block">
 
 <section className="relative flex min-h-screen items-center justify-center overflow-hidden border-b border-purple-500/20 pt-24">
   {/* VANHA SAVUTAUSTA */}
@@ -854,6 +866,8 @@ className="hero-slow-zoom pointer-events-none absolute inset-0 h-full w-full sel
     </a>
   </div>
 </section>
+
+</div>
 
       {/* MIKÄ ON KOPOSQUAD */}
 

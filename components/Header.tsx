@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import MobileHeader from "./mobile/MobileHeader";
 
 type HeaderProps = {
   activePage?: string;
@@ -52,8 +53,11 @@ export default function Header({ activePage }: HeaderProps) {
   const subLinkClass =
     "group flex items-center justify-between rounded-xl border border-transparent px-4 py-3.5 text-base font-bold text-gray-300 transition-all duration-300 hover:border-purple-500/15 hover:bg-purple-500/10 hover:pl-5 hover:text-purple-300";
 
-  return (
+return (
     <>
+      <MobileHeader />
+
+      <div className="hidden md:block">
       {/* YLÄPALKKI */}
       <nav className="fixed left-0 right-0 top-0 z-[70] border-b border-purple-500/20 bg-black/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
@@ -261,11 +265,11 @@ export default function Header({ activePage }: HeaderProps) {
 
       {/* TOINEN VALIKKOPANEELI */}
       <aside
-        className={`fixed top-0 z-[89] h-screen w-[88vw] max-w-[430px] overflow-hidden border-r border-purple-500/20 bg-[linear-gradient(145deg,rgba(17,8,24,0.995),rgba(5,3,8,0.995))] shadow-[30px_0_100px_rgba(0,0,0,0.55)] transition-all duration-500 ease-out ${
-          menuOpen && activeMenu
-            ? "left-[min(410px,88vw)] translate-x-0 opacity-100"
-            : "pointer-events-none left-[min(410px,88vw)] -translate-x-10 opacity-0"
-        }`}
+className={`hidden md:block fixed left-0 top-0 z-[95] h-screen w-[88vw] max-w-[410px] overflow-hidden border-r border-purple-500/20 bg-[linear-gradient(145deg,rgba(17,8,24,0.995),rgba(5,3,8,0.995))] shadow-[30px_0_100px_rgba(0,0,0,0.55)] transition-all duration-500 ease-out md:left-[min(410px,88vw)] md:z-[89] md:max-w-[430px] ${
+  menuOpen && activeMenu
+    ? "translate-x-0 opacity-100"
+    : "pointer-events-none -translate-x-full opacity-0 md:-translate-x-10"
+}`}
       >
         <img
           src="/images/ks-logo.png.png"
@@ -438,6 +442,8 @@ export default function Header({ activePage }: HeaderProps) {
           </div>
         </div>
       </aside>
+
+      </div>
     </>
   );
 }
