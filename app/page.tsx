@@ -838,36 +838,7 @@ className="hero-slow-zoom pointer-events-none absolute inset-0 h-full w-full sel
 </div>
   </div>
 
-{/* PIENEMPI KS-KORISTE OIKEAAN ALAREUNAAN */}
-<div className="group absolute bottom-16 right-8 z-10 hidden lg:block xl:right-16">
 
-  {/* ISO HENGITTÄVÄ VIOLETTI HEHKU */}
-  <div className="ks-glow-pulse pointer-events-none absolute inset-[-55px] rounded-full bg-purple-600/35 blur-[95px]" />
-
-  {/* FUKSIA SISÄHEHKU */}
-  <div className="pointer-events-none absolute inset-[-25px] rounded-full bg-fuchsia-500/20 blur-[55px]" />
-
-  {/* VALO LOGON ALLA */}
-  <div className="ks-glow-pulse pointer-events-none absolute -bottom-5 left-1/2 h-[22px] w-[150px] -translate-x-1/2 rounded-[100%] bg-purple-400/50 blur-[22px]" />
-
-  {/* HIMMEÄ LEVEÄ VALOPINTA */}
-  <div className="pointer-events-none absolute -bottom-8 left-1/2 h-[30px] w-[210px] -translate-x-1/2 rounded-[100%] bg-fuchsia-600/20 blur-[30px]" />
-
-  {/* KS LOGO */}
-  <img
-    src="/images/ks-logo.png.png"
-    alt=""
-    className="relative w-[180px] object-contain opacity-80
-    drop-shadow-[0_18px_22px_rgba(0,0,0,0.75)]
-    drop-shadow-[0_0_25px_rgba(168,85,247,0.75)]
-    transition duration-500
-    group-hover:scale-105
-    group-hover:opacity-100
-    group-hover:drop-shadow-[0_0_45px_rgba(217,70,239,0.95)]
-    xl:w-[220px]"
-  />
-
-</div>
 
   {/* VIERITÄ ALAS */}
   <div className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2">
