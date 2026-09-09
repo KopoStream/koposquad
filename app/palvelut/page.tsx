@@ -264,8 +264,9 @@ detailsNote:
   description:
     "Virallinen henkilökohtainen KOPOSQUAD-jäsenpaita. KS:n omalla esports-ilmeellä toteutettu jersey personoidaan jokaiselle jäsenelle omalla käyttäjänimellä.",
 
-  price: "Tulossa pian",
-  status: "TULOSSA PIAN",
+price: "129,90 €",
+status: "",
+  image: "/images/koposquad-member-jersey.png.png",
 
   accent:
     "from-purple-500/20 via-violet-500/10 to-transparent",
@@ -452,6 +453,17 @@ const [pendingGraphicsOrderData, setPendingGraphicsOrderData] =
 const [graphicsPaymentSuccess, setGraphicsPaymentSuccess] = useState(false);
 const graphicsPaypalContainerRef = useRef<HTMLDivElement | null>(null);
 const [simpleOrderOpen, setSimpleOrderOpen] = useState(false);
+const [jerseyOrderOpen, setJerseyOrderOpen] = useState(false);
+const [jerseyOrderStatus, setJerseyOrderStatus] = useState("");
+const [jerseyPaymentStep, setJerseyPaymentStep] = useState(false);
+
+const [pendingJerseyOrderData, setPendingJerseyOrderData] =
+  useState<FormData | null>(null);
+
+const [jerseyPaymentSuccess, setJerseyPaymentSuccess] = useState(false);
+
+const jerseyPaypalContainerRef =
+  useRef<HTMLDivElement | null>(null);
 const [simpleOrderType, setSimpleOrderType] =
   useState<"start" | "video">("start");
 
@@ -480,7 +492,296 @@ const simplePaypalContainerRef =
   const [pendingOrderData, setPendingOrderData] = useState<FormData | null>(null);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const paypalContainerRef = useRef<HTMLDivElement | null>(null);
+useEffect(() => {
+  if (!jerseyPaymentStep || !pendingJerseyOrderData) return;
 
+  const clientId = process.env.NEXT_PUBLIC_PAYPAL_LIVE_CLIENT_ID;
+
+  if (!clientId) {
+    setJerseyOrderStatus(
+      "PayPal Client ID puuttuu .env.local-tiedostosta."
+    );
+    return;
+  }
+
+  let cancelled = false;
+
+  const renderJerseyPayPalButtons = async () => {
+    try {
+      let paypal = (window as any).paypal;
+
+      if (!paypal) {
+        const existingScript =
+          document.querySelector<HTMLScriptElement>(
+            'script[data-koposquad-paypal="true"]'
+          );
+
+        if (existingScript) {
+          await new Promise<void>((resolve, reject) => {
+            if ((window as any).paypal) {
+              resolve();
+              return;
+            }
+
+            existingScript.addEventListener(
+              "load",
+              () => resolve(),
+              { once: true }
+            );
+
+            existingScript.addEventListener(
+              "error",
+              () =>
+                reject(
+                  new Error(
+                    "PayPal SDK:n lataus epäonnistui."
+                  )
+                ),
+              { once: true }
+            );
+          });
+        } else {
+          await new Promise<void>((resolve, reject) => {
+            const script = document.createElement("script");
+
+            script.src =
+              `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(
+                clientId
+              )}&currency=EUR&intent=capture`;
+
+            script.async = true;
+            script.dataset.koposquadPaypal = "true";
+
+            script.onload = () => resolve();
+
+            script.onerror = () =>
+              reject(
+                new Error(
+                  "PayPal SDK:n lataus epäonnistui."
+                )
+              );
+
+            document.body.appendChild(script);
+          });
+        }
+
+        paypal = (window as any).paypal;
+      }
+
+      if (
+        cancelled ||
+        !jerseyPaypalContainerRef.current ||
+        !paypal
+      ) {
+        return;
+      }
+
+      jerseyPaypalContainerRef.current.innerHTML = "";
+
+      const productCode = "koposquad-member-jersey";
+
+      await paypal
+        .Buttons({
+          style: {
+            layout: "vertical",
+            shape: "rect",
+            label: "paypal",
+          },
+
+          createOrder: async () => {
+            setJerseyOrderStatus(
+              "Luodaan PayPal-maksua..."
+            );
+
+const memberName = String(
+  pendingJerseyOrderData.get("memberName") || ""
+);
+
+const jerseyNickname = String(
+  pendingJerseyOrderData.get("jerseyNickname") || ""
+);
+
+const jerseySize = String(
+  pendingJerseyOrderData.get("jerseySize") || ""
+);
+
+const response = await fetch(
+  "/api/paypal/create-order",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      productCode,
+      memberName,
+      jerseyNickname,
+      jerseySize,
+    }),
+  }
+);
+
+            const data = await response.json();
+
+            if (!response.ok || !data?.id) {
+              throw new Error(
+                data?.error ||
+                  "PayPal-maksun luominen epäonnistui."
+              );
+            }
+
+            return data.id;
+          },
+
+          onApprove: async (data: {
+            orderID: string;
+          }) => {
+            try {
+              setOrderSending(true);
+
+              setJerseyOrderStatus(
+                "Vahvistetaan PayPal-maksua..."
+              );
+
+              const captureResponse = await fetch(
+                "/api/paypal/capture-order",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    orderID: data.orderID,
+                    productCode,
+                  }),
+                }
+              );
+
+              const captureData =
+                await captureResponse.json();
+
+              if (
+                !captureResponse.ok ||
+                captureData?.status !== "COMPLETED"
+              ) {
+                throw new Error(
+                  captureData?.error ||
+                    "PayPal-maksun vahvistaminen epäonnistui."
+                );
+              }
+
+              setJerseyOrderStatus(
+                "Maksu onnistui. Lähetetään Jersey-tilausta..."
+              );
+
+              const orderData = new FormData();
+
+              pendingJerseyOrderData.forEach(
+                (value, key) => {
+                  orderData.append(key, value);
+                }
+              );
+
+              orderData.set(
+                "service",
+                "KOPOSQUAD Member Jersey"
+              );
+
+              orderData.set(
+                "price",
+                "129,90 €"
+              );
+
+              orderData.set(
+                "memberVerification",
+                "KOPOSQUAD-jäsenyys tarkistetaan ennen paidan tilaamista valmistajalta."
+              );
+
+              orderData.append(
+                "paypalOrderId",
+                data.orderID
+              );
+
+              orderData.append(
+                "paypalCaptureId",
+                String(
+                  captureData?.captureId || ""
+                )
+              );
+
+              const orderResponse = await fetch(
+                "/api/order",
+                {
+                  method: "POST",
+                  body: orderData,
+                }
+              );
+
+              const orderResult =
+                await orderResponse.json();
+
+              if (!orderResponse.ok) {
+                throw new Error(
+                  orderResult?.error ||
+                    "Maksu onnistui, mutta Jersey-tilauksen lähettäminen epäonnistui."
+                );
+              }
+
+              setJerseyOrderStatus("");
+              setJerseyPaymentSuccess(true);
+              setPendingJerseyOrderData(null);
+              setJerseyPaymentStep(false);
+            } catch (error) {
+              setJerseyOrderStatus(
+                error instanceof Error
+                  ? error.message
+                  : "Maksun käsittelyssä tapahtui virhe."
+              );
+            } finally {
+              setOrderSending(false);
+            }
+          },
+
+          onCancel: () => {
+            setJerseyOrderStatus(
+              "PayPal-maksu peruutettiin. Voit yrittää uudelleen."
+            );
+          },
+
+          onError: (error: unknown) => {
+            console.error(
+              "PayPal Jersey error:",
+              error
+            );
+
+            setJerseyOrderStatus(
+              "PayPal-maksussa tapahtui virhe. Yritä uudelleen."
+            );
+          },
+        })
+        .render(jerseyPaypalContainerRef.current);
+    } catch (error) {
+      setJerseyOrderStatus(
+        error instanceof Error
+          ? error.message
+          : "PayPal-maksuvaiheen lataaminen epäonnistui."
+      );
+    }
+  };
+
+  renderJerseyPayPalButtons();
+
+  return () => {
+    cancelled = true;
+
+    if (jerseyPaypalContainerRef.current) {
+      jerseyPaypalContainerRef.current.innerHTML = "";
+    }
+  };
+}, [
+  jerseyPaymentStep,
+  pendingJerseyOrderData,
+]);
 useEffect(() => {
   if (!paymentStep || !pendingOrderData) return;
 
@@ -1989,6 +2290,15 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
     Siirry merch-kauppaan
   </a>
 
+) : service.title === "KOPOSQUAD Member Jersey" ? (
+  <button
+    type="button"
+    onClick={() => setJerseyOrderOpen(true)}
+    className="mt-6 w-full rounded-xl border border-purple-400/45 bg-gradient-to-r from-purple-600/85 to-fuchsia-600/75 px-5 py-3.5 text-sm font-black uppercase tracking-[0.08em] text-white shadow-[0_0_28px_rgba(168,85,247,0.20)] transition hover:-translate-y-0.5 hover:border-purple-300/70 hover:shadow-[0_0_38px_rgba(217,70,239,0.28)]"
+  >
+    Tilaa Jersey 
+  </button>
+
 ) : (
   <button
     type="button"
@@ -2232,6 +2542,352 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
           </div>
         </section>
 
+        {/* KOPOSQUAD MEMBER JERSEY - TILAUS */}
+{jerseyOrderOpen && (
+  <section
+    className="fixed inset-0 z-[120] flex items-center justify-center overflow-y-auto bg-black/85 px-4 py-8 backdrop-blur-md"
+    onClick={() => {
+      setJerseyOrderOpen(false);
+      setJerseyPaymentStep(false);
+      setPendingJerseyOrderData(null);
+      setJerseyOrderStatus("");
+      setJerseyPaymentSuccess(false);
+    }}
+  >
+    <form
+      className="relative my-auto w-full max-w-5xl overflow-hidden rounded-[32px] border border-purple-400/35 bg-[radial-gradient(circle_at_20%_0%,rgba(168,85,247,0.20),transparent_42%),linear-gradient(145deg,rgba(24,12,31,0.99),rgba(5,3,8,0.99))] p-6 shadow-[0_0_100px_rgba(126,34,206,0.30)] sm:p-8 md:p-10"
+      onClick={(event) => event.stopPropagation()}
+      onSubmit={(event) => {
+        event.preventDefault();
+
+        const form = event.currentTarget;
+        const formData = new FormData(form);
+
+        const memberConfirmed =
+          formData.get("memberConfirmed") === "yes";
+
+        if (!memberConfirmed) {
+          setJerseyOrderStatus(
+            "Sinun täytyy vahvistaa olevasi KOPOSQUAD-jäsen."
+          );
+          return;
+        }
+
+        setPendingJerseyOrderData(formData);
+        setJerseyPaymentStep(true);
+
+        setJerseyOrderStatus(
+          "Tiedot tallennettu. Valitse alta PayPal-maksutapa."
+        );
+      }}
+    >
+      <div className="pointer-events-none absolute -right-28 -top-28 h-72 w-72 rounded-full bg-fuchsia-600/15 blur-[90px]" />
+      <div className="pointer-events-none absolute -bottom-32 -left-28 h-72 w-72 rounded-full bg-purple-700/15 blur-[100px]" />
+
+      <button
+        type="button"
+        onClick={() => {
+          setJerseyOrderOpen(false);
+          setJerseyPaymentStep(false);
+          setPendingJerseyOrderData(null);
+          setJerseyOrderStatus("");
+          setJerseyPaymentSuccess(false);
+        }}
+        className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-xl border border-purple-400/30 bg-black/50 text-xl font-black text-purple-200 transition hover:border-purple-300/60 hover:bg-purple-500/10 hover:text-white"
+        aria-label="Sulje Jersey-tilaus"
+      >
+        ×
+      </button>
+
+      {jerseyPaymentSuccess ? (
+        <section className="relative z-10 mx-auto flex min-h-[600px] max-w-2xl flex-col items-center justify-center py-10 text-center">
+
+          <div className="flex h-24 w-24 items-center justify-center rounded-full border border-emerald-400/35 bg-emerald-400/[0.08] shadow-[0_0_55px_rgba(52,211,153,0.18)]">
+            <span className="text-5xl font-black text-emerald-300">
+              ✓
+            </span>
+          </div>
+
+          <p className="mt-8 text-[11px] font-black uppercase tracking-[0.34em] text-emerald-300">
+            Maksu onnistui
+          </p>
+
+          <h2 className="mt-4 text-3xl font-black uppercase sm:text-4xl md:text-5xl">
+            Jersey-tilaus vastaanotettu
+          </h2>
+
+          <p className="mt-5 max-w-xl text-base leading-7 text-gray-400">
+            Kiitos tilauksesta! KOPOSQUAD-jäsenyys ja
+            personointitiedot tarkistetaan ennen paidan
+            tilaamista valmistajalta.
+          </p>
+
+        </section>
+      ) : (
+        <section className="relative z-10">
+
+          <p className="text-[10px] font-black uppercase tracking-[0.30em] text-purple-300">
+            KOPOSQUAD MEMBER PRODUCT
+          </p>
+
+          <h2 className="mt-4 text-3xl font-black uppercase sm:text-4xl md:text-5xl">
+            Tilaa Member Jersey
+          </h2>
+
+          <p className="mt-4 max-w-2xl leading-7 text-gray-400">
+            Virallinen henkilökohtainen KOPOSQUAD-jäsenpaita.
+            Selän NICKNAME vaihdetaan sinun omaan
+            käyttäjänimeesi.
+          </p>
+
+          {/* PAITAKUVA */}
+          <section className="mt-8 overflow-hidden rounded-[26px] border border-purple-400/25 bg-black/30 p-4 shadow-[0_0_45px_rgba(168,85,247,0.12)]">
+
+            <img
+              src="/images/koposquad-member-jersey.png.png"
+              alt="KOPOSQUAD Member Jersey"
+              className="mx-auto max-h-[620px] w-full object-contain"
+            />
+
+            <p className="mt-3 text-center text-xs leading-6 text-gray-500">
+              Kuvan NICKNAME on esimerkki. Valmiiseen
+              paitaan tulee tilaajan ilmoittama käyttäjänimi.
+            </p>
+
+          </section>
+
+          {!jerseyPaymentStep ? (
+            <>
+              <section className="mt-8 grid gap-5 sm:grid-cols-2">
+
+                <label className="block">
+                  <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                    Nimi *
+                  </span>
+
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    placeholder="Etunimi Sukunimi"
+                    className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                    Sähköposti *
+                  </span>
+
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="sinun@email.fi"
+                    className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                    KOPOSQUAD-käyttäjänimi *
+                  </span>
+
+                  <input
+                    type="text"
+                    name="memberName"
+                    required
+                    placeholder="Esim. Kopo"
+                    className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                    Discord-käyttäjänimi *
+                  </span>
+
+                  <input
+                    type="text"
+                    name="discord"
+                    required
+                    placeholder="Discord-nimesi"
+                    className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                    Selkään tuleva NICKNAME *
+                  </span>
+
+                  <input
+                    type="text"
+                    name="jerseyNickname"
+                    required
+                    maxLength={20}
+                    placeholder="Esim. KOPOSTREAM"
+                    className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                    Paidan koko *
+                  </span>
+
+                  <input
+                    type="text"
+                    name="jerseySize"
+                    required
+                    placeholder="Esim. L"
+                    className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                  />
+                </label>
+
+                <label className="block sm:col-span-2">
+                  <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                    Katuosoite *
+                  </span>
+
+                  <input
+                    type="text"
+                    name="address"
+                    required
+                    placeholder="Katuosoite ja asunnon numero"
+                    className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                    Postinumero *
+                  </span>
+
+                  <input
+                    type="text"
+                    name="postalCode"
+                    required
+                    placeholder="90100"
+                    className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
+                    Kaupunki *
+                  </span>
+
+                  <input
+                    type="text"
+                    name="city"
+                    required
+                    placeholder="Oulu"
+                    className="mt-2 w-full rounded-xl border border-purple-500/25 bg-black/40 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 focus:border-purple-400/60"
+                  />
+                </label>
+
+              </section>
+
+              <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-2xl border border-purple-400/25 bg-purple-500/[0.06] p-4">
+
+                <input
+                  type="checkbox"
+                  name="memberConfirmed"
+                  value="yes"
+                  required
+                  className="mt-1 h-4 w-4 accent-purple-500"
+                />
+
+                <span className="text-sm leading-6 text-gray-300">
+                  Vahvistan olevani KOPOSQUAD-jäsen ja ymmärrän,
+                  että jäsenyys tarkistetaan ennen paidan
+                  tilaamista valmistajalta.
+                </span>
+
+              </label>
+
+              <section className="mt-7 flex items-center justify-between gap-5 rounded-2xl border border-purple-400/25 bg-black/30 p-5">
+
+                <span>
+                  <span className="block text-[10px] font-black uppercase tracking-[0.24em] text-gray-500">
+                    Hinta
+                  </span>
+
+                  <span className="mt-1 block text-3xl font-black text-purple-300">
+                    129,90 €
+                  </span>
+                </span>
+
+                <span className="text-right text-xs leading-5 text-gray-500">
+                  Personoitu
+                  <br />
+                  Member Jersey
+                </span>
+
+              </section>
+
+              {jerseyOrderStatus && (
+                <p className="mt-5 rounded-xl border border-purple-400/20 bg-purple-500/[0.06] px-4 py-3 text-sm text-purple-200">
+                  {jerseyOrderStatus}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                className="mt-6 w-full rounded-xl border border-purple-400/50 bg-gradient-to-r from-purple-600 to-fuchsia-600 px-6 py-4 text-sm font-black uppercase tracking-[0.12em] text-white shadow-[0_0_35px_rgba(168,85,247,0.25)] transition hover:-translate-y-0.5 hover:shadow-[0_0_50px_rgba(217,70,239,0.35)]"
+              >
+                Jatka maksuun – 129,90 €
+              </button>
+            </>
+          ) : (
+            <section className="mt-8">
+
+              <section className="rounded-2xl border border-emerald-400/25 bg-emerald-400/[0.05] p-5">
+                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-emerald-300">
+                  Tiedot tallennettu
+                </p>
+
+                <p className="mt-2 text-sm leading-6 text-gray-400">
+                  Tarkista vielä hinta ja valitse alta PayPal.
+                </p>
+
+                <p className="mt-3 text-2xl font-black text-white">
+                  129,90 €
+                </p>
+              </section>
+
+              {jerseyOrderStatus && (
+                <p className="mt-5 text-sm text-purple-200">
+                  {jerseyOrderStatus}
+                </p>
+              )}
+
+              <div
+                ref={jerseyPaypalContainerRef}
+                className="mt-6 min-h-[45px]"
+              />
+
+              <button
+                type="button"
+                onClick={() => {
+                  setJerseyPaymentStep(false);
+                  setJerseyOrderStatus("");
+                }}
+                className="mt-4 w-full rounded-xl border border-purple-500/25 bg-black/30 px-5 py-3 text-sm font-bold text-gray-300 transition hover:border-purple-400/50 hover:text-white"
+              >
+                ← Muokkaa tilaustietoja
+              </button>
+
+            </section>
+          )}
+
+        </section>
+      )}
+    </form>
+  </section>
+)}
+
         {/* PALVELUN LISÄTIEDOT - MODAALI */}
         {selectedService && (
           <div
@@ -2286,6 +2942,24 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
                 <p className="mt-6 max-w-2xl text-base leading-8 text-gray-300 sm:text-lg">
                   {selectedService.detailsIntro}
                 </p>
+
+                {selectedService.title === "KOPOSQUAD Member Jersey" && (
+  <section className="relative mt-8 overflow-hidden rounded-[24px] border border-purple-400/25 bg-black/35 p-4 shadow-[0_0_45px_rgba(168,85,247,0.12)]">
+    <p className="mb-4 text-[10px] font-black uppercase tracking-[0.28em] text-purple-300">
+      Jersey Preview
+    </p>
+
+    <img
+      src="/images/koposquad-member-jersey.png.png"
+      alt="KOPOSQUAD Member Jersey – etu- ja takaosa"
+      className="mx-auto max-h-[560px] w-full object-contain"
+    />
+
+    <p className="mt-4 text-center text-sm leading-6 text-gray-400">
+      Kuvan NICKNAME on esimerkki. Valmiiseen paitaan tulee jäsenen oma käyttäjänimi.
+    </p>
+  </section>
+)}
 
                 <div className="mt-8 rounded-2xl border border-purple-500/20 bg-black/30 p-5 sm:p-6">
                   <p className="text-[10px] font-black uppercase tracking-[0.28em] text-purple-300">

@@ -159,7 +159,7 @@ export const members: Member[] = [
   },
 
   {
-    name: "Jenniah",
+  name: "jenniah",
     role: "Striimaaja",
     twitch: "jenniah",
 
