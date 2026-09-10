@@ -264,8 +264,9 @@ detailsNote:
   description:
     "Virallinen henkilökohtainen KOPOSQUAD-jäsenpaita. KS:n omalla esports-ilmeellä toteutettu jersey personoidaan jokaiselle jäsenelle omalla käyttäjänimellä.",
 
-price: "129,90 €",
-status: "",
+  price: "129,90 €",
+  status: "",
+  stock: "5 KPL JÄLJELLÄ",
   image: "/images/koposquad-member-jersey.png.png",
 
   accent:
@@ -279,7 +280,7 @@ status: "",
     "Yhtenäinen KOPOSQUAD-tiimityyli",
     "Personoidaan jokaiselle jäsenelle",
     "Saatavilla vain KOPOSQUAD-jäsenille",
-    "Sisältö tarkentuu myöhemmin",
+    "Rajoitettu erä, vain 5 paitaa saatavilla",
   ],
 
   detailsTitle: "KOPOSQUAD Member Jersey",
@@ -293,10 +294,11 @@ status: "",
     "Yhtenäinen ulkoasu muiden KS-jäsenten kanssa",
     "Henkilökohtaisesti personoitu jäsenelle",
     "Tarkoitettu vain KOPOSQUAD-jäsenille",
+    "Ensimmäinen erä on rajattu viiteen kappaleeseen",
   ],
 
   detailsNote:
-    "Member Jersey on vielä valmistelussa. Lopullinen design, hinta, koot ja tilausmahdollisuus julkaistaan myöhemmin.",
+    "Member Jersey valmistetaan henkilökohtaisesti tilaajan tiedoilla. Tarkista erityisesti selkään tuleva käyttäjänimi, paidan koko ja toimitustiedot ennen maksamista.",
 },
 
 {
@@ -2192,9 +2194,20 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
                       </div>
                     </div>
                   ) : (
-                    <p className="mt-2 text-3xl font-black text-purple-300">
-                      {service.price}
-                    </p>
+<div className="mt-2">
+  <p className="text-3xl font-black text-purple-300">
+    {service.price}
+  </p>
+
+  {service.title === "KOPOSQUAD Member Jersey" && (
+    <div className="mt-3 inline-flex items-center gap-2 rounded-lg border border-fuchsia-400/35 bg-fuchsia-500/10 px-3 py-1.5 shadow-[0_0_18px_rgba(217,70,239,0.12)]">
+      <span className="h-2 w-2 animate-pulse rounded-full bg-fuchsia-400" />
+      <span className="text-[10px] font-black uppercase tracking-[0.18em] text-fuchsia-200">
+        Rajoitettu erä · 5 kpl jäljellä
+      </span>
+    </div>
+  )}
+</div>
                   )}
                 </div>
 
@@ -2990,11 +3003,15 @@ selectedEmotePackage === "5" ? "39,99 €" : "59,99 €"
                   </p>
                 </div>
 
-                <div className="mt-6 rounded-2xl border border-purple-500/20 bg-purple-500/[0.035] p-4">
-                  <p className="text-sm leading-6 text-gray-400">
-                    Stream Overlay -tilaus avautuu omassa tilauslomakkeessaan, jossa tiedot tarkistetaan ennen maksua.
-                  </p>
-                </div>
+<div className="mt-6 rounded-2xl border border-purple-500/20 bg-purple-500/[0.035] p-4">
+  <p className="text-sm leading-6 text-gray-400">
+    {selectedService.title === "KOPOSQUAD Member Jersey"
+      ? "Member Jersey on rajattu vain KOPOSQUAD-jäsenille. Ensimmäisestä erästä on saatavilla vain 5 kappaletta. Tilaajan jäsenyys ja personointitiedot tarkistetaan tilauksen yhteydessä."
+      : selectedService.title === "Stream Overlay"
+        ? "Stream Overlay -tilaus avautuu omassa tilauslomakkeessaan, jossa tiedot tarkistetaan ennen maksua."
+        : "Tilauksen tarkemmat tiedot ja mahdolliset valinnat näkyvät palvelun omassa tilauslomakkeessa."}
+  </p>
+</div>
 
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <button
