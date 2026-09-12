@@ -470,6 +470,16 @@ useEffect(() => {
             <span>{language === "fi" ? "Tietoa" : "About"}</span>
             <span className="text-purple-400">›</span>
           </button>
+          <a
+  href="/kirjaudu"
+  onClick={() => setMenuOpen(false)}
+  className="group mt-3 flex w-full items-center justify-between rounded-xl border border-purple-500/30 bg-purple-500/[0.08] px-4 py-3.5 text-left text-lg font-black text-purple-300 transition-all duration-300 hover:border-purple-400/60 hover:bg-purple-500/15 hover:pl-5 hover:text-white"
+>
+  <span>{language === "fi" ? "Kirjaudu" : "Login"}</span>
+  <span className="text-purple-400 transition-transform duration-300 group-hover:translate-x-1">
+    →
+  </span>
+</a>
         </div>
       </div>
     </div>
