@@ -10,7 +10,7 @@ export default function KirjauduPage() {
   const router = useRouter();
   const supabase = createClient();
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
@@ -22,13 +22,15 @@ export default function KirjauduPage() {
     setLoading(true);
     setErrorMessage("");
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+const loginEmail = `${username.toLowerCase().trim()}@koposquad.local`;
+
+const { error } = await supabase.auth.signInWithPassword({
+  email: loginEmail,
+  password,
+});
 
     if (error) {
-      setErrorMessage("Kirjautuminen epäonnistui. Tarkista tunnukset.");
+      setErrorMessage(error.message);
       setLoading(false);
       return;
     }
@@ -100,15 +102,15 @@ export default function KirjauduPage() {
               <form onSubmit={handleLogin} className="space-y-5">
                 <label className="block">
                   <span className="text-[10px] font-black uppercase tracking-[0.20em] text-purple-300">
-                    Sähköposti
+                    Käyttäjänimi
                   </span>
 
                   <input
-                    type="email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    type="text"
+                    value={username}
+                    onChange={(event) => setUsername(event.target.value)}
                     required
-                    placeholder="sinun@email.fi"
+                    placeholder="Käyttäjänimi"
                     className="mt-2 w-full rounded-xl border border-purple-500/20 bg-black/45 px-4 py-3.5 text-white outline-none placeholder:text-gray-600 transition focus:border-purple-400/70 focus:bg-black/60"
                   />
                 </label>

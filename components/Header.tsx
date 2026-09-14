@@ -15,9 +15,87 @@ type MenuSection =
   | "tietoa"
   | null;
 
+  const searchItems = [
+  {
+    title: "Etusivu",
+    description: "KOPOSQUADin etusivu",
+    href: "/",
+    keywords: "etusivu home koposquad",
+  },
+  {
+    title: "Live",
+    description: "KOPOSQUADin live-lähetykset",
+    href: "/#live",
+    keywords: "live twitch lähetys striimi",
+  },
+  {
+    title: "Tiimi",
+    description: "KOPOSQUADin jäsenet ja tekijät",
+    href: "/#tiimi",
+    keywords: "tiimi jäsenet streamer striimaajat sisällöntuottajat",
+  },
+  {
+    title: "KOPOSQUADTV",
+    description: "KOPOSQUADin virallinen Twitch-kanava",
+    href: "/#koposquadtv",
+    keywords: "koposquadtv twitch kanava live",
+  },
+  {
+    title: "Clips",
+    description: "KOPOSQUAD-klipit",
+    href: "/#clips",
+    keywords: "clips klipit videot twitch",
+  },
+  {
+    title: "Työkalut",
+    description: "Työkaluja striimaukseen ja sisällöntuotantoon",
+    href: "/tools",
+    keywords: "työkalut obs streamlabs prism botit editointi grafiikka",
+  },
+  {
+    title: "Palvelut",
+    description: "KOPOSQUAD Creative -palvelut",
+    href: "/palvelut",
+    keywords: "palvelut overlay emote grafiikka editointi jersey kit lan",
+  },
+  {
+    title: "Tietoa",
+    description: "Mikä on KOPOSQUAD?",
+    href: "/tietoa",
+    keywords: "tietoa koposquad mikä on yhteisö",
+  },
+  {
+    title: "Hae mukaan",
+    description: "Liity KOPOSQUADiin",
+    href: "/#rekry",
+    keywords: "liity hae mukaan rekry hakemus",
+  },
+  {
+    title: "Jäsenalue",
+    description: "KOPOSQUAD-jäsenten oma alue",
+    href: "/kirjaudu",
+    keywords: "jäsenalue kirjaudu jäsenet login",
+  },
+];
+
 export default function Header({ activePage }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<MenuSection>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+const [searchQuery, setSearchQuery] = useState("");
+const filteredSearchItems = searchItems.filter((item) => {
+  const query = searchQuery.toLowerCase().trim();
+
+  if (!query) {
+    return false;
+  }
+
+  return (
+    item.title.toLowerCase().includes(query) ||
+    item.description.toLowerCase().includes(query) ||
+    item.keywords.toLowerCase().includes(query)
+  );
+});
 
   useEffect(() => {
     if (!menuOpen) {
@@ -85,6 +163,35 @@ return (
 
           {/* OIKEA */}
           <div className="flex items-center gap-3">
+<button
+  type="button"
+  onClick={() => setSearchOpen(true)}
+  aria-label="Avaa haku"
+  className="group relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl border border-purple-500/40 bg-[linear-gradient(145deg,rgba(126,34,206,0.18),rgba(10,5,15,0.95))] text-purple-200 shadow-[0_0_22px_rgba(168,85,247,0.12)] transition-all duration-300 hover:border-purple-300/80 hover:bg-purple-500/20 hover:shadow-[0_0_28px_rgba(168,85,247,0.30)]"
+>
+  <span className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(circle_at_center,rgba(216,180,254,0.18),transparent_65%)]" />
+
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    className="relative z-10 h-5 w-5"
+    aria-hidden="true"
+  >
+    <circle
+      cx="11"
+      cy="11"
+      r="6.5"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    />
+    <path
+      d="M16 16L21 21"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+    />
+  </svg>
+</button>
             <a
               href="https://discord.gg/ZXgSS9v6ye"
               target="_blank"
@@ -454,6 +561,115 @@ className={`hidden md:block fixed left-0 top-0 z-[95] h-screen w-[88vw] max-w-[4
       </aside>
 
       </div>
+      {searchOpen && (
+  <div className="fixed inset-0 z-[120] flex items-start justify-center bg-black/70 px-5 pt-28 backdrop-blur-md">
+    <div className="relative w-full max-w-2xl overflow-hidden rounded-[26px] border border-purple-500/30 bg-[linear-gradient(145deg,rgba(10,5,15,0.98),rgba(20,8,30,0.98))] p-6 shadow-[0_0_70px_rgba(126,34,206,0.24)]">
+      <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-purple-600/15 blur-[80px]" />
+
+      <div className="relative z-10">
+        <div className="mb-5 flex items-center justify-between">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-purple-400">
+              KOPOSQUAD HAKU
+            </p>
+
+            <h2 className="mt-1 text-2xl font-black text-white">
+              Hae sivustolta
+            </h2>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              setSearchOpen(false);
+              setSearchQuery("");
+            }}
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-purple-500/30 bg-purple-500/[0.06] text-xl text-gray-300 transition hover:rotate-90 hover:border-purple-400 hover:bg-purple-500/15 hover:text-white"
+            aria-label="Sulje haku"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="relative">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Hae KOPOSQUAD-sivustolta..."
+            autoFocus
+            className="w-full rounded-2xl border border-purple-500/30 bg-black/55 px-5 py-4 pr-14 text-base text-white outline-none placeholder:text-gray-600 transition focus:border-purple-400/70 focus:bg-black/70 focus:shadow-[0_0_30px_rgba(168,85,247,0.12)]"
+          />
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            className="pointer-events-none absolute right-5 top-1/2 h-5 w-5 -translate-y-1/2 text-purple-400"
+            aria-hidden="true"
+          >
+            <circle
+              cx="11"
+              cy="11"
+              r="6.5"
+              stroke="currentColor"
+              strokeWidth="1.8"
+            />
+            <path
+              d="M16 16L21 21"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+
+<div className="mt-5">
+  {!searchQuery.trim() ? (
+    <div className="rounded-2xl border border-white/[0.07] bg-white/[0.025] px-5 py-4">
+      <p className="text-sm leading-6 text-gray-500">
+        Kirjoita hakusana löytääksesi sivuja, työkaluja ja KOPOSQUADin sisältöä.
+      </p>
+    </div>
+  ) : filteredSearchItems.length > 0 ? (
+    <div className="space-y-2">
+      {filteredSearchItems.map((item) => (
+        <a
+          key={item.title}
+          href={item.href}
+          onClick={() => {
+            setSearchOpen(false);
+            setSearchQuery("");
+          }}
+          className="group flex items-center justify-between rounded-2xl border border-purple-500/15 bg-white/[0.025] px-5 py-4 transition-all duration-300 hover:border-purple-400/40 hover:bg-purple-500/[0.08]"
+        >
+          <div>
+            <p className="font-black text-white transition group-hover:text-purple-200">
+              {item.title}
+            </p>
+
+            <p className="mt-1 text-sm text-gray-500">
+              {item.description}
+            </p>
+          </div>
+
+          <span className="ml-5 text-xl text-purple-400 transition-transform duration-300 group-hover:translate-x-1">
+            →
+          </span>
+        </a>
+      ))}
+    </div>
+  ) : (
+    <div className="rounded-2xl border border-red-500/15 bg-red-500/[0.04] px-5 py-4">
+      <p className="text-sm text-gray-400">
+        Hakusanalla <strong className="text-white">"{searchQuery}"</strong> ei löytynyt tuloksia.
+      </p>
+    </div>
+  )}
+</div>
+      </div>
+    </div>
+  </div>
+)}
     </>
   );
 }
