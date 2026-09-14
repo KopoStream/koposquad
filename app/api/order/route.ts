@@ -10,9 +10,326 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
+    const service = String(formData.get("service") || "").trim();
+const isJerseyOrder = service === "KOPOSQUAD Member Jersey";
 
     const name = String(formData.get("name") || "").trim();
     const email = String(formData.get("email") || "").trim();
+
+    if (isJerseyOrder) {
+      const memberName = String(formData.get("memberName") || "").trim();
+      const discord = String(formData.get("discord") || "").trim();
+      const jerseyNickname = String(formData.get("jerseyNickname") || "").trim();
+      const jerseySize = String(formData.get("jerseySize") || "").trim();
+      const address = String(formData.get("address") || "").trim();
+      const postalCode = String(formData.get("postalCode") || "").trim();
+      const city = String(formData.get("city") || "").trim();
+      const memberConfirmed = String(formData.get("memberConfirmed") || "");
+      const paypalOrderId = String(formData.get("paypalOrderId") || "").trim();
+      const paypalCaptureId = String(formData.get("paypalCaptureId") || "").trim();
+
+      if (
+        !name ||
+        !email ||
+        !memberName ||
+        !discord ||
+        !jerseyNickname ||
+        !jerseySize ||
+        !address ||
+        !postalCode ||
+        !city ||
+        memberConfirmed !== "yes" ||
+        !paypalOrderId ||
+        !paypalCaptureId
+      ) {
+        return NextResponse.json(
+          { error: "Jersey-tilauksesta puuttuu pakollisia tietoja." },
+          { status: 400 }
+        );
+      }
+
+      if (!process.env.RESEND_API_KEY) {
+        return NextResponse.json(
+          { error: "Resend API-avain puuttuu palvelimelta." },
+          { status: 500 }
+        );
+      }
+
+      const orderToEmail =
+        process.env.ORDER_TO_EMAIL || "koposquadtv@gmail.com";
+
+      const resendFrom =
+        process.env.RESEND_FROM ||
+        "KOPOSQUAD Creative <onboarding@resend.dev>";
+
+      const isResendTestSender = resendFrom.includes("onboarding@resend.dev");
+      const orderId = `KS-JERSEY-${Date.now().toString().slice(-8)}`;
+
+      let jerseyLogoAttachment:
+        | { filename: string; content: string; contentId: string }
+        | undefined;
+
+      try {
+        const logoPath = path.join(
+          process.cwd(),
+          "public",
+          "images",
+          "ks-logo.png.png"
+        );
+
+        const logoBuffer = await readFile(logoPath);
+
+        jerseyLogoAttachment = {
+          filename: "ks-logo.png",
+          content: logoBuffer.toString("base64"),
+          contentId: "ks-logo",
+        };
+      } catch (logoError) {
+        console.warn("KS-logoa ei löytynyt Jersey-sähköpostia varten:", logoError);
+      }
+
+      const jerseyLogoHtml = jerseyLogoAttachment
+        ? `
+          <div style="text-align:center;margin-bottom:18px">
+            <img
+              src="cid:ks-logo"
+              alt="KOPOSQUAD"
+              width="92"
+              style="display:inline-block;width:92px;height:auto"
+            />
+          </div>
+        `
+        : "";
+
+      const adminSubject =
+        `UUSI JERSEY-TILAUS – ${orderId} – ${memberName} – ${jerseyNickname}`;
+
+      const adminText = `
+UUSI KOPOSQUAD MEMBER JERSEY -TILAUS
+
+TILAUSNUMERO: ${orderId}
+Palvelu: KOPOSQUAD Member Jersey
+Hinta: 129,90 €
+
+ASIAKAS
+Nimi: ${name}
+Sähköposti: ${email}
+Discord: ${discord}
+KOPOSQUAD-käyttäjänimi: ${memberName}
+
+PERSONOINTI
+Selkään tuleva NICKNAME: ${jerseyNickname}
+Paitakoko: ${jerseySize}
+
+TOIMITUSOSOITE
+${address}
+${postalCode} ${city}
+
+MAKSU
+PayPal Order ID: ${paypalOrderId}
+PayPal Capture ID: ${paypalCaptureId}
+Maksu vahvistettu ennen tilauksen lähettämistä: Kyllä
+
+Jäsenyysvahvistus: Kyllä
+`.trim();
+
+      const adminHtml = `
+        <div style="margin:0;padding:34px 16px;background:#07040a;font-family:Arial,sans-serif;color:#f5f3f7">
+          <div style="max-width:720px;margin:0 auto;border:1px solid #7e22ce;border-radius:22px;overflow:hidden;background:#120918">
+            <div style="padding:28px;background:linear-gradient(135deg,#4c1d95,#86198f)">
+              ${jerseyLogoHtml}
+              <div style="font-size:11px;letter-spacing:3px;font-weight:800;color:#e9d5ff">
+                KOPOSQUAD MEMBER PRODUCT
+              </div>
+              <h1 style="margin:10px 0 0;font-size:28px;color:#fff">
+                UUSI JERSEY-TILAUS
+              </h1>
+              <p style="margin:9px 0 0;color:#f5d0fe">
+                KOPOSQUAD Member Jersey – 129,90 €
+              </p>
+              <p style="margin:8px 0 0;font-size:12px;color:#ddd6fe">
+                Tilausnumero: <strong>${orderId}</strong>
+              </p>
+            </div>
+
+            <div style="padding:26px">
+              ${emailSection(
+                "ASIAKAS",
+                `
+                  <strong>Nimi:</strong> ${escapeHtml(name)}<br>
+                  <strong>Sähköposti:</strong> ${escapeHtml(email)}<br>
+                  <strong>Discord:</strong> ${escapeHtml(discord)}<br>
+                  <strong>KOPOSQUAD-käyttäjänimi:</strong> ${escapeHtml(memberName)}
+                `
+              )}
+
+              ${emailSection(
+                "PERSONOINTI",
+                `
+                  <strong>Selkään tuleva NICKNAME:</strong> ${escapeHtml(jerseyNickname)}<br>
+                  <strong>Paitakoko:</strong> ${escapeHtml(jerseySize)}
+                `
+              )}
+
+              ${emailSection(
+                "TOIMITUSOSOITE",
+                `
+                  ${escapeHtml(address)}<br>
+                  ${escapeHtml(postalCode)} ${escapeHtml(city)}
+                `
+              )}
+
+              ${emailSection(
+                "PAYPAL-MAKSU",
+                `
+                  <strong>Order ID:</strong> ${escapeHtml(paypalOrderId)}<br>
+                  <strong>Capture ID:</strong> ${escapeHtml(paypalCaptureId)}<br>
+                  <strong>Maksu:</strong> vahvistettu ennen tilauksen lähettämistä
+                `
+              )}
+
+              <div style="margin-top:24px;padding:16px;border-radius:12px;background:#0b060e;border:1px solid #6d28d944;color:#d8b4fe;line-height:1.7">
+                <strong>Jäsenyysvahvistus:</strong> Kyllä<br>
+                Tarkista jäsenyys ja personointitiedot ennen paidan tilaamista valmistajalta.
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const adminResult = await resend.emails.send({
+        from: resendFrom,
+        to: [orderToEmail],
+        replyTo: email,
+        subject: adminSubject,
+        text: adminText,
+        html: adminHtml,
+        attachments: jerseyLogoAttachment ? [jerseyLogoAttachment] : [],
+      });
+
+      if (adminResult.error) {
+        console.error("Resend Jersey admin error:", adminResult.error);
+
+        return NextResponse.json(
+          {
+            error:
+              adminResult.error.message ||
+              "Jersey-tilauksen sähköpostin lähetys epäonnistui.",
+          },
+          { status: 500 }
+        );
+      }
+
+      const customerRecipient = isResendTestSender ? orderToEmail : email;
+      const customerSubject =
+        `Jersey-tilauksesi on vastaanotettu – ${orderId} – KOPOSQUAD`;
+
+      const customerText = `
+Hei ${name}!
+
+Kiitos KOPOSQUAD Member Jersey -tilauksestasi.
+
+Tilausnumero: ${orderId}
+Hinta: 129,90 €
+KOPOSQUAD-käyttäjänimi: ${memberName}
+Selkään tuleva NICKNAME: ${jerseyNickname}
+Paitakoko: ${jerseySize}
+
+Toimitusosoite:
+${address}
+${postalCode} ${city}
+
+Maksu on vahvistettu PayPalissa. Jäsenyys ja personointitiedot tarkistetaan ennen paidan tilaamista valmistajalta.
+
+KOPOSQUAD
+`.trim();
+
+      const customerHtml = `
+        <div style="margin:0;padding:34px 16px;background:#07040a;font-family:Arial,sans-serif;color:#f5f3f7">
+          <div style="max-width:680px;margin:0 auto;border:1px solid #7e22ce;border-radius:22px;overflow:hidden;background:#120918">
+            <div style="padding:30px;text-align:center;background:linear-gradient(135deg,#4c1d95,#86198f)">
+              ${jerseyLogoHtml}
+              <div style="font-size:11px;letter-spacing:3px;font-weight:800;color:#e9d5ff">
+                KOPOSQUAD MEMBER PRODUCT
+              </div>
+              <h1 style="margin:12px 0 0;font-size:27px;color:#fff">
+                KIITOS JERSEY-TILAUKSESTASI!
+              </h1>
+            </div>
+
+            <div style="padding:28px">
+              <p style="margin:0 0 20px;font-size:16px;line-height:1.7;color:#e5e7eb">
+                Hei <strong>${escapeHtml(name)}</strong>! Maksusi on vahvistettu ja Jersey-tilauksesi on vastaanotettu.
+              </p>
+
+              ${emailSection(
+                "TILAUKSEN TIEDOT",
+                `
+                  <strong>Tilausnumero:</strong> ${orderId}<br>
+                  <strong>Hinta:</strong> 129,90 €<br>
+                  <strong>KOPOSQUAD-käyttäjänimi:</strong> ${escapeHtml(memberName)}<br>
+                  <strong>Selkään tuleva NICKNAME:</strong> ${escapeHtml(jerseyNickname)}<br>
+                  <strong>Paitakoko:</strong> ${escapeHtml(jerseySize)}
+                `
+              )}
+
+              ${emailSection(
+                "TOIMITUSOSOITE",
+                `
+                  ${escapeHtml(address)}<br>
+                  ${escapeHtml(postalCode)} ${escapeHtml(city)}
+                `
+              )}
+
+              <div style="margin-top:26px;padding:18px;border-radius:14px;background:linear-gradient(135deg,#2e1065,#4a044e);color:#f5f3f7;line-height:1.7">
+                <strong>Mitä seuraavaksi?</strong><br>
+                KOPOSQUAD-jäsenyys ja personointitiedot tarkistetaan ennen paidan tilaamista valmistajalta.
+              </div>
+
+              <p style="margin:26px 0 0;text-align:center;color:#9ca3af;font-size:12px;line-height:1.6">
+                KOPOSQUAD<br>
+                ${orderId}
+              </p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const customerResult = await resend.emails.send({
+        from: resendFrom,
+        to: [customerRecipient],
+        subject: customerSubject,
+        text: customerText,
+        html: customerHtml,
+        attachments: jerseyLogoAttachment ? [jerseyLogoAttachment] : [],
+      });
+
+      if (customerResult.error) {
+        console.error(
+          "Resend Jersey customer confirmation error:",
+          customerResult.error
+        );
+
+        return NextResponse.json({
+          ok: true,
+          id: adminResult.data?.id,
+          jerseyOrder: true,
+          customerConfirmationSent: false,
+          warning:
+            "Jersey-tilaus tuli adminille, mutta asiakkaan vahvistusviestin lähetys epäonnistui.",
+        });
+      }
+
+      return NextResponse.json({
+        ok: true,
+        id: adminResult.data?.id,
+        jerseyOrder: true,
+        customerConfirmationSent: true,
+        customerConfirmationRecipient: customerRecipient,
+        customerConfirmationTestMode:
+          isResendTestSender && customerRecipient !== email,
+      });
+    }
     const channel = String(formData.get("channel") || "").trim();
     const implementation = String(formData.get("implementation") || "").trim();
     const colorTheme = String(formData.get("colorTheme") || "").trim();
@@ -22,23 +339,26 @@ export async function POST(request: Request) {
     const termsAccepted = String(formData.get("termsAccepted") || "");
     const overlayItems = formData.getAll("overlayItems").map(String);
 
-    if (
-      !name ||
-      !email ||
-      !channel ||
-      !implementation ||
-      !colorTheme ||
-      !discord ||
-      !platform ||
-      !description ||
-      termsAccepted !== "yes" ||
-      overlayItems.length === 0
-    ) {
-      return NextResponse.json(
-        { error: "Täytä kaikki pakolliset kentät ennen lähettämistä." },
-        { status: 400 }
-      );
-    }
+if (
+  !isJerseyOrder &&
+  (
+    !name ||
+    !email ||
+    !channel ||
+    !implementation ||
+    !colorTheme ||
+    !discord ||
+    !platform ||
+    !description ||
+    termsAccepted !== "yes" ||
+    overlayItems.length === 0
+  )
+) {
+  return NextResponse.json(
+    { error: "Täytä kaikki pakolliset kentät ennen lähettämistä." },
+    { status: 400 }
+  );
+}
 
     if (!process.env.RESEND_API_KEY) {
       return NextResponse.json(
