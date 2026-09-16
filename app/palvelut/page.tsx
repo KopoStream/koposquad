@@ -266,7 +266,7 @@ detailsNote:
 
   price: "129,90 €",
   status: "",
-  stock: "5 KPL JÄLJELLÄ",
+  stock: "4 KPL JÄLJELLÄ",
   image: "/images/koposquad-member-jersey.png.png",
 
   accent:
@@ -280,7 +280,7 @@ detailsNote:
     "Yhtenäinen KOPOSQUAD-tiimityyli",
     "Personoidaan jokaiselle jäsenelle",
     "Saatavilla vain KOPOSQUAD-jäsenille",
-    "Rajoitettu erä, vain 5 paitaa saatavilla",
+    "Rajoitettu erä",
   ],
 
   detailsTitle: "KOPOSQUAD Member Jersey",

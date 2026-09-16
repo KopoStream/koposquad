@@ -297,6 +297,13 @@ return (
                 >
                   Clips
                 </a>
+                <a
+  href="/uutiset"
+  onClick={closeMenu}
+  className="flex items-center justify-between rounded-xl px-4 py-3.5 text-lg font-black text-gray-300 transition hover:bg-purple-500/10 hover:pl-5 hover:text-purple-300"
+>
+  Uutiset
+</a>
               </div>
             </div>
 
@@ -545,7 +552,7 @@ className={`hidden md:block fixed left-0 top-0 z-[95] h-screen w-[88vw] max-w-[4
                   <span className="text-purple-500">→</span>
                 </a>
 
-                <a href="/#uutiset" onClick={closeMenu} className={subLinkClass}>
+                <a href="/uutiset" onClick={closeMenu} className={subLinkClass}>
                   <span>Uutiset</span>
                   <span className="text-purple-500">→</span>
                 </a>
