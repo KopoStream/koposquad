@@ -292,6 +292,13 @@ export default function KoposquadChat() {
         },
         body: JSON.stringify({
           message: text,
+          history: messages
+            .filter((message) => !message.typing)
+            .slice(-12)
+            .map((message) => ({
+              role: message.sender === "user" ? "user" : "assistant",
+              content: message.text,
+            })),
         }),
       });
 
