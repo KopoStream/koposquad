@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import KoposquadChat from "../components/KoposquadChat";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://koposquad.vercel.app"),
@@ -95,7 +94,7 @@ export default function RootLayout({
     <html lang="fi">
 <body className="bg-black text-white">
   {children}
-  <KoposquadChat />
+  
 </body>
     </html>
   );
