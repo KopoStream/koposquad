@@ -379,10 +379,10 @@ export default function MemberProfilePage() {
             </p>
 
 <h1
-  className={`mt-4 font-black uppercase leading-[0.95] ${
-    member.name.length > 12
-      ? "text-4xl md:text-6xl"
-      : "text-6xl md:text-8xl"
+  className={`mt-4 max-w-full break-words font-black uppercase leading-[0.95] ${
+    member.name.length > 9
+      ? "text-3xl sm:text-4xl lg:text-5xl"
+      : "text-5xl sm:text-6xl lg:text-7xl"
   }`}
 >
   {member.name}
