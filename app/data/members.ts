@@ -305,4 +305,18 @@ export const members: Member[] = [
   games: "Vaihtelevat pelit",
   content: "Piirtäminen, maalaaminen, 3D-mallinnus, graafinen suunnittelu ja pelisisältö",
 },
+  {
+    name: "MaahanTuoja",
+    role: "Striimaaja",
+    twitch: "maahantuoja_",
+    discord: "maahantuoja",
+
+    image: "",
+
+    bio: "Olen reilu parikymppinen harrastelijastriimaaja, jolle videopelit ovat olleet lähellä sydäntä pienestä pitäen. Striimaaminen alkoi alun perin vitsistä, mutta päätin myöhemmin toteuttaa ajatuksen ja aloittaa oman striimiharrastukseni.\n\nLiityin KOPOSQUADiin, koska haluan kasvattaa omaa yhteisöäni, kehittää striimaamistani ja saada uusia ideoita kokeneemmilta sisällöntuottajilta. Haluan myös jakaa omaa tietotaitoani muille ja olla mukana rakentamassa yhteisöä, jossa tekijät voivat oppia toisiltaan.",
+
+    country: "Suomi",
+    games: "Videopelit",
+    content: "Pelistriimit ja yhteisöllinen sisältö",
+  },
 ];
