@@ -319,4 +319,18 @@ export const members: Member[] = [
     games: "Videopelit",
     content: "Pelistriimit ja yhteisöllinen sisältö",
   },
+  {
+    name: "janezkiii90",
+    role: "Striimaaja",
+    twitch: "janezkiii90",
+    discord: "https://discord.gg/W998nrAMQ",
+
+    image: "",
+
+    bio: "Olen Jaana Koukkula, perheellinen striimaaja Pohjois-Karjalasta. Pelaaminen on minulle mieluisa harrastus, ja striimaan Twitchiin erilaisia PlayStation 5 -pelejä.\n\nPelaan pääasiassa yksinpelejä laidasta laitaan, aina kauhupeleistä erilaisiin simulaatiopeleihin. Liityin KOPOSQUADiin tutustuakseni uusiin ihmisiin ja yhteisön toimintaan sekä kehittääkseni omaa striimaamistani. Tavoitteena on kasvattaa omaa katsojayhteisöä, saada uusia seuraajia ja oppia muilta striimaajilta vinkkien ja ideoiden kautta.",
+
+    country: "Suomi",
+    games: "Kauhupelit, simulaatiopelit ja muut yksinpelit",
+    content: "PlayStation 5 -pelistriimit",
+  },
 ];
