@@ -333,4 +333,15 @@ export const members: Member[] = [
     games: "Kauhupelit, simulaatiopelit ja muut yksinpelit",
     content: "PlayStation 5 -pelistriimit",
   },
+  {
+  name: "DJ DSM",
+  role: "DJ / Striimaaja",
+  twitch: "mrdjdsm",
+  discord: "mrsaxeus",
+  image: "",
+  bio: "Olen Sakari Miettinen, eli DJ DSM, suomalainen DJ ja striimaaja. Aloitin DJ:nä soittamisen kotisohvaltani vuonna 2018, ja sen jälkeen olen soittanut monissa erilaisissa tapahtumissa. Päägenrenäni on psytrance, joka on lähellä sydäntäni, mutta soitan myös technoa, housea ja trancea.\n\nAloitin striimaamisen vuonna 2019 pelaamalla yksin- ja moninpelejä. Nykyään striimaan enimmäkseen DJ-lähetyksiä aina, kun aikatauluni sen sallivat. Välillä lähetyksissä kuullaan myös omaa musiikkituotantoani. Haluan jakaa musiikkiani ja DJ-settejäni katsojille sekä tuoda esiin omaa tyyliäni musiikin kautta.",
+  country: "Suomi",
+  games: "Yksin- ja moninpelit",
+  content: "DJ-lähetykset, psytrance, techno, house, trance ja oma musiikkituotanto",
+},
 ];
