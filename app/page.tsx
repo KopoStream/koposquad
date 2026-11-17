@@ -3056,6 +3056,25 @@ className="group relative overflow-hidden rounded-3xl border border-purple-500/2
     </p>
 
     <form onSubmit={handleApplicationSubmit}>
+      <div className="mt-6 rounded-2xl border border-purple-500/30 bg-purple-500/10 p-5">
+  <h3 className="text-lg font-bold text-purple-300">
+    {language === "fi"
+      ? "Kerro meille hieman enemmän itsestäsi!"
+      : "Tell us more about yourself!"}
+  </h3>
+
+  <p className="mt-2 text-sm leading-6 text-gray-300">
+    {language === "fi"
+      ? "Kerro hakemuksessasi esimerkiksi, millainen sisällöntuottaja olet, mitä sisältöä teet, kuinka kauan olet striimannut ja mitä tavoitteita sinulla on. Voit kertoa myös harrastuksistasi ja siitä, miksi haluaisit mukaan KOPOSQUADiin."
+      : "Tell us what kind of creator you are, what content you make, how long you have been streaming, what your goals are and why you want to join KOPOSQUAD."}
+  </p>
+
+  <p className="mt-3 text-sm font-semibold text-purple-200">
+    {language === "fi"
+      ? "Esittelyäsi käytetään myös mahdollisen jäsenprofiilisi luomiseen, joten kattava hakemus auttaa meitä tekemään sinulle paremman esittelyn."
+      : "Your introduction may also be used to create your member profile, so a detailed application helps us write a better introduction."}
+  </p>
+</div>
       <input
         type="text"
         required
@@ -3112,11 +3131,11 @@ className="group relative overflow-hidden rounded-3xl border border-purple-500/2
           })
         }
         className="mt-4 h-40 w-full resize-none rounded-xl border border-purple-800 bg-black/70 p-4 outline-none transition focus:border-purple-400"
-        placeholder={
-          language === "fi"
-            ? "Kerro itsestäsi ja miksi haluaisit mukaan"
-            : "Tell us about yourself and why you would like to join"
-        }
+placeholder={
+  language === "fi"
+    ? "Esittele itsesi, sisältösi, kokemuksesi ja tavoitteesi mahdollisimman kattavasti..."
+    : "Introduce yourself, your content, experience and goals in detail..."
+}
       />
 
       <button
@@ -3133,6 +3152,36 @@ className="group relative overflow-hidden rounded-3xl border border-purple-500/2
             : "Send application"}
       </button>
 
+<div className="mt-8 rounded-2xl border border-indigo-500/40 bg-gradient-to-br from-indigo-950/40 to-purple-950/30 p-6">
+  <h3 className="text-xl font-black text-white">
+    {language === "fi"
+      ? "Liity myös KOPOSQUADin Discordiin!"
+      : "Join the KOPOSQUAD Discord!"}
+  </h3>
+
+  <p className="mt-3 text-sm leading-6 text-gray-300">
+    {language === "fi"
+      ? "Suosittelemme liittymään Discord-palvelimellemme hakemuksen lähettämisen jälkeen. Näin saamme sinuun helpommin yhteyden hakemuksesi käsittelyn aikana ja pääset samalla tutustumaan yhteisöömme."
+      : "We recommend joining our Discord server after submitting your application. This makes it easier for us to contact you and lets you get to know our community."}
+  </p>
+
+  <p className="mt-3 text-sm font-semibold text-purple-300">
+    {language === "fi"
+      ? "Muista käyttää hakemuksessa samaa Discord-käyttäjänimeä, jolla olet palvelimellamme."
+      : "Use the same Discord username in your application as on our server."}
+  </p>
+
+  <a
+    href="https://discord.gg/ZXgSS9v6ye"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="mt-5 inline-flex items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 font-bold text-white transition duration-300 hover:-translate-y-1 hover:bg-indigo-500"
+  >
+    {language === "fi"
+      ? "Liity Discordiin"
+      : "Join Discord"}
+  </a>
+</div>
       {applicationStatus === "success" && (
         <p className="mt-5 rounded-xl border border-green-500/40 bg-green-500/10 p-4 font-bold text-green-400">
           {language === "fi"
